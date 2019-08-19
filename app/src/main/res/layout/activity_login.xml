@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/activity_main"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="#CC000000"
+tools:context=".views.LoginActivity">
+
+<android.support.v7.widget.Toolbar
+    android:id="@+id/toolbarLogin"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:elevation="5dp"
+    android:background="@color/colorBlanco">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/imgbtnLogin"
+            android:layout_width="45dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="7dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imgviewLogoLogin"
+            android:layout_width="100dp"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/logo_pftp" />
+
+    </RelativeLayout>
+
+
+
+</android.support.v7.widget.Toolbar>
+
+<RelativeLayout
+    android:id="@+id/relativeToolbarLogin"
+    android:layout_below="@+id/toolbarLogin"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/txtviewLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:text="@string/title_login"
+        android:textColor="#ffffff"
+        android:textSize="28dp" />
+
+    <View
+        android:id="@+id/dividerLogin"
+        android:layout_width="335dp"
+        android:layout_height="0.5dp"
+        android:layout_below="@+id/txtviewLogin"
+        android:layout_centerHorizontal="true"/>
+</RelativeLayout>
+
+
+<RelativeLayout
+    android:id="@+id/relativeBodyLogin"
+    android:layout_below="@+id/relativeToolbarLogin"
+    android:layout_width="match_parent"
+    android:layout_height="250dp"
+    android:layout_marginTop="30dp"
+    android:layout_marginStart="25dp"
+    android:layout_marginEnd="25dp">
+
+    <TextView
+        android:id="@+id/txtviewRegistro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:textColor="@color/colorBlanco"
+        android:text="Ingresa tu correo y contraseña"/>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/txtinputCorreoLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtviewRegistro"
+        android:textColorHint="@color/colorBlanco"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="@color/colorAccent"
+        app:hintTextAppearance="@style/AppTheme.FloatingLabel">
+
+        <cn.zhaiyifan.rememberedittext.RememberEditText
+            android:id="@+id/edtxtCorreoLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:textColor="@color/colorBlanco"
+            app:rememberCount="4"
+            android:hint="Correo"
+            android:inputType="textEmailAddress"
+            />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/txtInputPasswordLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColorHint="@color/colorBlanco"
+        android:layout_below="@id/txtinputCorreoLogin"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="@color/colorAccent"
+        app:hintTextAppearance="@style/AppTheme.FloatingLabel">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/edtxtPasswordLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:inputType="textPassword"
+            android:textColor="@color/colorBlanco"
+            android:hint="Contraseña"
+            android:theme="@style/EditText"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/btnEntrarLogin"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:background="@color/colorBotonVerde"
+        android:text="@string/btn_login"
+        android:textColor="@color/colorBlanco"
+        android:enabled="false"
+        android:textAllCaps="false"
+        android:textSize="19dp" />
+
+
+</RelativeLayout>
+
+<ProgressBar
+    android:id="@+id/progressbarLogin"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    style="?android:progressBarStyleLarge"
+    android:layout_centerHorizontal="true"
+    android:layout_centerVertical="true"
+    android:visibility="gone"
+    android:indeterminate="true"/>
+
+
+</RelativeLayout>
