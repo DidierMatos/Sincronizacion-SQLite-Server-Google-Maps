@@ -1,5 +1,12 @@
 <resources>
     <string name="app_name">PFTP</string>
+
+    <!-- Vista Login Activity -->
     <string name="title_login">Inicio de Sesion</string>
     <string name="btn_login">Iniciar Sesion</string>
+
+    <!-- Vista Main Activity -->
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+
 </resources>
