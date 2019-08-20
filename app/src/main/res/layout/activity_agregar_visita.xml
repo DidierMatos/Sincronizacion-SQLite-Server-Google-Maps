@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.AgregarVisitaActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarRegistrarVisita"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:background="@color/colorBlanco"
+        android:elevation="5dp">
+
+        <ImageButton
+            android:id="@+id/imgbtnBackRegVisita"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/ic_action_arrow_left"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Registrar visita"
+            android:textColor="@color/colorNegro"
+            android:layout_marginStart="30dp"
+            android:textSize="18sp" />
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbarRegistrarVisita">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_margin="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/photo_tree"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:layout_gravity="center"
+                android:text="Evidencia fotografica"/>
+            
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <ImageButton
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/ic_calendario"/>
+                <EditText
+                    android:id="@+id/edtxtFechaVisita"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Fecha de visita"
+                    android:textSize="16sp"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Altura(metros)"/>
+            <EditText
+                android:id="@+id/edtxtAltura"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Diametro(centimetros)"/>
+            <EditText
+                android:id="@+id/edtxtDiametro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Observaciones"/>
+            <EditText
+                android:id="@+id/edtxtObservaciones"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vigor"/>
+            <EditText
+                android:id="@+id/edtxtVigor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Condición"/>
+            <EditText
+                android:id="@+id/edtxtCondicion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sanidad"/>
+            <EditText
+                android:id="@+id/edtxtSanidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="15dp">
+
+                <Button
+                    android:id="@+id/btnGuardarVisita"
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:text="Guardar"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorBlanco"
+                    android:background="@color/colorBotonVerde"/>
+
+                <Button
+                    android:id="@+id/btnCancelarVisita"
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:textAllCaps="false"
+                    android:text="Cancelar"
+                    android:layout_marginStart="20dp"
+                    android:textColor="@color/colorBlanco"
+                    android:background="@color/colorBotonRojo"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</RelativeLayout>
