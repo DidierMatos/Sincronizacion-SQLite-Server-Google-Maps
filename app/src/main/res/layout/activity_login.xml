@@ -21,18 +21,18 @@ tools:context=".views.LoginActivity">
 
         <ImageButton
             android:id="@+id/imgbtnLogin"
-            android:layout_width="45dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="7dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/ic_action_arrow_left" />
 
         <ImageView
             android:id="@+id/imgviewLogoLogin"
             android:layout_width="100dp"
             android:layout_height="?attr/actionBarSize"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
             app:srcCompat="@drawable/logo_pftp" />
 
     </RelativeLayout>
@@ -51,7 +51,6 @@ tools:context=".views.LoginActivity">
         android:id="@+id/txtviewLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="12dp"
         android:text="@string/title_login"
@@ -124,8 +123,7 @@ tools:context=".views.LoginActivity">
             android:textSize="20dp"
             android:inputType="textPassword"
             android:textColor="@color/colorBlanco"
-            android:hint="Contraseña"
-            android:theme="@style/EditText"/>
+            android:hint="Contraseña" />
 
     </android.support.design.widget.TextInputLayout>
 
