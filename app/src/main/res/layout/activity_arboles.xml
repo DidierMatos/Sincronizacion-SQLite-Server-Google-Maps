@@ -5,17 +5,42 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".views.ArbolesActivity"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorFondo">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbarArboles"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:background="@color/colorBlanco"
+            android:elevation="5dp">
+
+            <ImageButton
+                android:id="@+id/imgbtnBackRanchos"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/ic_action_arrow_left"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Arboles"
+                android:textColor="@color/colorNegro"
+                android:layout_marginStart="30dp"
+                android:textSize="18sp" />
+        </android.support.v7.widget.Toolbar>
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rvMisArboles"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginTop="60dp">
         </android.support.v7.widget.RecyclerView>
 
     </RelativeLayout>

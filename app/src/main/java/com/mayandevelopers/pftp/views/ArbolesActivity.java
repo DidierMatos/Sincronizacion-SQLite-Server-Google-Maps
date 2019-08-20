@@ -2,11 +2,15 @@ package com.mayandevelopers.pftp.views;
 
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.mayandevelopers.pftp.R;
@@ -18,6 +22,7 @@ import java.util.List;
 
 public class ArbolesActivity extends AppCompatActivity {
 
+    Toolbar toolbar;
     ArrayList<ArbolesModel> arboles_model;
     RecyclerView rv_mis_arboles;
     RvArbolesController rv_arboles_controller;
@@ -31,6 +36,11 @@ public class ArbolesActivity extends AppCompatActivity {
 
 
         arboles_model = new ArrayList<>();
+
+
+        toolbar = (Toolbar) findViewById(R.id.toolbarArboles);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
 
         for (int i = 0; i< 5; i++){
@@ -60,5 +70,19 @@ public class ArbolesActivity extends AppCompatActivity {
 
 
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.toolbar_options, menu);
+
+        MenuItem menuItem = menu.findItem(R.id.find);
+        SearchView searchView = (SearchView) menuItem.getActionView();
+        searchView.setQueryHint("Escribe algo");
+        MenuItemCompat.getActionView(menuItem);
+        // searchView.setOnQueryTextListener(this);
+
+        return true;
     }
 }

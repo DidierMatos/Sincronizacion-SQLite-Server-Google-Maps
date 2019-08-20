@@ -7,7 +7,7 @@
 
     <item
         android:id="@+id/find"
-        android:icon="@drawable/ic_search"
+        android:icon="@drawable/ic_search_folio"
         android:orderInCategory="100"
         app:actionViewClass="android.support.v7.widget.SearchView"
         app:showAsAction="always|collapseActionView"
