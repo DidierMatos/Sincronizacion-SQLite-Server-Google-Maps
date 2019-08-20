@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/drawer_layout"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
@@ -18,7 +19,23 @@
 
         </android.support.v7.widget.Toolbar>
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvEspecies"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toolbarMain"
+            android:layout_marginTop="10dp">
 
+        </android.support.v7.widget.RecyclerView>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/flactbtnEspeciesMain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="7dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            app:srcCompat= "@android:drawable/ic_menu_add"/>
     </RelativeLayout>
     
 
@@ -31,9 +48,12 @@
         app:itemTextColor="@color/colorNegro"
         app:itemIconTint="@color/colorNegro"
         app:menu="@menu/drawer_menu"
+        android:clickable="true"
         app:headerLayout="@layout/header_drawer">
 
     </android.support.design.widget.NavigationView>
+
+
 
 
 

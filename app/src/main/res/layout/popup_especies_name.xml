@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/txtNombreMain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Nombre"
+        android:textSize="18dp"/>
+
+    <EditText
+        android:id="@+id/edtxtNombreMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="20dp"
+        android:layout_below="@id/txtNombreMain"
+        android:hint="Nombre de la especie"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/edtxtNombreMain">
+
+        <Button
+            android:id="@+id/btnCancelarMain"
+            android:layout_width="130dp"
+            android:layout_height="40dp"
+            android:textAllCaps="false"
+            android:text="Cancelar"
+            android:layout_below="@id/edtxtNombreMain"/>
+
+        <Button
+            android:id="@+id/btnGuardarMain"
+            android:layout_width="130dp"
+            android:layout_height="40dp"
+            android:textAllCaps="false"
+            android:text="Guardar"
+            android:layout_below="@id/btnCancelarMain"/>
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>

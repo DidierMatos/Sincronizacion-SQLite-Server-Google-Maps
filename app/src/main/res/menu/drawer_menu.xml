@@ -10,7 +10,7 @@
             <item
                 android:id="@+id/nav_crecimiento"
                 android:title="Monitoreo de crecimiento"
-                android:icon="@drawable/ic_monitor"/>
+                android:icon="@drawable/ic_monitoreo"/>
             <item
                 android:id="@+id/nav_muestras"
                 android:title="Muestras"
@@ -18,7 +18,7 @@
             <item
                 android:id="@+id/nav_folio"
                 android:title="Buscar por folio"
-                android:icon="@drawable/ic_buscar_folio"/>
+                android:icon="@drawable/ic_search_folio"/>
 
         </group>
         <group
