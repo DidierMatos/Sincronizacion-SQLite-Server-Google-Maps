@@ -6,17 +6,17 @@
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginTop="10dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="15dp"
         android:layout_marginStart="4dp"
         android:layout_marginEnd="4dp"
-        android:layout_marginBottom="5dp"
+
         app:cardCornerRadius="10dp">
 
         <RelativeLayout
             android:background="@color/colorBlanco"
             android:layout_width="match_parent"
-            android:layout_height="70dp">
+            android:layout_height="60dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -27,7 +27,7 @@
 
                 <TextView
                     android:id="@+id/txtviewTituloCVarbol"
-                    android:layout_width="160dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Arbol con folio: "
                     android:layout_weight="1"
@@ -36,35 +36,38 @@
 
                 <TextView
                     android:id="@+id/txtviewFolioCVarbol"
-                    android:layout_width="160dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="99"
                     android:layout_weight="1"
                     android:textColor="@color/colorNegro"
-                    android:textSize="15dp" />
+                    android:textSize="15dp"
+                    android:layout_marginRight="5dp"/>
 
                 <ImageButton
                     android:id="@+id/btnVistasCVarbol"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="10dp"
-                    android:background="@color/colorBotonVerde" />
+                    android:layout_margin="5dp"
+                    android:background="@drawable/ic_arboles_ranchos"
+                 />
 
                 <ImageButton
                     android:id="@+id/btnEditarCVarbol"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_marginLeft="3dp"
-                    android:layout_weight="1"
-                    android:background="@color/colorBotonRojo"/>
+                    android:layout_margin="5dp"
+                    android:background="@drawable/ic_update"
+/>
                 <ImageButton
                     android:id="@+id/btnEliminarCVarbol"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_marginLeft="3dp"
-                    android:layout_weight="1"
-                    android:background="@color/colorBotonVerde"/>
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/ic_delete"
+                    android:layout_gravity="center" />
+ />
             </LinearLayout>
 
 <!--            <View
