@@ -137,7 +137,7 @@ tools:context=".views.LoginActivity">
         android:background="@color/colorBotonVerde"
         android:text="@string/btn_login"
         android:textColor="@color/colorBlanco"
-        android:enabled="false"
+        android:enabled="true"
         android:textAllCaps="false"
         android:textSize="19dp" />
 
