@@ -37,7 +37,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginEnd="5dp"
-                android:background="@drawable/ic_editar"/>
+                android:background="@drawable/ic_update"/>
             <ImageButton
                 android:id="@+id/imgbtnEliminarVisita"
                 android:layout_width="30dp"
