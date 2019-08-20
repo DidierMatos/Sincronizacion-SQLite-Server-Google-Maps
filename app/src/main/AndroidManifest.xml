@@ -9,11 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".views.ArbolesActivity"></activity>
+        <activity android:name=".views.AgregarVisitaActivity"></activity>
+        <activity android:name=".views.VisitasActivity" />
+        <activity android:name=".views.RanchosActivity" />
+        <activity android:name=".views.ArbolesActivity" />
         <activity android:name=".views.LoginActivity" />
         <activity android:name=".views.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
