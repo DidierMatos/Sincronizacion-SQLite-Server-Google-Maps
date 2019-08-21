@@ -1,5 +1,6 @@
 package com.mayandevelopers.pftp.views;
 
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
@@ -13,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.mayandevelopers.pftp.MainActivity;
 import com.mayandevelopers.pftp.R;
 import com.mayandevelopers.pftp.controllers.RvArbolesController;
 import com.mayandevelopers.pftp.models.ArbolesModel;
@@ -65,6 +67,9 @@ public class ArbolesActivity extends AppCompatActivity {
             public void onClick(View view) {
             /*    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
+            Intent intent = new Intent(ArbolesActivity.this, AgregarArbolActivity.class);
+            startActivity(intent);
+            finish();
             }
         });
 

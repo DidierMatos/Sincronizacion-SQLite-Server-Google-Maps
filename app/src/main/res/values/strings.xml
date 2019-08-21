@@ -5,6 +5,11 @@
     <string name="title_login">Inicio de Sesion</string>
     <string name="btn_login">Iniciar Sesion</string>
 
+    <!-- Vista Agregar Arbol -->
+    <string name="btn_add_arbol">Agregar</string>
+    <string name="btn_update_arbol">Editar</string>
+    <string name="btn_ubicacion_arbol">Obtener Ubicacion</string>
+
     <!-- Vista Main Activity -->
     <string name="open">Open</string>
     <string name="close">Close</string>
