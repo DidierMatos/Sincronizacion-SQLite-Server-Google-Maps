@@ -9,8 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".views.AgregarVisitaActivity"></activity>
+        <activity android:name=".views.EstablecerMuestraActivity"></activity>
+        <activity android:name=".views.MuestrasRanchosActivity" />
+        <activity android:name=".views.MuestrasActivity" />
+        <activity android:name=".views.AgregarVisitaActivity" />
         <activity android:name=".views.VisitasActivity" />
         <activity android:name=".views.RanchosActivity" />
         <activity android:name=".views.ArbolesActivity" />
