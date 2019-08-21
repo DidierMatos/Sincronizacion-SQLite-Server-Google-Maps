@@ -32,7 +32,7 @@ public class AgregarArbolActivity extends AppCompatActivity {
         edtxt_latitud = findViewById(R.id.edtxtFolio);
         edtxt_longitud = findViewById(R.id.edtxtLongitud);
         imgbtn_add_arbol = findViewById(R.id.btnAddArbol);
-        imgbtn_ubicacion = findViewById(R.id.imgbtnUbicacionAddArbol);
+        //imgbtn_ubicacion = findViewById(R.id.imgbtnUbicacionAddArbol);
 
 
         valorUpdate = getIntent().getStringExtra("update");
@@ -43,6 +43,7 @@ public class AgregarArbolActivity extends AppCompatActivity {
         }else{
             imgbtn_add_arbol.setText("Actualizar");
             txtview_add_arbol.setText("Actualizar Arbol");
+
         }
 
     }

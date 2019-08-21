@@ -162,7 +162,7 @@
 
             </android.support.design.widget.TextInputLayout>
 
-            <ImageButton
+            <Button
                 android:id="@+id/imgbtnUbicacionAddArbol"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
