@@ -1,5 +1,7 @@
 package com.mayandevelopers.pftp.views;
 
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,6 +25,7 @@ public class MuestrasRanchosActivity extends AppCompatActivity {
 
     RecyclerView rv_muestras;
     ImageButton imgbtn_back;
+    FloatingActionButton floatbtn_establecer_muestra;
 
 
     @Override
@@ -32,12 +35,21 @@ public class MuestrasRanchosActivity extends AppCompatActivity {
 
         rv_muestras = (RecyclerView) findViewById(R.id.rvMuestras);
         imgbtn_back = (ImageButton) findViewById(R.id.imgbtnMuestras);
+        floatbtn_establecer_muestra = findViewById(R.id.floatbtnAgregarMuestra);
+
 
         // REGRESAR A LA ACTIVIDAD ANTERIOR //
         imgbtn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
+            }
+        });
+        floatbtn_establecer_muestra.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent establecer_muestra = new Intent(MuestrasRanchosActivity.this, EstablecerMuestraActivity.class);
+                startActivity(establecer_muestra);
             }
         });
 

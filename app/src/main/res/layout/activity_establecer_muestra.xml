@@ -1,9 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorFondo"
     tools:context=".views.EstablecerMuestraActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarEstablecerMuestra"
+        android:background="@color/colorBlanco"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/imgbtnEstablecerMuestra"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="@drawable/ic_action_arrow_left" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_centerVertical="true"
+                android:text="Establecer una muestra"
+                android:textSize="16dp"/>
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:id="@+id/linearlForm"
+        android:orientation="vertical"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/toolbarEstablecerMuestra"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/txtinputNombreMuestra"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/colorBlanco"
+            app:passwordToggleTint="@color/colorAccent"
+            app:hintTextAppearance="@style/AppTheme.FloatingLabel">
+
+            <EditText
+                android:id="@+id/edtxtNombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textColor="@color/colorBlanco"
+                android:hint="Nombre"
+                android:inputType="textEmailAddress" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/txtinputFolioMuestra"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/colorBlanco"
+            app:passwordToggleTint="@color/colorAccent"
+            app:hintTextAppearance="@style/AppTheme.FloatingLabel">
+
+            <EditText
+                android:id="@+id/edtxtFolio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textColor="@color/colorBlanco"
+                android:hint="Folio"
+                android:inputType="textEmailAddress" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/txtinputRadioMuestra"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/colorBlanco"
+            app:passwordToggleTint="@color/colorAccent"
+            app:hintTextAppearance="@style/AppTheme.FloatingLabel">
+
+            <EditText
+                android:id="@+id/edtxtRadio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textColor="@color/colorBlanco"
+                android:hint="Radio(metros)"
+                android:inputType="textEmailAddress" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/txtinputLatitudMuestra"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/colorBlanco"
+            app:passwordToggleTint="@color/colorAccent"
+            app:hintTextAppearance="@style/AppTheme.FloatingLabel">
+
+            <EditText
+                android:id="@+id/edtxtLatitud"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textColor="@color/colorBlanco"
+                android:hint="Latitud"
+                android:inputType="textEmailAddress" />
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/txtinputLongitudMuestra"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/colorBlanco"
+            app:passwordToggleTint="@color/colorAccent"
+            app:hintTextAppearance="@style/AppTheme.FloatingLabel">
+
+            <EditText
+                android:id="@+id/edtxtLongitud"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textColor="@color/colorBlanco"
+                android:hint="Longitud"
+                android:inputType="textEmailAddress" />
+        </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_below="@+id/linearlForm"
+        android:layout_marginTop="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btnObtenerUbicacion"
+            android:layout_width="130dp"
+            android:layout_height="35dp"
+            android:textAllCaps="false"
+            android:text="Obtener ubicación"
+            android:textColor="@color/colorBlanco"
+            android:background="@color/colorBotonRojo"/>
+
+        <Button
+            android:id="@+id/btnEstablecerMuestra"
+            android:layout_width="130dp"
+            android:layout_height="35dp"
+            android:text="Establecer muestra"
+            android:textAllCaps="false"
+            android:layout_marginStart="30dp"
+            android:textColor="@color/colorBlanco"
+            android:background="@color/colorBotonVerde"/>
+
+
+
+    </LinearLayout>
+</RelativeLayout>
