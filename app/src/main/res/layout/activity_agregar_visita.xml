@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorFondo"
     tools:context=".views.AgregarVisitaActivity">
 
     <android.support.v7.widget.Toolbar
@@ -41,19 +42,38 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="140dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:background="@drawable/photo_tree"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16dp"
-                android:layout_gravity="center"
-                android:text="Evidencia fotografica"/>
-            
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/imgviewFotoVisita"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:scaleType="fitXY"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:background="@drawable/photo_tree"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16dp"
+                    android:textColor="@color/colorBlanco"
+                    android:layout_below="@id/imgviewFotoVisita"
+                    android:layout_centerHorizontal="true"
+                    android:text="Evidencia fotografica"/>
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/floatbtnTomarFoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    app:backgroundTint="@color/colorBotonVerde"
+                    android:layout_marginTop="100dp"
+                    app:fabSize="normal"
+                    app:srcCompat="@drawable/ic_camera" />
+
+            </RelativeLayout>
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -61,70 +81,139 @@
                 android:layout_marginTop="10dp">
 
                 <ImageButton
+                    android:id="@+id/imgbtnCalendario"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
+                    android:backgroundTint="@color/colorBotonVerde"
                     android:background="@drawable/ic_calendario"/>
                 <EditText
                     android:id="@+id/edtxtFechaVisita"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColorHint="@color/colorBlanco"
                     android:hint="Fecha de visita"
                     android:textSize="16sp"/>
             </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Altura(metros)"/>
-            <EditText
-                android:id="@+id/edtxtAltura"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/txtinputAltura"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/colorBlanco"
+                app:passwordToggleTint="@color/colorAccent"
+                app:hintTextAppearance="@style/AppTheme.FloatingLabel">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Diametro(centimetros)"/>
-            <EditText
-                android:id="@+id/edtxtDiametro"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                <cn.zhaiyifan.rememberedittext.RememberEditText
+                    android:id="@+id/edtxtAltura"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:textColor="@color/colorBlanco"
+                    app:rememberCount="4"
+                    android:hint="Altura(metros)"
+                    android:inputType="textEmailAddress" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Observaciones"/>
-            <EditText
-                android:id="@+id/edtxtObservaciones"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+            </android.support.design.widget.TextInputLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Vigor"/>
-            <EditText
-                android:id="@+id/edtxtVigor"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/txtInputDiametro"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/colorBlanco"
+                app:passwordToggleTint="@color/colorAccent"
+                app:hintTextAppearance="@style/AppTheme.FloatingLabel">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Condición"/>
-            <EditText
-                android:id="@+id/edtxtCondicion"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                <android.support.design.widget.TextInputEditText
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sanidad"/>
-            <EditText
-                android:id="@+id/edtxtSanidad"
+                    android:id="@+id/edtxtDiametro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:inputType="textPassword"
+                    android:textColor="@color/colorBlanco"
+                    android:hint="Diametro(centimetros)" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/txtInputObservaciones"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/colorBlanco"
+                app:passwordToggleTint="@color/colorAccent"
+                app:hintTextAppearance="@style/AppTheme.FloatingLabel">
+
+                <android.support.design.widget.TextInputEditText
+
+                    android:id="@+id/edtxtObservaciones"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:inputType="textPassword"
+                    android:textColor="@color/colorBlanco"
+                    android:hint="Observaciones" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/txtInputVigor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/colorBlanco"
+                app:passwordToggleTint="@color/colorAccent"
+                app:hintTextAppearance="@style/AppTheme.FloatingLabel">
+
+                <android.support.design.widget.TextInputEditText
+
+                    android:id="@+id/edtxtVigor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:inputType="textPassword"
+                    android:textColor="@color/colorBlanco"
+                    android:hint="Vigor" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/txtInputCondicion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/colorBlanco"
+                app:passwordToggleTint="@color/colorAccent"
+                app:hintTextAppearance="@style/AppTheme.FloatingLabel">
+
+                <android.support.design.widget.TextInputEditText
+
+                    android:id="@+id/edtxtCondicion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:inputType="textPassword"
+                    android:textColor="@color/colorBlanco"
+                    android:hint="Condición" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/txtInputSanidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/colorBlanco"
+                app:passwordToggleTint="@color/colorAccent"
+                app:hintTextAppearance="@style/AppTheme.FloatingLabel">
+
+                <android.support.design.widget.TextInputEditText
+
+                    android:id="@+id/edtxtSanidad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:inputType="textPassword"
+                    android:textColor="@color/colorBlanco"
+                    android:hint="Sanidad" />
+
+            </android.support.design.widget.TextInputLayout>
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -151,10 +240,7 @@
                     android:layout_marginStart="20dp"
                     android:textColor="@color/colorBlanco"
                     android:background="@color/colorBotonRojo"/>
-
             </LinearLayout>
-
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
-
 </RelativeLayout>
