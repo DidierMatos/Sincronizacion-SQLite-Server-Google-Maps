@@ -20,7 +20,7 @@
             android:layout_height="wrap_content">
 
             <ImageButton
-                android:id="@+id/imgbtnAddArbol"
+                android:id="@+id/imgbtnBackAddArbol"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_centerVertical="true"
@@ -29,6 +29,7 @@
                 android:background="@drawable/ic_action_arrow_left" />
 
             <TextView
+                android:id="@+id/txtviewAddArbol"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Agregar arbol"
@@ -161,8 +162,8 @@
 
             </android.support.design.widget.TextInputLayout>
 
-            <Button
-                android:id="@+id/btnUbicacionAddArbol"
+            <ImageButton
+                android:id="@+id/imgbtnUbicacionAddArbol"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/txtinputLongitud"
