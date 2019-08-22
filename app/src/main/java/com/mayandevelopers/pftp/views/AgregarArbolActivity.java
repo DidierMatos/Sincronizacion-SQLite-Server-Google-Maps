@@ -298,7 +298,7 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(longitud, latitud);
+        LatLng sydney = new LatLng(latitud, longitud);
 
         /*mMap.addMarker(new MarkerOptions().position(sydney).title("AQUI"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));*/
@@ -317,7 +317,7 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
             // Get back the mutable Circle
             Circle circle = mMap.addCircle(circleOptions);
         }else{
-
+            //Toast.makeText(this, "HOLIII", Toast.LENGTH_SHORT).show();
             Bitmap imagenOriginal = BitmapFactory.decodeResource(getResources(),R.drawable.icon_marcador_arbol);
             Bitmap imagenFinal = Bitmap.createScaledBitmap(imagenOriginal,80,80,false);
 
