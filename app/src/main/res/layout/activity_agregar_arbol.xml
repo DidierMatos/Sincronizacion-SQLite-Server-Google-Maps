@@ -44,7 +44,8 @@
     <RelativeLayout
         android:id="@+id/relativeMapAddArbol"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="55dp"
         >
 
         <fragment
@@ -53,167 +54,177 @@
             android:id="@+id/map"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="600dp"
+            android:layout_height="250dp"
             tools:context=".MapsActivity"
             android:layout_gravity="bottom"/>
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/relativeBodyAddArbol"
-        android:layout_below="@+id/relativeMapAddArbol"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp">
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/txtinputEspecie"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColorHint="@color/colorBlanco"
-            app:passwordToggleEnabled="true"
-            app:passwordToggleTint="@color/colorAccent"
-            app:hintTextAppearance="@style/AppTheme.FloatingLabel">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edtxtEspecie"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:inputType="text"
-                android:textColor="@color/colorBlanco"
-                android:hint="Especie" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/txtinputCentro"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColorHint="@color/colorBlanco"
-            android:layout_below="@id/txtinputEspecie"
-            app:passwordToggleEnabled="true"
-            app:passwordToggleTint="@color/colorAccent"
-            app:hintTextAppearance="@style/AppTheme.FloatingLabel">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edtxtCentro"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:inputType="text"
-                android:textColor="@color/colorBlanco"
-                android:hint="Centro" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/txtinputFolio"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txtinputCentro"
-            android:textColorHint="@color/colorBlanco"
-            app:passwordToggleEnabled="true"
-            app:passwordToggleTint="@color/colorAccent"
-            app:hintTextAppearance="@style/AppTheme.FloatingLabel">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edtxtFolio"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:inputType="number"
-                android:textColor="@color/colorBlanco"
-                android:hint="Folio" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/relativeMapAddArbol">
 
         <RelativeLayout
-            android:id="@+id/relativeUbicacion"
+            android:id="@+id/relativeBodyAddArbol"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="180dp">
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="10dp">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/txtinputLatitud"
-                android:layout_width="220dp"
+                android:id="@+id/txtinputEspecie"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColorHint="@color/colorBlanco"
-                android:layout_below="@id/txtinputFolio"
                 app:passwordToggleEnabled="true"
                 app:passwordToggleTint="@color/colorAccent"
                 app:hintTextAppearance="@style/AppTheme.FloatingLabel">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edtxtLatitud"
+                    android:id="@+id/edtxtEspecie"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="20dp"
-                    android:inputType="numberDecimal"
+                    android:inputType="text"
                     android:textColor="@color/colorBlanco"
-                    android:hint="Latitud" />
+                    android:hint="Especie" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/txtinputLongitud"
+                android:id="@+id/txtinputCentro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColorHint="@color/colorBlanco"
-                android:layout_below="@id/txtinputLatitud"
+                android:layout_below="@id/txtinputEspecie"
                 app:passwordToggleEnabled="true"
                 app:passwordToggleTint="@color/colorAccent"
                 app:hintTextAppearance="@style/AppTheme.FloatingLabel">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edtxtLongitud"
-                    android:layout_width="220dp"
+                    android:id="@+id/edtxtCentro"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="20dp"
-                    android:inputType="numberDecimal"
+                    android:inputType="text"
                     android:textColor="@color/colorBlanco"
-                    android:hint="Longitud" />
+                    android:hint="Centro" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
-                android:id="@+id/imgbtnUbicacionAddArbol"
-                android:layout_width="100dp"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txtinputFolio"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/txtinputLongitud"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="37dp"
-                android:layout_marginBottom="37dp"
-                android:layout_toEndOf="@+id/txtinputLatitud"
+                android:layout_below="@id/txtinputCentro"
+                android:textColorHint="@color/colorBlanco"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@color/colorAccent"
+                app:hintTextAppearance="@style/AppTheme.FloatingLabel">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtxtFolio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:inputType="number"
+                    android:textColor="@color/colorBlanco"
+                    android:hint="Folio" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeUbicacion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="180dp">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txtinputLatitud"
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@color/colorBlanco"
+                    android:layout_below="@id/txtinputFolio"
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleTint="@color/colorAccent"
+                    app:hintTextAppearance="@style/AppTheme.FloatingLabel">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtxtLatitud"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:inputType="numberDecimal"
+                        android:textColor="@color/colorBlanco"
+                        android:hint="Latitud" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txtinputLongitud"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@color/colorBlanco"
+                    android:layout_below="@id/txtinputLatitud"
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleTint="@color/colorAccent"
+                    app:hintTextAppearance="@style/AppTheme.FloatingLabel">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtxtLongitud"
+                        android:layout_width="220dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:inputType="numberDecimal"
+                        android:textColor="@color/colorBlanco"
+                        android:hint="Longitud" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Button
+                    android:id="@+id/btnUbicacionAddArbol"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/txtinputLongitud"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="37dp"
+                    android:layout_marginBottom="37dp"
+                    android:layout_toEndOf="@+id/txtinputLatitud"
+                    android:background="@color/colorBotonVerde"
+                    android:enabled="true"
+                    android:gravity="center"
+                    android:text="@string/btn_ubicacion_arbol"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorBlanco"
+                    android:textSize="19dp" />
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btnAddArbol"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
                 android:background="@color/colorBotonVerde"
-                android:enabled="true"
-                android:gravity="center"
-                android:text="@string/btn_ubicacion_arbol"
-                android:textAllCaps="false"
+                android:text="@string/btn_add_arbol"
                 android:textColor="@color/colorBlanco"
-                android:textSize="19dp" />
+                android:enabled="true"
+                android:textAllCaps="false"
+                android:textSize="19dp"
+                android:layout_below="@id/relativeUbicacion"
+                android:layout_marginTop="15dp"/>
+
 
         </RelativeLayout>
 
-        <Button
-            android:id="@+id/btnAddArbol"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:background="@color/colorBotonVerde"
-            android:text="@string/btn_add_arbol"
-            android:textColor="@color/colorBlanco"
-            android:enabled="true"
-            android:textAllCaps="false"
-            android:textSize="19dp"
-            android:layout_below="@id/relativeUbicacion"
-            android:layout_marginTop="20dp"/>
+    </androidx.core.widget.NestedScrollView>
 
 
-    </RelativeLayout>
 
  <!--   <ProgressBar
         android:id="@+id/progressbarLogin"
