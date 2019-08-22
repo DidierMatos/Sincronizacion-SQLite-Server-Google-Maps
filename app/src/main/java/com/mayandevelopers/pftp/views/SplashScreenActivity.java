@@ -3,11 +3,10 @@ package com.mayandevelopers.pftp.views;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.WindowManager;
 
-import com.mayandevelopers.pftp.MainActivity;
 import com.mayandevelopers.pftp.R;
 
 public class SplashScreenActivity extends AppCompatActivity {

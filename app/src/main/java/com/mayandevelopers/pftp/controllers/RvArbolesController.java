@@ -1,8 +1,9 @@
 package com.mayandevelopers.pftp.controllers;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import android.content.Intent;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.mayandevelopers.pftp.R;
 import com.mayandevelopers.pftp.models.ArbolesModel;
+import com.mayandevelopers.pftp.views.AgregarArbolActivity;
 
 import java.util.ArrayList;
 
@@ -53,7 +55,10 @@ public class RvArbolesController extends RecyclerView.Adapter<RvArbolesControlle
         viewHolder.btn_editar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(mContext, AgregarArbolActivity.class);
+                intent.putExtra("update","1");
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(intent);
             }
         });
 

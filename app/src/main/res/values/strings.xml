@@ -5,9 +5,18 @@
     <string name="title_login">Inicio de Sesion</string>
     <string name="btn_login">Iniciar Sesion</string>
 
+    <!-- Vista Agregar Arbol -->
+    <string name="btn_add_arbol">Agregar</string>
+    <string name="btn_update_arbol">Editar</string>
+    <string name="btn_ubicacion_arbol">Obtener Ubicacion</string>
+
     <!-- Vista Main Activity -->
     <string name="open">Open</string>
     <string name="close">Close</string>
     <string name="title_activity_holi">holi</string>
+
+
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyBmdf-ZgE_aDG68WJGiQIiQygRqvjVwzT4</string>
+    <string name="title_activity_maps">Map</string>
 
 </resources>

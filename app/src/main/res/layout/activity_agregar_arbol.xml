@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorFondo"
+    tools:context=".views.LoginActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarAddArbol"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:elevation="5dp"
+        android:background="@color/colorBlanco">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/imgbtnBackAddArbol"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="@drawable/ic_action_arrow_left" />
+
+            <TextView
+                android:id="@+id/txtviewAddArbol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Agregar arbol"
+                android:textColor="@color/colorNegro"
+                android:layout_marginStart="40dp"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <RelativeLayout
+        android:id="@+id/relativeBodyAddArbol"
+        android:layout_below="@+id/relativeToolbarLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtinputEspecie"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/colorBlanco"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/colorAccent"
+            app:hintTextAppearance="@style/AppTheme.FloatingLabel">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtxtEspecie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:inputType="text"
+                android:textColor="@color/colorBlanco"
+                android:hint="Especie" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtinputCentro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/colorBlanco"
+            android:layout_below="@id/txtinputEspecie"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/colorAccent"
+            app:hintTextAppearance="@style/AppTheme.FloatingLabel">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtxtCentro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:inputType="text"
+                android:textColor="@color/colorBlanco"
+                android:hint="Centro" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtinputFolio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtinputCentro"
+            android:textColorHint="@color/colorBlanco"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/colorAccent"
+            app:hintTextAppearance="@style/AppTheme.FloatingLabel">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtxtFolio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:inputType="number"
+                android:textColor="@color/colorBlanco"
+                android:hint="Folio" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeUbicacion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="180dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txtinputLatitud"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/colorBlanco"
+                android:layout_below="@id/txtinputFolio"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@color/colorAccent"
+                app:hintTextAppearance="@style/AppTheme.FloatingLabel">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtxtLatitud"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/colorBlanco"
+                    android:hint="Latitud" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txtinputLongitud"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/colorBlanco"
+                android:layout_below="@id/txtinputLatitud"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@color/colorAccent"
+                app:hintTextAppearance="@style/AppTheme.FloatingLabel">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtxtLongitud"
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/colorBlanco"
+                    android:hint="Longitud" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/imgbtnUbicacionAddArbol"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/txtinputLongitud"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="37dp"
+                android:layout_marginBottom="37dp"
+                android:layout_toEndOf="@+id/txtinputLatitud"
+                android:background="@color/colorBotonVerde"
+                android:enabled="true"
+                android:gravity="center"
+                android:text="@string/btn_ubicacion_arbol"
+                android:textAllCaps="false"
+                android:textColor="@color/colorBlanco"
+                android:textSize="19dp" />
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btnAddArbol"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@color/colorBotonVerde"
+            android:text="@string/btn_add_arbol"
+            android:textColor="@color/colorBlanco"
+            android:enabled="true"
+            android:textAllCaps="false"
+            android:textSize="19dp"
+            android:layout_below="@id/relativeUbicacion"
+            android:layout_marginTop="20dp"/>
+
+
+    </RelativeLayout>
+
+ <!--   <ProgressBar
+        android:id="@+id/progressbarLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="?android:progressBarStyleLarge"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone"
+        android:indeterminate="true"/>-->
+
+
+</RelativeLayout>

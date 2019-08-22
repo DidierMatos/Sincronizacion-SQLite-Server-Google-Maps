@@ -1,15 +1,12 @@
 package com.mayandevelopers.pftp.views;
-import com.mayandevelopers.pftp.MainActivity;
 import com.mayandevelopers.pftp.R;
-import com.mayandevelopers.pftp.controllers.RvEspeciesController;
 import com.mayandevelopers.pftp.controllers.RvRanchosController;
-import com.mayandevelopers.pftp.models.EspeciesModel;
 import com.mayandevelopers.pftp.models.RanchosModel;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageButton;
 

@@ -7,7 +7,7 @@
     android:background="@color/colorFondo"
     tools:context=".views.AgregarVisitaActivity">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarRegistrarVisita"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
@@ -29,9 +29,9 @@
             android:textColor="@color/colorNegro"
             android:layout_marginStart="30dp"
             android:textSize="18sp" />
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/toolbarRegistrarVisita">
@@ -63,7 +63,7 @@
                     android:layout_centerHorizontal="true"
                     android:text="Evidencia fotografica"/>
 
-                <android.support.design.widget.FloatingActionButton
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/floatbtnTomarFoto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -96,7 +96,7 @@
                     android:textSize="16sp"/>
             </LinearLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/txtinputAltura"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -114,9 +114,9 @@
                     android:hint="Altura(metros)"
                     android:inputType="textEmailAddress" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/txtInputDiametro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -124,7 +124,7 @@
                 app:passwordToggleTint="@color/colorAccent"
                 app:hintTextAppearance="@style/AppTheme.FloatingLabel">
 
-                <android.support.design.widget.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
 
                     android:id="@+id/edtxtDiametro"
                     android:layout_width="match_parent"
@@ -134,9 +134,9 @@
                     android:textColor="@color/colorBlanco"
                     android:hint="Diametro(centimetros)" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/txtInputObservaciones"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -144,7 +144,7 @@
                 app:passwordToggleTint="@color/colorAccent"
                 app:hintTextAppearance="@style/AppTheme.FloatingLabel">
 
-                <android.support.design.widget.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
 
                     android:id="@+id/edtxtObservaciones"
                     android:layout_width="match_parent"
@@ -154,9 +154,9 @@
                     android:textColor="@color/colorBlanco"
                     android:hint="Observaciones" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/txtInputVigor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -164,7 +164,7 @@
                 app:passwordToggleTint="@color/colorAccent"
                 app:hintTextAppearance="@style/AppTheme.FloatingLabel">
 
-                <android.support.design.widget.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
 
                     android:id="@+id/edtxtVigor"
                     android:layout_width="match_parent"
@@ -174,9 +174,9 @@
                     android:textColor="@color/colorBlanco"
                     android:hint="Vigor" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/txtInputCondicion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -184,7 +184,7 @@
                 app:passwordToggleTint="@color/colorAccent"
                 app:hintTextAppearance="@style/AppTheme.FloatingLabel">
 
-                <android.support.design.widget.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
 
                     android:id="@+id/edtxtCondicion"
                     android:layout_width="match_parent"
@@ -194,9 +194,9 @@
                     android:textColor="@color/colorBlanco"
                     android:hint="Condición" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/txtInputSanidad"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -204,7 +204,7 @@
                 app:passwordToggleTint="@color/colorAccent"
                 app:hintTextAppearance="@style/AppTheme.FloatingLabel">
 
-                <android.support.design.widget.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
 
                     android:id="@+id/edtxtSanidad"
                     android:layout_width="match_parent"
@@ -214,7 +214,7 @@
                     android:textColor="@color/colorBlanco"
                     android:hint="Sanidad" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -243,5 +243,5 @@
                     android:background="@color/colorBotonRojo"/>
             </LinearLayout>
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 </RelativeLayout>
