@@ -13,6 +13,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 
 import com.mayandevelopers.pftp.R;
 import com.mayandevelopers.pftp.controllers.RvArbolesController;
@@ -22,26 +23,35 @@ import java.util.ArrayList;
 
 public class ArbolesActivity extends AppCompatActivity {
 
-    Toolbar toolbar;
+
     ArrayList<ArbolesModel> arboles_model;
     RecyclerView rv_mis_arboles;
     RvArbolesController rv_arboles_controller;
+
+    Toolbar toolbar;
+    ImageButton imgbtn_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_arboles);
-
-        rv_mis_arboles = findViewById(R.id.rvMisArboles);
-
-
-        arboles_model = new ArrayList<>();
-
-
         toolbar = (Toolbar) findViewById(R.id.toolbarArboles);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        rv_mis_arboles = findViewById(R.id.rvMisArboles);
+        imgbtn_back = findViewById(R.id.imgbtnBackRanchos);
+
+
+        imgbtn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
+
+        arboles_model = new ArrayList<>();
 
         for (int i = 0; i< 5; i++){
 

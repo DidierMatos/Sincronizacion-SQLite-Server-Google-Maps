@@ -1,8 +1,11 @@
 package com.mayandevelopers.pftp.controllers;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.annotation.NonNull;
 import androidx.annotation.NonNull;
@@ -11,10 +14,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.mayandevelopers.pftp.MainActivity;
 import com.mayandevelopers.pftp.R;
 import com.mayandevelopers.pftp.models.EspeciesModel;
+import com.mayandevelopers.pftp.views.RanchosActivity;
+
 import java.util.List;
 
 public class RvEspeciesController extends RecyclerView.Adapter<RvEspeciesController.ViewHolder> {
@@ -46,14 +54,52 @@ public class RvEspeciesController extends RecyclerView.Adapter<RvEspeciesControl
         holder.nombre_nuevo.setText(Lonuevo.getNombre_nuevo());
         Glide.with(mContext).load(mData.get(position).getImg_nuevo()).error(R.drawable.default_picture_promo).into(holder.imag_nuevo);*/
 
+        // intent //
+        viewHolder.ver_arboles.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent ver_arboles = new Intent(mContext, RanchosActivity.class);
+                ver_arboles.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(ver_arboles);
+            }
+        });
+
+        // editar una especie //
+        viewHolder.editar_especie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LayoutInflater mInflater = LayoutInflater.from(mContext);
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(mContext);
+                View mView = mInflater.inflate(R.layout.popup_especies_name,null);
+
+                EditText edtxt_nombre = (EditText) mView.findViewById(R.id.edtxtNombreMain);
+                Button btn_cancelar = (Button) mView.findViewById(R.id.btnCancelarMain);
+                Button btnguardar = (Button) mView.findViewById(R.id.btnGuardarMain);
 
 
-        viewHolder.eliminar_arboles.setOnClickListener(new View.OnClickListener() {
+                mBuilder.setView(mView);
+                final AlertDialog dialog = mBuilder.create();
+                dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+
+                btn_cancelar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        dialog.dismiss();
+                    }
+                });
+            }
+        });
+
+        // eliminar una especie //
+        viewHolder.eliminar_especie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // mostrar un alert dialog personalizado //
                 LayoutInflater mInflater = LayoutInflater.from(mContext);
-
                 androidx.appcompat.app.AlertDialog.Builder mBuilder = new androidx.appcompat.app.AlertDialog.Builder(mContext);
                 View mView = mInflater.inflate(R.layout.popup_eliminar,null);
 
@@ -86,16 +132,16 @@ public class RvEspeciesController extends RecyclerView.Adapter<RvEspeciesControl
 
         TextView nombre_especie;
         ImageButton ver_arboles;
-        ImageButton editar_arboles;
-        ImageButton eliminar_arboles;
+        ImageButton editar_especie;
+        ImageButton eliminar_especie;
 
         public ViewHolder(View view) {
             super(view);
 
             nombre_especie= (TextView) view.findViewById(R.id.txtNombreEspecie);
             ver_arboles= (ImageButton) view.findViewById(R.id.imgbtnVerArboles);
-            editar_arboles=(ImageButton) view.findViewById(R.id.imgbtnEditarArboles);
-            eliminar_arboles=(ImageButton) view.findViewById(R.id.imgbtnEliminarArboles);
+            editar_especie=(ImageButton) view.findViewById(R.id.imgbtnEditarArboles);
+            eliminar_especie=(ImageButton) view.findViewById(R.id.imgbtnEliminarArboles);
            // relativeLayout=(RelativeLayout)view.findViewById(R.id.capa__lonuevo);
 
         }

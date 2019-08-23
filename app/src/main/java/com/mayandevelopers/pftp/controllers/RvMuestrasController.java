@@ -4,6 +4,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
@@ -15,6 +16,8 @@ import android.widget.TextView;
 
 import com.mayandevelopers.pftp.R;
 import com.mayandevelopers.pftp.models.MuestrasModel;
+import com.mayandevelopers.pftp.views.ArbolesActivity;
+import com.mayandevelopers.pftp.views.EstablecerMuestraActivity;
 
 import java.util.List;
 
@@ -51,6 +54,15 @@ public class RvMuestrasController extends RecyclerView.Adapter<RvMuestrasControl
         Glide.with(mContext).load(mData.get(position).getImg_nuevo()).error(R.drawable.default_picture_promo).into(holder.imag_nuevo);*/
 
 
+        viewHolder.btn_editar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, EstablecerMuestraActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(intent);
+
+            }
+        });
 
         viewHolder.btn_eliminar.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageButton;
 
 import com.mayandevelopers.pftp.R;
 import com.mayandevelopers.pftp.controllers.RvVisitasController;
@@ -27,6 +28,7 @@ public class VisitasActivity extends AppCompatActivity {
 
     FloatingActionButton flt_action_btn_add;
     Toolbar toolbar;
+    ImageButton imgbtn_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,14 @@ public class VisitasActivity extends AppCompatActivity {
 
         rv_visitas = (RecyclerView) findViewById(R.id.rvVisitas);
         flt_action_btn_add = (FloatingActionButton) findViewById(R.id.flactbtnVisitas);
+        imgbtn_back = findViewById(R.id.imgbtnBackVisitas);
+
+        imgbtn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         flt_action_btn_add.setOnClickListener(new View.OnClickListener() {
             @Override

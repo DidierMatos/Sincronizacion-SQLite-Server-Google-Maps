@@ -3,6 +3,8 @@ package com.mayandevelopers.pftp.controllers;
 import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,8 @@ import android.widget.TextView;
 
 import com.mayandevelopers.pftp.R;
 import com.mayandevelopers.pftp.models.RanchosModel;
+import com.mayandevelopers.pftp.views.AgregarArbolActivity;
+import com.mayandevelopers.pftp.views.ArbolesActivity;
 
 import java.util.List;
 
@@ -44,20 +48,19 @@ public class RvRanchosController extends RecyclerView.Adapter<RvRanchosControlle
         /*holder.precio_nuevo.setText(Lonuevo.getPrecio_nuevo());
         holder.vigencia_nuevo.setText(Lonuevo.getVigencia_nuevo());
         holder.nombre_nuevo.setText(Lonuevo.getNombre_nuevo());
-        Glide.with(mContext).load(mData.get(position).getImg_nuevo()).error(R.drawable.default_picture_promo).into(holder.imag_nuevo);
+        Glide.with(mContext).load(mData.get(position).getImg_nuevo()).error(R.drawable.default_picture_promo).into(holder.imag_nuevo);*/
 
 
 
-        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+        viewHolder.btn_detalles.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext,PromocionActivity.class);
-                intent.putExtra("id_company",Lonuevo.getId_company());
-                intent.putExtra("id_promo",Lonuevo.getId_promo());
+                Intent intent = new Intent(mContext, ArbolesActivity.class);
+
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
             }
-        });*/
+        });
 
     }
 

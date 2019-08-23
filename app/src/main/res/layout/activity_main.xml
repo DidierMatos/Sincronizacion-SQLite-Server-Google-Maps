@@ -45,9 +45,9 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/colorBlanco"
-        app:itemTextColor="@color/colorNegro"
-        app:itemIconTint="@color/colorNegro"
+        android:background="@color/colorDialog"
+        app:itemTextColor="@color/colorBlanco"
+        app:itemIconTint="@color/colorBlanco"
         app:menu="@menu/drawer_menu"
         android:clickable="true"
         app:headerLayout="@layout/header_drawer">

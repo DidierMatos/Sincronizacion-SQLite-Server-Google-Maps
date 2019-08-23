@@ -62,6 +62,7 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
     Button btn_ubicacion;
     Button imgbtn_add_arbol, imgbtn_ubicacion;
     TextInputEditText edtxt_especie, edtxt_centro, edtxt_folio, edtxt_latitud, edtxt_longitud;
+    ImageButton imgbtn_back;
 
     double lat;
     double lng;
@@ -82,6 +83,14 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
         edtxt_longitud = findViewById(R.id.edtxtLongitud);
         imgbtn_add_arbol = findViewById(R.id.btnAddArbol);
         btn_ubicacion = findViewById(R.id.btnUbicacionAddArbol);
+        imgbtn_back = findViewById(R.id.imgbtnBackAddArbol);
+
+        imgbtn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
 
         valorUpdate = getIntent().getStringExtra("update");

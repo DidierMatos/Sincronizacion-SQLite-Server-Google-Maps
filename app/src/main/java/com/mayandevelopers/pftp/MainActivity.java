@@ -1,6 +1,9 @@
 package com.mayandevelopers.pftp;
 
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 
@@ -24,6 +27,8 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.net.Uri;
 import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,6 +42,10 @@ import android.widget.EditText;
 
 import com.mayandevelopers.pftp.controllers.RvEspeciesController;
 import com.mayandevelopers.pftp.models.EspeciesModel;
+import com.mayandevelopers.pftp.views.BuscarFolioActivity;
+import com.mayandevelopers.pftp.views.LoginActivity;
+import com.mayandevelopers.pftp.views.MuestrasActivity;
+import com.mayandevelopers.pftp.views.MuestrasRanchosActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +57,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView;
     List<EspeciesModel> especiesModel;
     RecyclerView rv_especies;
+
+    MenuItem item;
     RvEspeciesController rv_especies_controller;
     FloatingActionButton flt_action_btn_add;
 
@@ -77,6 +88,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
+        // set checked true //
+        item = navigationView.getMenu().findItem(R.id.nav_crecimiento);
+        item.setChecked(true);
 
         especiesModel = new ArrayList<>();
 
@@ -145,6 +159,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
-        return false;
+        // Handle navigation view item clicks here.
+        switch (menuItem.getItemId()){
+            case R.id.nav_crecimiento:
+
+                break;
+
+            case R.id.nav_muestras:
+                Intent muestras = new Intent(this, MuestrasActivity.class);
+                startActivity(muestras);
+                break;
+
+            case R.id.nav_folio:
+                Intent actividad = new Intent(this, BuscarFolioActivity.class);
+                startActivity(actividad);
+                break;
+
+            case R.id.nav_sesion:
+                Intent logOut = new Intent(this, LoginActivity.class);
+                startActivity(logOut);
+        }
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }
