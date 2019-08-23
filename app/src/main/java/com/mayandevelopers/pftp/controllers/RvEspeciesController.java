@@ -3,20 +3,18 @@ package com.mayandevelopers.pftp.controllers;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.annotation.NonNull;
-
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
 import com.mayandevelopers.pftp.R;
 import com.mayandevelopers.pftp.models.EspeciesModel;
-
 import java.util.List;
 
 public class RvEspeciesController extends RecyclerView.Adapter<RvEspeciesController.ViewHolder> {
