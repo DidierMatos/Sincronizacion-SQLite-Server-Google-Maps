@@ -7,7 +7,7 @@
     android:background="@color/colorFondo"
     tools:context=".views.EstablecerMuestraActivity">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarEstablecerMuestra"
         android:background="@color/colorBlanco"
         android:layout_width="match_parent"
@@ -34,7 +34,7 @@
                 android:text="Establecer una muestra"
                 android:textSize="16dp"/>
         </RelativeLayout>
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
         android:id="@+id/linearlForm"
@@ -44,7 +44,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txtinputNombreMuestra"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -60,9 +60,9 @@
                 android:textColor="@color/colorBlanco"
                 android:hint="Nombre"
                 android:inputType="textEmailAddress" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txtinputFolioMuestra"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -78,9 +78,9 @@
                 android:textColor="@color/colorBlanco"
                 android:hint="Folio"
                 android:inputType="textEmailAddress" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txtinputRadioMuestra"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -96,9 +96,9 @@
                 android:textColor="@color/colorBlanco"
                 android:hint="Radio(metros)"
                 android:inputType="textEmailAddress" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txtinputLatitudMuestra"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -114,8 +114,8 @@
                 android:textColor="@color/colorBlanco"
                 android:hint="Latitud"
                 android:inputType="textEmailAddress" />
-        </android.support.design.widget.TextInputLayout>
-        <android.support.design.widget.TextInputLayout
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txtinputLongitudMuestra"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -131,7 +131,7 @@
                 android:textColor="@color/colorBlanco"
                 android:hint="Longitud"
                 android:inputType="textEmailAddress" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
     <LinearLayout
