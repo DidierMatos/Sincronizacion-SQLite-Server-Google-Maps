@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import com.mayandevelopers.pftp.R;
 import com.mayandevelopers.pftp.controllers.RvMuestrasController;
@@ -57,7 +58,7 @@ public class MuestrasRanchosActivity extends AppCompatActivity {
             muestrasModel.add(new MuestrasModel(1,"muestra 1","2019-09-12"));
 
             rv_muestras_controller = new RvMuestrasController(MuestrasRanchosActivity.this,muestrasModel);
-            rv_muestras.setLayoutManager(new LinearLayoutManager(MuestrasRanchosActivity.this,LinearLayoutManager.VERTICAL, false));
+            rv_muestras.setLayoutManager(new LinearLayoutManager(MuestrasRanchosActivity.this, LinearLayoutManager.VERTICAL, false));
             rv_muestras.setAdapter(rv_muestras_controller);
 
         }

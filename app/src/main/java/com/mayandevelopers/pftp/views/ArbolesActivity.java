@@ -50,7 +50,7 @@ public class ArbolesActivity extends AppCompatActivity {
 
 
             //ASIGNANDO ADAPTADOR AL RECYCLER VIEW//
-            rv_arboles_controller = new RvArbolesController(ArbolesActivity.this, (ArrayList<ArbolesModel>) arboles_model);
+            rv_arboles_controller = new RvArbolesController(ArbolesActivity.this,arboles_model);
             rv_mis_arboles.setLayoutManager(new LinearLayoutManager(ArbolesActivity.this, LinearLayoutManager.VERTICAL,false ));
             rv_mis_arboles.setAdapter(rv_arboles_controller);
         }

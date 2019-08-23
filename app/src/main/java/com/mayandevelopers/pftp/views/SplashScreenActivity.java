@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.WindowManager;
 
+import com.mayandevelopers.pftp.MainActivity;
 import com.mayandevelopers.pftp.R;
 
 public class SplashScreenActivity extends AppCompatActivity {
@@ -24,7 +25,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         new Handler().postDelayed(new Runnable(){
             public void run(){
-                Intent intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
+                Intent intent = new Intent(SplashScreenActivity.this, MuestrasActivity.class);
                 startActivity(intent);
                 finish();
             };

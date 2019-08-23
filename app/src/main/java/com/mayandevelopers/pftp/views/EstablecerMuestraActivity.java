@@ -75,6 +75,9 @@ public class EstablecerMuestraActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 guardarDatosMuestra();
+                Intent irMapa = new Intent(EstablecerMuestraActivity.this,MapaMuestraActivity.class);
+                startActivity(irMapa);
+
             }
         });
     }
@@ -180,7 +183,7 @@ public class EstablecerMuestraActivity extends AppCompatActivity {
 
         SharedPreferences getcoordenadas = getSharedPreferences("Coordenadas",Context.MODE_PRIVATE);
         String r = getcoordenadas.getString("longitud","");
-        Toast.makeText(this, r, Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, r, Toast.LENGTH_SHORT).show();
 
         /*/ IR A LA VISTA DEL MAPA
         Intent ir = new Intent(EstablecerMuestraActivity.this, MapsActivity1.class);

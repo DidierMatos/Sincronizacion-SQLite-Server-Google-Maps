@@ -3,9 +3,13 @@ package com.mayandevelopers.pftp.controllers;
 import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -44,20 +48,38 @@ public class RvMuestrasController extends RecyclerView.Adapter<RvMuestrasControl
         /*holder.precio_nuevo.setText(Lonuevo.getPrecio_nuevo());
         holder.vigencia_nuevo.setText(Lonuevo.getVigencia_nuevo());
         holder.nombre_nuevo.setText(Lonuevo.getNombre_nuevo());
-        Glide.with(mContext).load(mData.get(position).getImg_nuevo()).error(R.drawable.default_picture_promo).into(holder.imag_nuevo);
+        Glide.with(mContext).load(mData.get(position).getImg_nuevo()).error(R.drawable.default_picture_promo).into(holder.imag_nuevo);*/
 
 
 
-        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+        viewHolder.btn_eliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext,PromocionActivity.class);
-                intent.putExtra("id_company",Lonuevo.getId_company());
-                intent.putExtra("id_promo",Lonuevo.getId_promo());
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mContext.startActivity(intent);
+                // mostrar un alert dialog personalizado //
+                LayoutInflater mInflater = LayoutInflater.from(mContext);
+
+                androidx.appcompat.app.AlertDialog.Builder mBuilder = new androidx.appcompat.app.AlertDialog.Builder(mContext);
+                View mView = mInflater.inflate(R.layout.popup_eliminar,null);
+
+                Button btn_cancelar = (Button) mView.findViewById(R.id.btnCancelarDelete);
+                Button btnEliminar = (Button) mView.findViewById(R.id.btnEliminar);
+
+                mBuilder.setView(mView);
+                final androidx.appcompat.app.AlertDialog dialog = mBuilder.create();
+                dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+
+                btn_cancelar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        dialog.dismiss();
+                    }
+                });
+
             }
-        });*/
+        });
 
     }
 
