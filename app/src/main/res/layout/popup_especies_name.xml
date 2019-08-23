@@ -7,7 +7,7 @@
     android:background="@drawable/popup_perzonalizado">
 
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/txtInputNombre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
             android:textColorHint="@color/colorBlanco"
             android:hint="Nombre de la especie"/>
 
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
         android:orientation="horizontal"

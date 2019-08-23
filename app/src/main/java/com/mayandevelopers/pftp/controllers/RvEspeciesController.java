@@ -3,10 +3,10 @@ package com.mayandevelopers.pftp.controllers;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
-import androidx.annotation.NonNull;
+
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.annotation.NonNull;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +14,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import android.widget.TextView;
 import com.mayandevelopers.pftp.R;
 import com.mayandevelopers.pftp.models.EspeciesModel;
 
@@ -57,14 +56,14 @@ public class RvEspeciesController extends RecyclerView.Adapter<RvEspeciesControl
                 // mostrar un alert dialog personalizado //
                 LayoutInflater mInflater = LayoutInflater.from(mContext);
 
-                android.support.v7.app.AlertDialog.Builder mBuilder = new android.support.v7.app.AlertDialog.Builder(mContext);
+                androidx.appcompat.app.AlertDialog.Builder mBuilder = new androidx.appcompat.app.AlertDialog.Builder(mContext);
                 View mView = mInflater.inflate(R.layout.popup_eliminar,null);
 
                 Button btn_cancelar = (Button) mView.findViewById(R.id.btnCancelarDelete);
                 Button btnEliminar = (Button) mView.findViewById(R.id.btnEliminar);
 
                 mBuilder.setView(mView);
-                final android.support.v7.app.AlertDialog dialog = mBuilder.create();
+                final androidx.appcompat.app.AlertDialog dialog = mBuilder.create();
                 dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
