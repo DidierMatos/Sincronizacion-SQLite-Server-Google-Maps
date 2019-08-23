@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:id="@+id/drawer_layout"
+    android:background="@color/colorFondo"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
@@ -35,7 +36,7 @@
             android:layout_margin="7dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            app:srcCompat= "@android:drawable/ic_menu_add"/>
+            app:srcCompat= "@drawable/ic_agregar"/>
     </RelativeLayout>
     
 

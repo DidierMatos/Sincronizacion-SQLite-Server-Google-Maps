@@ -1,18 +1,17 @@
 package com.mayandevelopers.pftp.controllers;
 
 import android.content.Context;
-import android.content.Intent;
-import android.media.Image;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
+import android.widget.TextView;
 import com.mayandevelopers.pftp.R;
 import com.mayandevelopers.pftp.models.EspeciesModel;
 
@@ -42,27 +41,40 @@ public class RvEspeciesController extends RecyclerView.Adapter<RvEspeciesControl
     public void onBindViewHolder(@NonNull RvEspeciesController.ViewHolder viewHolder, int i) {
        // final EspeciesModel Lonuevo = mData.get(position);
 
-
-
-
         /*holder.precio_nuevo.setText(Lonuevo.getPrecio_nuevo());
         holder.vigencia_nuevo.setText(Lonuevo.getVigencia_nuevo());
         holder.nombre_nuevo.setText(Lonuevo.getNombre_nuevo());
-        Glide.with(mContext).load(mData.get(position).getImg_nuevo()).error(R.drawable.default_picture_promo).into(holder.imag_nuevo);
+        Glide.with(mContext).load(mData.get(position).getImg_nuevo()).error(R.drawable.default_picture_promo).into(holder.imag_nuevo);*/
 
 
 
-        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+        viewHolder.eliminar_arboles.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext,PromocionActivity.class);
-                intent.putExtra("id_company",Lonuevo.getId_company());
-                intent.putExtra("id_promo",Lonuevo.getId_promo());
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mContext.startActivity(intent);
-            }
-        });*/
+                // mostrar un alert dialog personalizado //
+                LayoutInflater mInflater = LayoutInflater.from(mContext);
 
+                android.support.v7.app.AlertDialog.Builder mBuilder = new android.support.v7.app.AlertDialog.Builder(mContext);
+                View mView = mInflater.inflate(R.layout.popup_eliminar,null);
+
+                Button btn_cancelar = (Button) mView.findViewById(R.id.btnCancelarDelete);
+                Button btnEliminar = (Button) mView.findViewById(R.id.btnEliminar);
+
+                mBuilder.setView(mView);
+                final android.support.v7.app.AlertDialog dialog = mBuilder.create();
+                dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+
+                btn_cancelar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        dialog.dismiss();
+                    }
+                });
+            }
+        });
     }
 
     @Override
@@ -72,27 +84,20 @@ public class RvEspeciesController extends RecyclerView.Adapter<RvEspeciesControl
 
     public static class ViewHolder extends RecyclerView.ViewHolder  {
 
-
-        TextView nomre_especie;
+        TextView nombre_especie;
         ImageButton ver_arboles;
         ImageButton editar_arboles;
         ImageButton eliminar_arboles;
 
-
-
         public ViewHolder(View view) {
             super(view);
 
-            nomre_especie= (TextView) view.findViewById(R.id.txtNombreEspecie);
+            nombre_especie= (TextView) view.findViewById(R.id.txtNombreEspecie);
             ver_arboles= (ImageButton) view.findViewById(R.id.imgbtnVerArboles);
             editar_arboles=(ImageButton) view.findViewById(R.id.imgbtnEditarArboles);
             eliminar_arboles=(ImageButton) view.findViewById(R.id.imgbtnEliminarArboles);
            // relativeLayout=(RelativeLayout)view.findViewById(R.id.capa__lonuevo);
 
         }
-
-
     }
-
-
 }
