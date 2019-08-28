@@ -1,5 +1,6 @@
 package com.mayandevelopers.pftp.databaseHelper;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -41,6 +42,46 @@ public class DatabaseAccess {
         }
 
         return buffer.toString();
+    }
+
+    public String getEspecies(){
+        c=db.rawQuery("select nombre from especies", new String[]{});
+        StringBuffer buffer = new StringBuffer();
+        while(c.moveToNext()){
+            String especies = c.getString(0);
+            buffer.append(""+especies+ "\n");
+        }
+
+        return buffer.toString();
+    }
+
+
+    public void addEspecies(String nombreEspecie){
+
+        /*SQLiteDatabase db2 = openHelper.getWritableDatabase();
+        int num = 34;
+
+        if(db2 != null){
+
+            db2.execSQL("INSERT INTO especies (id, nombre) " +
+                    "VALUES (num, '"+ nombreEspecie +"')");
+
+        }
+
+        db2.close();*/
+
+
+        SQLiteDatabase db2 = openHelper.getWritableDatabase();
+
+        ContentValues registro = new ContentValues();
+        registro.put("nombre",nombreEspecie);
+
+        db2.insert("especies",null,registro);
+
+        db2.close();
+
+
+
     }
 
 

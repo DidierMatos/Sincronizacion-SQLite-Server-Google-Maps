@@ -1,9 +1,12 @@
 package com.mayandevelopers.pftp;
 
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 
@@ -39,8 +42,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mayandevelopers.pftp.controllers.RvEspeciesController;
+import com.mayandevelopers.pftp.databaseHelper.DatabaseAccess;
 import com.mayandevelopers.pftp.models.EspeciesModel;
 import com.mayandevelopers.pftp.views.BuscarFolioActivity;
 import com.mayandevelopers.pftp.views.LoginActivity;
@@ -62,6 +68,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     RvEspeciesController rv_especies_controller;
     FloatingActionButton flt_action_btn_add;
 
+    TextView txtview_get_especies;
+    private SQLiteOpenHelper openHelper;
+    //private SQLiteDatabase db;
 
 
 
@@ -77,6 +86,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         rv_especies =(RecyclerView) findViewById(R.id.rvEspecies);
         flt_action_btn_add=(FloatingActionButton) findViewById(R.id.flactbtnEspeciesMain);
+
+        txtview_get_especies = findViewById(R.id.txtviewGetEspeciesPrueba);
 
 
 
@@ -122,9 +133,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
         View mView = getLayoutInflater().inflate(R.layout.popup_especies_name,null);
 
-        EditText edtxt_nombre = (EditText) mView.findViewById(R.id.edtxtNombreMain);
+        final EditText edtxt_nombre = (EditText) mView.findViewById(R.id.edtxtNombreMain);
         Button btn_cancelar = (Button) mView.findViewById(R.id.btnCancelarMain);
-        Button btnguardar = (Button) mView.findViewById(R.id.btnGuardarMain);
+        Button btn_guardar = (Button) mView.findViewById(R.id.btnGuardarMain);
 
 
         mBuilder.setView(mView);
@@ -137,7 +148,42 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View v) {
 
+
+                DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
+                databaseAccess.open();
+
+                String especies = databaseAccess.getEspecies();
+
+                txtview_get_especies.setText(especies);
+
+                databaseAccess.close();
+
                 dialog.dismiss();
+            }
+        });
+
+        btn_guardar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
+
+                databaseAccess.open();
+
+                String nombre_especie = edtxt_nombre.getText().toString();
+
+                if(nombre_especie != null){
+                    databaseAccess.addEspecies(nombre_especie);
+                }else{
+                    Toast.makeText(MainActivity.this, "Ingresa un nombre valido", Toast.LENGTH_SHORT).show();
+                }
+
+                databaseAccess.close();
+
+
+
+
             }
         });
     }
