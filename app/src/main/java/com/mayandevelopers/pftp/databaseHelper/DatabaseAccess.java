@@ -6,10 +6,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseAccess {
+
     private SQLiteOpenHelper openHelper;
     private SQLiteDatabase db;
     private static DatabaseAccess instance;
     Cursor c = null;
+
 
     private DatabaseAccess(Context context) {
         this.openHelper = new DataBaseOpenHelper(context);
@@ -32,16 +34,17 @@ public class DatabaseAccess {
         }
     }
 
-    public String getArboles(){
+    /*public String getArboles(){
         c=db.rawQuery("select latitud from arboles", new String[]{});
         StringBuffer buffer = new StringBuffer();
         while(c.moveToNext()){
+            usuario.setId(c.getString(0));
             String arboles = c.getString(0);
             buffer.append(""+arboles+ "\n");
         }
 
         return buffer.toString();
-    }
+    }*/
 
 
 }

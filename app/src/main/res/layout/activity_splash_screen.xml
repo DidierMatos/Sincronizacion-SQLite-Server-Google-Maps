@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.SplashScreenActivity"
-    >
+    tools:context=".views.SplashScreenActivity">
 
     <ImageView
-        android:layout_width="900px"
-        android:layout_height="900px"
+        android:contentDescription="Plant for the planet"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/logo_pftp"/>
+        android:background="@drawable/ic_logo"/>
 
 </RelativeLayout>

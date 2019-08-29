@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="10dp"
+    android:background="@drawable/popup_delete">
+
+    <ImageView
+        android:id="@+id/icEmail"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/ic_email" />
+
+    <TextView
+        android:id="@+id/txtMensajeEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/icEmail"
+        android:text="El correo electronico ingresado es incorrecto"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@id/txtMensajeEmail"
+        android:layout_centerHorizontal="true">
+
+        <Button
+            android:id="@+id/btnCancelarEmail"
+            android:layout_width="130dp"
+            android:layout_height="40dp"
+            android:textAllCaps="false"
+            android:text="Intentar de nuevo"
+            android:textColor="@color/colorBlanco"
+            android:background="@drawable/btn_guardar_perzonalizado" />
+
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>

@@ -1,165 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:id="@+id/activity_main"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:background="@color/colorFondo"
-tools:context=".views.LoginActivity">
-
-<androidx.appcompat.widget.Toolbar
-    android:id="@+id/toolbarLogin"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
     android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
-    android:elevation="5dp"
-    android:background="@color/colorBlanco">
+    android:layout_height="match_parent"
+    android:background="@color/colorFondo"
+    tools:context=".views.LoginActivity">
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/ic_logo"
+        android:layout_centerHorizontal="true"/>
+
 
     <RelativeLayout
+        android:id="@+id/relativeToolbarLogin"
+        android:layout_marginTop="100dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageButton
-            android:id="@+id/imgbtnLogin"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_centerVertical="true"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/ic_action_arrow_left" />
-
-        <ImageView
-            android:id="@+id/imgviewLogoLogin"
-            android:layout_width="100dp"
-            android:layout_height="?attr/actionBarSize"
+        <TextView
+            android:id="@+id/txtviewLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            app:srcCompat="@drawable/logo_pftp" />
+            android:layout_marginTop="12dp"
+            android:text="@string/title_login"
+            android:textColor="#ffffff"
+            android:textSize="28dp" />
 
     </RelativeLayout>
 
 
+    <RelativeLayout
+        android:id="@+id/relativeBodyLogin"
+        android:layout_below="@+id/relativeToolbarLogin"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp">
 
-</androidx.appcompat.widget.Toolbar>
 
-<RelativeLayout
-    android:id="@+id/relativeToolbarLogin"
-    android:layout_below="@+id/toolbarLogin"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtinputCorreoLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/colorBlanco"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/colorAccent"
+            app:hintTextAppearance="@style/AppTheme.FloatingLabel">
 
-    <TextView
-        android:id="@+id/txtviewLogin"
+            <EditText
+                android:id="@+id/edtxtCorreoLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textColor="@color/colorBlanco"
+                android:hint="Correo"
+                android:inputType="textEmailAddress"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtInputPasswordLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/colorBlanco"
+            android:layout_below="@id/txtinputCorreoLogin"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/colorAccent"
+            app:hintTextAppearance="@style/AppTheme.FloatingLabel">
+
+            <EditText
+                android:id="@+id/edtxtPasswordLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:inputType="textPassword"
+                android:textColor="@color/colorBlanco"
+                android:hint="Contraseña" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btnEntrarLogin"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="100dp"
+            android:background="@drawable/btn_guardar_perzonalizado"
+            android:text="@string/btn_login"
+            android:textColor="@color/colorBlanco"
+            android:enabled="false"
+            android:textAllCaps="false"
+            android:textSize="19dp"
+            android:layout_below="@id/txtInputPasswordLogin"/>
+
+    </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/progressbarLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="?android:progressBarStyleLarge"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="12dp"
-        android:text="@string/title_login"
-        android:textColor="#ffffff"
-        android:textSize="28dp" />
-
-    <View
-        android:id="@+id/dividerLogin"
-        android:layout_width="335dp"
-        android:layout_height="0.5dp"
-        android:layout_below="@+id/txtviewLogin"
-        android:layout_centerHorizontal="true"/>
-</RelativeLayout>
-
-
-<RelativeLayout
-    android:id="@+id/relativeBodyLogin"
-    android:layout_below="@+id/relativeToolbarLogin"
-    android:layout_width="match_parent"
-    android:layout_height="350dp"
-    android:layout_marginTop="30dp"
-    android:layout_marginStart="25dp"
-    android:layout_marginEnd="25dp">
-
-    <TextView
-        android:id="@+id/txtviewRegistro"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:textColor="@color/colorBlanco"
-        android:text="Ingresa tu correo y contraseña"/>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/txtinputCorreoLogin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txtviewRegistro"
-        android:textColorHint="@color/colorBlanco"
-        app:passwordToggleEnabled="true"
-        app:passwordToggleTint="@color/colorAccent"
-        app:hintTextAppearance="@style/AppTheme.FloatingLabel">
-
-        <cn.zhaiyifan.rememberedittext.RememberEditText
-            android:id="@+id/edtxtCorreoLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:textColor="@color/colorBlanco"
-            app:rememberCount="4"
-            android:hint="Correo"
-            android:inputType="textEmailAddress"
-            />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/txtInputPasswordLogin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColorHint="@color/colorBlanco"
-        android:layout_below="@id/txtinputCorreoLogin"
-        app:passwordToggleEnabled="true"
-        app:passwordToggleTint="@color/colorAccent"
-        app:hintTextAppearance="@style/AppTheme.FloatingLabel">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtxtPasswordLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:inputType="textPassword"
-            android:textColor="@color/colorBlanco"
-            android:hint="Contraseña" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <Button
-        android:id="@+id/btnEntrarLogin"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"
-        android:background="@color/colorBotonVerde"
-        android:text="@string/btn_login"
-        android:textColor="@color/colorBlanco"
-        android:enabled="true"
-        android:textAllCaps="false"
-        android:textSize="19dp"
-        android:layout_below="@id/txtInputPasswordLogin"/>
-
-    <TextView
-        android:id="@+id/txtview_bd"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:text="asdasdsadasdasdasdsdaasd"
-        android:layout_below="@id/btnEntrarLogin"/>
-
-
-</RelativeLayout>
-
-<ProgressBar
-    android:id="@+id/progressbarLogin"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    style="?android:progressBarStyleLarge"
-    android:layout_centerHorizontal="true"
-    android:layout_centerVertical="true"
-    android:visibility="gone"
-    android:indeterminate="true"/>
-
-
+        android:layout_centerVertical="true"
+        android:visibility="gone"
+        android:indeterminate="true"/>
 </RelativeLayout>
