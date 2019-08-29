@@ -1,6 +1,7 @@
 package com.mayandevelopers.pftp.views;
 import com.mayandevelopers.pftp.R;
 import com.mayandevelopers.pftp.controllers.RvRanchosController;
+import com.mayandevelopers.pftp.databaseHelper.DatabaseAccessRanchos;
 import com.mayandevelopers.pftp.models.RanchosModel;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,7 +17,6 @@ import java.util.List;
 
 public class RanchosActivity extends AppCompatActivity {
 
-    List<RanchosModel> ranchosModel;
     RvRanchosController rv_ranchos_controller;
 
     RecyclerView rv_ranchos;
@@ -39,17 +39,14 @@ public class RanchosActivity extends AppCompatActivity {
             }
         });
 
+        // INSTANCIA DE MI CLASE DATABASE ACCES //
+        DatabaseAccessRanchos databaseAccessRanchos = DatabaseAccessRanchos.getInstance(getApplicationContext());
+
+        //OBTENIENDO LOS RANCHOS Y ASIGNANDO ADAPTADOR AL RECYCLER VIEW//
+        rv_ranchos_controller = new RvRanchosController(RanchosActivity.this,databaseAccessRanchos.obtenerRanchos());
+        rv_ranchos.setLayoutManager(new LinearLayoutManager(RanchosActivity.this, LinearLayoutManager.VERTICAL,false ));
+        rv_ranchos.setAdapter(rv_ranchos_controller);
 
 
-        ranchosModel =  new ArrayList<>();
-        for (int i = 0; i<6; i++){
-            ranchosModel.add(new RanchosModel(1,"rancho 1"));
-
-            //ASIGNANDO ADAPTADOR AL RECYCLER VIEW//
-            rv_ranchos_controller = new RvRanchosController(RanchosActivity.this, (ArrayList<RanchosModel>) ranchosModel);
-            rv_ranchos.setLayoutManager(new LinearLayoutManager(RanchosActivity.this, LinearLayoutManager.VERTICAL,false ));
-            rv_ranchos.setAdapter(rv_ranchos_controller);
-
-        }
     }
 }

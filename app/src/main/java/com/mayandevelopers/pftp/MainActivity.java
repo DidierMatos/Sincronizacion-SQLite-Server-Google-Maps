@@ -38,6 +38,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.EditText;
 
 import com.mayandevelopers.pftp.controllers.RvEspeciesController;
@@ -121,6 +122,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
         View mView = getLayoutInflater().inflate(R.layout.popup_especies_name,null);
 
+
+        CalendarView calendar = (CalendarView) mView.findViewById(R.id.calendarVisita);
         EditText edtxt_nombre = (EditText) mView.findViewById(R.id.edtxtNombreMain);
         Button btn_cancelar = (Button) mView.findViewById(R.id.btnCancelarMain);
         Button btnguardar = (Button) mView.findViewById(R.id.btnGuardarMain);

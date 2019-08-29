@@ -39,24 +39,15 @@ public class RvRanchosController extends RecyclerView.Adapter<RvRanchosControlle
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RvRanchosController.ViewHolder viewHolder, int i) {
-       // final EspeciesModel Lonuevo = mData.get(position);
+    public void onBindViewHolder(@NonNull RvRanchosController.ViewHolder viewHolder, int position) {
+        final RanchosModel rancho = mData.get(position);
 
-
-
-
-        /*holder.precio_nuevo.setText(Lonuevo.getPrecio_nuevo());
-        holder.vigencia_nuevo.setText(Lonuevo.getVigencia_nuevo());
-        holder.nombre_nuevo.setText(Lonuevo.getNombre_nuevo());
-        Glide.with(mContext).load(mData.get(position).getImg_nuevo()).error(R.drawable.default_picture_promo).into(holder.imag_nuevo);*/
-
-
+        viewHolder.txt_nombre_rancho.setText(rancho.getNombreRancho());
 
         viewHolder.btn_detalles.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, ArbolesActivity.class);
-
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
             }
@@ -71,7 +62,6 @@ public class RvRanchosController extends RecyclerView.Adapter<RvRanchosControlle
 
     public static class ViewHolder extends RecyclerView.ViewHolder  {
 
-
         TextView txt_nombre_rancho;
         Button btn_detalles;
 
@@ -81,11 +71,6 @@ public class RvRanchosController extends RecyclerView.Adapter<RvRanchosControlle
             txt_nombre_rancho= (TextView) view.findViewById(R.id.txtNombreRancho);
             btn_detalles= (Button) view.findViewById(R.id.btnDetallesRanchos);
            // relativeLayout=(RelativeLayout)view.findViewById(R.id.capa__lonuevo);
-
         }
-
-
     }
-
-
 }

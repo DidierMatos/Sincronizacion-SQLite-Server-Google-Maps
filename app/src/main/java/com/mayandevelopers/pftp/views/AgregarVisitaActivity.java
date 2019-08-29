@@ -4,6 +4,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
@@ -13,16 +15,23 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CalendarView;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mayandevelopers.pftp.MainActivity;
 import com.mayandevelopers.pftp.R;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.IOException;
+import java.util.Calendar;
 
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -35,10 +44,13 @@ public class AgregarVisitaActivity extends AppCompatActivity {
     private final int SELECT_PICTURE = 300;
 
     private Bitmap bitmapImage;
+    String fecha;
 
     FloatingActionButton floatbtn_tomar_foto;
     ImageView imgview_foto;
     ImageButton imgbtn_back;
+    ImageButton imgbtn_fecha;
+    EditText edtxt_fecha_visita, edtxt_altura, edtxt_diametro, edtxt_observaciones, edtxt_vigor, edtxt_condicion, edtxt_sanidad;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +59,16 @@ public class AgregarVisitaActivity extends AppCompatActivity {
 
         floatbtn_tomar_foto = (FloatingActionButton) findViewById(R.id.floatbtnTomarFoto);
         imgview_foto        = (ImageView) findViewById(R.id.imgviewFotoVisita);
-        imgbtn_back = (ImageButton) findViewById(R.id.imgbtnBackRegVisita);
+        imgbtn_back         = (ImageButton) findViewById(R.id.imgbtnBackRegVisita);
+        imgbtn_fecha        = (ImageButton) findViewById(R.id.imgbtnCalendario);
+        edtxt_fecha_visita  = (EditText) findViewById(R.id.edtxtFechaVisita);
+        edtxt_altura        = (EditText) findViewById(R.id.edtxtAltura);
+        edtxt_diametro      = (EditText) findViewById(R.id.edtxtDiametro);
+        edtxt_observaciones = (EditText) findViewById(R.id.edtxtObservaciones);
+        edtxt_vigor         = (EditText) findViewById(R.id.edtxtVigor);
+        edtxt_condicion     = (EditText) findViewById(R.id.edtxtCondicion);
+        edtxt_sanidad       = (EditText) findViewById(R.id.edtxtSanidad);
+
 
         // TOMAR FOTO //
         floatbtn_tomar_foto.setOnClickListener(new View.OnClickListener() {
@@ -64,7 +85,71 @@ public class AgregarVisitaActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
+        // POP UP SELECCIONAR LA FECHA //
+        imgbtn_fecha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popUpDialog();
+            }
+        });
+
+
     }
+
+    // crear pop up //
+    public void popUpDialog(){
+
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(AgregarVisitaActivity.this);
+        View mView = getLayoutInflater().inflate(R.layout.popup_calendar,null);
+
+        final TextView text_fecha = (TextView)mView.findViewById(R.id.txtFecha);
+        Button btn_cancelar = (Button) mView.findViewById(R.id.btnCancelarFecha);
+        Button btnguardar = (Button) mView.findViewById(R.id.btnGuardarFecha);
+        CalendarView calendar_date = (CalendarView)mView.findViewById(R.id.calendarVisita);
+
+        // obtener fecha actual //
+        Calendar calendar = Calendar.getInstance();
+        int dia = calendar.get(Calendar.DAY_OF_MONTH);
+        int mes  = calendar.get(Calendar.MONTH);
+        int año = calendar.get(Calendar.YEAR);
+        fecha = dia + "/" + (mes + 1) + "/" + año;
+
+        text_fecha.setText(fecha);
+
+
+        // escojer la fecha de la visita //
+        calendar_date.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                fecha = year +"/" + (month + 1)  + "/" + dayOfMonth;
+                text_fecha.setText(fecha);
+            }
+        });
+
+
+        mBuilder.setView(mView);
+        final AlertDialog dialog = mBuilder.create();
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
+
+        btn_cancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        btnguardar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edtxt_fecha_visita.setText(fecha);
+                dialog.dismiss();
+
+            }
+        });
+    }
+
 
     // TOMAR FOTO //
     private void tomarFoto() {

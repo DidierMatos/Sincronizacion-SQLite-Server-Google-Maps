@@ -11,7 +11,9 @@ import android.widget.ImageButton;
 
 import com.google.android.material.navigation.NavigationView;
 import com.mayandevelopers.pftp.R;
+import com.mayandevelopers.pftp.controllers.RvRanchosController;
 import com.mayandevelopers.pftp.controllers.RvRanchosMuestrasController;
+import com.mayandevelopers.pftp.databaseHelper.DatabaseAccessRanchos;
 import com.mayandevelopers.pftp.models.RanchosModel;
 
 import java.util.ArrayList;
@@ -42,14 +44,20 @@ public class MuestrasActivity extends AppCompatActivity {
             }
         });
 
-        ranchosModel = new ArrayList<>();
-        for (int i = 0; i<4; i++){
+        DatabaseAccessRanchos databaseAccessRanchos = DatabaseAccessRanchos.getInstance(getApplicationContext());
+
+        //ASIGNANDO ADAPTADOR AL RECYCLER VIEW//
+        rv_ranchos_muestras_controller = new RvRanchosMuestrasController(MuestrasActivity.this,databaseAccessRanchos.obtenerRanchos());
+        rv_ranchos_muestras.setLayoutManager(new LinearLayoutManager(MuestrasActivity.this, LinearLayoutManager.VERTICAL,false ));
+        rv_ranchos_muestras.setAdapter(rv_ranchos_muestras_controller);
+
+       /* for (int i = 0; i<4; i++){
 
             ranchosModel.add(new RanchosModel(1,"Rancho 1"));
             rv_ranchos_muestras_controller = new RvRanchosMuestrasController(MuestrasActivity.this,ranchosModel);
             rv_ranchos_muestras.setLayoutManager(new LinearLayoutManager(MuestrasActivity.this, LinearLayoutManager.VERTICAL,false));
             rv_ranchos_muestras.setAdapter(rv_ranchos_muestras_controller);
-        }
+        }*/
 
 
     }
