@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.mayandevelopers.pftp.models.EspeciesModel;
+
 public class DatabaseAccess {
     private SQLiteOpenHelper openHelper;
     private SQLiteDatabase db;
@@ -47,9 +49,27 @@ public class DatabaseAccess {
     public String getEspecies(){
         c=db.rawQuery("select nombre from especies", new String[]{});
         StringBuffer buffer = new StringBuffer();
+
         while(c.moveToNext()){
+
             String especies = c.getString(0);
             buffer.append(""+especies+ "\n");
+        }
+
+        return buffer.toString();
+    }
+
+    public String getEspecies2(){
+        c=db.rawQuery("select nombre from especies", new String[]{});
+        StringBuffer buffer = new StringBuffer();
+
+        EspeciesModel especiesModel = new EspeciesModel();
+
+        while(c.moveToNext()){
+            String especies = c.getString(0);
+            especiesModel.setNombreEspecie(especies);
+
+            //buffer.append(""+especies+ "\n");
         }
 
         return buffer.toString();

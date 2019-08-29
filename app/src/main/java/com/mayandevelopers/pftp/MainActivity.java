@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
@@ -46,6 +47,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mayandevelopers.pftp.controllers.RvEspeciesController;
+import com.mayandevelopers.pftp.databaseHelper.ConexionDataBase;
 import com.mayandevelopers.pftp.databaseHelper.DatabaseAccess;
 import com.mayandevelopers.pftp.models.EspeciesModel;
 import com.mayandevelopers.pftp.views.BuscarFolioActivity;
@@ -105,7 +107,61 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         especiesModel = new ArrayList<>();
 
+        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
+        databaseAccess.open();
+
+
+
+        //txtview_get_especies.setText(especies);
+
         for (int i = 0; i< 5; i++){
+
+            //AGREGANDO LO NUEVO A LA LISTA  //
+            //especiesModel.add(new EspeciesModel(1,"Caoba"));
+
+            String especies = databaseAccess.getEspecies2();
+            //ASIGNANDO ADAPTADOR AL RECYCLER VIEW//
+            //rv_especies_controller = new RvEspeciesController(MainActivity.this, (ArrayList<EspeciesModel>) especiesModel);
+            rv_especies.setLayoutManager(new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL,false ));
+            rv_especies.setAdapter(rv_especies_controller);
+        }
+
+        databaseAccess.close();
+
+
+
+        /*rv_especies_controller = new RvEspeciesController(MainActivity.this, (ArrayList<EspeciesModel>) especiesModel);
+        rv_especies.setLayoutManager(new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL,false ));
+        rv_especies.setAdapter(rv_especies_controller);*/
+
+        /*ConexionDataBase conexionDataBase = new ConexionDataBase(MainActivity.this, "pftp_bd",null,1);
+        SQLiteDatabase database = conexionDataBase.getReadableDatabase();
+        Cursor consultaRegistros = database.rawQuery("SELECT nombre FROM especies",null);
+
+
+        if (consultaRegistros!= null) {
+            consultaRegistros.moveToFirst();
+            do{
+                String nombre = consultaRegistros.getString(consultaRegistros.
+                        getColumnIndex("nombre"));;
+
+                        EspeciesModel especies_model = new EspeciesModel(12,nombre);
+
+                especiesModel.add(especies_model);
+            }while(consultaRegistros.moveToNext());
+        }
+        consultaRegistros.close();
+        conexionDataBase.close();*/
+
+        /*AdaptadorRecycler adaptadorRecycler = new AdaptadorRecycler(listaResultante,MainActivity.this);
+        listaReciclada.setAdapter(adaptadorRecycler);
+        listaReciclada.setLayoutManager(new LinearLayoutManager(MainActivity.this,LinearLayoutManager.VERTICAL,false)); */
+
+    /*  rv_especies_controller = new RvEspeciesController(MainActivity.this, (ArrayList<EspeciesModel>) especiesModel);
+        rv_especies.setLayoutManager(new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL,false ));
+        rv_especies.setAdapter(rv_especies_controller);*/
+
+        /*for (int i = 0; i< 5; i++){
 
             //AGREGANDO LO NUEVO A LA LISTA  //
             especiesModel.add(new EspeciesModel(1,"Caoba"));
@@ -115,7 +171,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             rv_especies_controller = new RvEspeciesController(MainActivity.this, (ArrayList<EspeciesModel>) especiesModel);
             rv_especies.setLayoutManager(new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL,false ));
             rv_especies.setAdapter(rv_especies_controller);
-        }
+        }*/
+
+
         flt_action_btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -187,6 +245,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
