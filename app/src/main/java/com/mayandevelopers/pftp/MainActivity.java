@@ -107,28 +107,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         especiesModel = new ArrayList<>();
 
-        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
-        databaseAccess.open();
-
-
-
-        //txtview_get_especies.setText(especies);
-
-        for (int i = 0; i< 5; i++){
-
-            //AGREGANDO LO NUEVO A LA LISTA  //
-            //especiesModel.add(new EspeciesModel(1,"Caoba"));
-
-            String especies = databaseAccess.getEspecies2();
-            //ASIGNANDO ADAPTADOR AL RECYCLER VIEW//
-            //rv_especies_controller = new RvEspeciesController(MainActivity.this, (ArrayList<EspeciesModel>) especiesModel);
-            rv_especies.setLayoutManager(new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL,false ));
-            rv_especies.setAdapter(rv_especies_controller);
-        }
-
-        databaseAccess.close();
-
-
+        loadMisEspecies();
 
         /*rv_especies_controller = new RvEspeciesController(MainActivity.this, (ArrayList<EspeciesModel>) especiesModel);
         rv_especies.setLayoutManager(new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL,false ));
@@ -185,6 +164,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    public void loadMisEspecies(){
+        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
+        databaseAccess.openRead();
+
+        rv_especies_controller = new RvEspeciesController(MainActivity.this, databaseAccess.getEspecies2());
+        rv_especies.setLayoutManager(new LinearLayoutManager(MainActivity.this, RecyclerView.VERTICAL,false ));
+        rv_especies.setAdapter(rv_especies_controller);
+
+        databaseAccess.close();
+    }
+
     // crear pop up //
     public void popUpDialog(){
 
@@ -238,6 +228,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
 
                 databaseAccess.close();
+
+                loadMisEspecies();
+
+                dialog.dismiss();
 
 
 

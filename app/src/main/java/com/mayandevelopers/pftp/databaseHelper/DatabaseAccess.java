@@ -8,11 +8,16 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.mayandevelopers.pftp.models.EspeciesModel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DatabaseAccess {
     private SQLiteOpenHelper openHelper;
-    private SQLiteDatabase db;
     private static DatabaseAccess instance;
+    private SQLiteDatabase db;
     Cursor c = null;
+
+    String especies;
 
     private DatabaseAccess(Context context) {
         this.openHelper = new DataBaseOpenHelper(context);
@@ -27,6 +32,10 @@ public class DatabaseAccess {
 
     public  void open(){
         this.db=openHelper.getWritableDatabase();
+    }
+
+    public  void openRead(){
+        this.db=openHelper.getReadableDatabase();
     }
 
     public void close(){
@@ -59,20 +68,23 @@ public class DatabaseAccess {
         return buffer.toString();
     }
 
-    public String getEspecies2(){
-        c=db.rawQuery("select nombre from especies", new String[]{});
-        StringBuffer buffer = new StringBuffer();
+    public List<EspeciesModel> getEspecies2(){
 
-        EspeciesModel especiesModel = new EspeciesModel();
+        List<EspeciesModel> especies = new ArrayList<>();
 
-        while(c.moveToNext()){
-            String especies = c.getString(0);
-            especiesModel.setNombreEspecie(especies);
+        c=db.rawQuery("select * from especies",null);
 
-            //buffer.append(""+especies+ "\n");
+        //StringBuffer buffer = new StringBuffer();
+        /*EspeciesModel especiesModel = new EspeciesModel();*/
+
+        if(c.moveToFirst()){
+            do {
+                especies.add(new EspeciesModel(c.getInt(0),c.getString(1)));
+            }while(c.moveToNext());
         }
 
-        return buffer.toString();
+        return especies;
+        //return buffer.toString();
     }
 
 
