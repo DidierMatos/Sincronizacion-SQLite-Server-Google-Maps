@@ -14,7 +14,7 @@ public class DatabaseAccess {
 
 
     private DatabaseAccess(Context context) {
-        this.openHelper = new DataBaseOpenHelper(context);
+        this.openHelper = new DataBaseOpenHelper(context); // llamando al constructor //
     }
 
     public static DatabaseAccess getInstance(Context context){

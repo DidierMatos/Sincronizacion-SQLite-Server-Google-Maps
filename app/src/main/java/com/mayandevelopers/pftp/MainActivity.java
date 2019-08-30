@@ -179,10 +179,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.nav_sesion:
                 Intent logOut = new Intent(this, LoginActivity.class);
+                clearSessionVariables();
+
                 startActivity(logOut);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    ///// LIMPIAR VARIABLE DE SESION//
+    private void clearSessionVariables(){
+        //BORRAR DATOS DE LAS VARIABLES DE SESION///
+        SharedPreferences preferences =getSharedPreferences("myPrefsLogin",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
+        editor.apply();
     }
 }

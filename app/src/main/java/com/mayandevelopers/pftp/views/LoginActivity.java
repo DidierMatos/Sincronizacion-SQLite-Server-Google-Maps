@@ -5,6 +5,7 @@ import android.content.Intent;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -37,6 +38,12 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /// checar si el usuario ya tiene iniciado una sesion//
+        if (checkUserLoggedBefore()){
+            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
         setContentView(R.layout.activity_login);
 
         btn_login = findViewById(R.id.btnEntrarLogin);
@@ -54,7 +61,8 @@ public class LoginActivity extends AppCompatActivity {
                 databaseAccessLogin.open();
 
                 String respuesta = databaseAccessLogin.getUserByEmail(correo,pass);
-                switch (respuesta) {
+                Toast.makeText(LoginActivity.this, respuesta, Toast.LENGTH_SHORT).show();
+                /*switch (respuesta) {
                     //Case statements
                     case "0":
                         // email incorrecto
@@ -65,6 +73,7 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, "Sesion iniciada", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
+                        saveLoginUser();
                         finish();
                         break;
                     case "2":
@@ -73,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                         break;
 
                 }
-                databaseAccessLogin.close();
+                databaseAccessLogin.close();*/
             }
         });
 
@@ -82,6 +91,22 @@ public class LoginActivity extends AppCompatActivity {
         edtxt_pass.addTextChangedListener(loginTextWatcher);
 
 
+    }
+    // recuperar valor de inicio de sesion //
+    private boolean checkUserLoggedBefore() {
+
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("myPrefsLogin",MODE_PRIVATE);
+        Boolean userLoggedBefore = pref.getBoolean("userLogged",false);
+
+        return  userLoggedBefore;
+    }
+
+    // guardar inicio de sesion true //
+    private void saveLoginUser() {
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("myPrefsLogin",MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean("userLogged", true);
+        editor.apply();
     }
 
     private  TextWatcher loginTextWatcher = new TextWatcher() {

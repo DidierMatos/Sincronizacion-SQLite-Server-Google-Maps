@@ -44,7 +44,7 @@ public class RanchosActivity extends AppCompatActivity {
 
         //OBTENIENDO LOS RANCHOS Y ASIGNANDO ADAPTADOR AL RECYCLER VIEW//
         rv_ranchos_controller = new RvRanchosController(RanchosActivity.this,databaseAccessRanchos.obtenerRanchos());
-        rv_ranchos.setLayoutManager(new LinearLayoutManager(RanchosActivity.this, LinearLayoutManager.VERTICAL,false ));
+        rv_ranchos.setLayoutManager(new LinearLayoutManager(RanchosActivity.this, RecyclerView.VERTICAL,false ));
         rv_ranchos.setAdapter(rv_ranchos_controller);
 
 
