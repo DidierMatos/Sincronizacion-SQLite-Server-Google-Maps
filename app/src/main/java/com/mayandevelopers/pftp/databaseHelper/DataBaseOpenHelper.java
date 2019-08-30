@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
-public class DataBaseOpenHelper extends SQLiteOpenHelper {
+public class DataBaseOpenHelper extends SQLiteAssetHelper {
     private static final String DATABASE_NAME ="pftp_db.sqlite";
     private static final int DATABASE_VERSION=1;
 
@@ -18,7 +18,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
 
     }
 
-    @Override
+    /*@Override
     public void onCreate(SQLiteDatabase db) {
 
     }
@@ -26,5 +26,5 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-    }
+    }*/
 }
