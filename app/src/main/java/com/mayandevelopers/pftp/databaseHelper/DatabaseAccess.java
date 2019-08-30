@@ -1,17 +1,24 @@
 package com.mayandevelopers.pftp.databaseHelper;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.mayandevelopers.pftp.models.EspeciesModel;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class DatabaseAccess {
 
     private SQLiteOpenHelper openHelper;
-    private SQLiteDatabase db;
     private static DatabaseAccess instance;
+    private SQLiteDatabase db;
     Cursor c = null;
 
+    String especies;
 
     private DatabaseAccess(Context context) {
         this.openHelper = new DataBaseOpenHelper(context); // llamando al constructor //
@@ -26,6 +33,10 @@ public class DatabaseAccess {
 
     public  void open(){
         this.db=openHelper.getWritableDatabase();
+    }
+
+    public  void openRead(){
+        this.db=openHelper.getReadableDatabase();
     }
 
     public void close(){
@@ -45,6 +56,67 @@ public class DatabaseAccess {
 
         return buffer.toString();
     }*/
+
+    public String getEspecies(){
+        c=db.rawQuery("select nombre from especies", new String[]{});
+        StringBuffer buffer = new StringBuffer();
+
+        while(c.moveToNext()){
+
+            String especies = c.getString(0);
+            buffer.append(""+especies+ "\n");
+        }
+
+        return buffer.toString();
+    }
+
+    public List<EspeciesModel> getEspecies2(){
+
+        List<EspeciesModel> especies = new ArrayList<>();
+
+        c=db.rawQuery("select * from especies",null);
+
+        //StringBuffer buffer = new StringBuffer();
+        /*EspeciesModel especiesModel = new EspeciesModel();*/
+
+        if(c.moveToFirst()){
+            do {
+                especies.add(new EspeciesModel(c.getInt(0),c.getString(1)));
+            }while(c.moveToNext());
+        }
+
+        return especies;
+        //return buffer.toString();
+    }
+
+
+    public void addEspecies(String nombreEspecie){
+
+        /*SQLiteDatabase db2 = openHelper.getWritableDatabase();
+        int num = 34;
+
+        if(db2 != null){
+
+            db2.execSQL("INSERT INTO especies (id, nombre) " +
+                    "VALUES (num, '"+ nombreEspecie +"')");
+
+        }
+
+        db2.close();*/
+
+
+        SQLiteDatabase db2 = openHelper.getWritableDatabase();
+
+        ContentValues registro = new ContentValues();
+        registro.put("nombre",nombreEspecie);
+
+        db2.insert("especies",null,registro);
+
+        db2.close();
+
+
+
+    }
 
 
 }

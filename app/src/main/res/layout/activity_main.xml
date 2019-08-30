@@ -37,6 +37,16 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             app:srcCompat= "@drawable/ic_agregar"/>
+
+        <TextView
+            android:id="@+id/txtviewGetEspeciesPrueba"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ejemplo textview"
+            android:layout_below="@id/rvEspecies"
+            android:layout_marginTop="30dp"/>
+
+
     </RelativeLayout>
     
 

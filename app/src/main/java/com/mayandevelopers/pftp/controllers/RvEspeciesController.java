@@ -46,13 +46,15 @@ public class RvEspeciesController extends RecyclerView.Adapter<RvEspeciesControl
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RvEspeciesController.ViewHolder viewHolder, int i) {
-       // final EspeciesModel Lonuevo = mData.get(position);
+    public void onBindViewHolder(@NonNull RvEspeciesController.ViewHolder viewHolder, int position) {
+        final EspeciesModel misespecies = mData.get(position);
 
         /*holder.precio_nuevo.setText(Lonuevo.getPrecio_nuevo());
         holder.vigencia_nuevo.setText(Lonuevo.getVigencia_nuevo());
         holder.nombre_nuevo.setText(Lonuevo.getNombre_nuevo());
         Glide.with(mContext).load(mData.get(position).getImg_nuevo()).error(R.drawable.default_picture_promo).into(holder.imag_nuevo);*/
+
+        viewHolder.nombre_especie.setText(misespecies.getNombreEspecie());
 
         // intent //
         viewHolder.ver_arboles.setOnClickListener(new View.OnClickListener() {

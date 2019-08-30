@@ -10,6 +10,10 @@ public class EspeciesModel {
         this.nombreEspecie = nombreEspecie;
     }
 
+    public EspeciesModel(){
+
+    }
+
     public int getIdEspecie() {
         return idEspecie;
     }
