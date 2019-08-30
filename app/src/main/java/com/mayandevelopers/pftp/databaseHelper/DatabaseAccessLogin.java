@@ -43,7 +43,7 @@ public class DatabaseAccessLogin {
         if(c.moveToFirst()){
             if (pass.equals(c.getString(10))){
                 // Comparar contraseñas //
-                return c.getString(1);
+                return c.getString(0);
             } else{
                 // contraseñas no son iguales //
                 return "2";
