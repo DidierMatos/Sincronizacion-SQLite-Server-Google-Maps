@@ -118,5 +118,33 @@ public class DatabaseAccess {
 
     }
 
+    public void editarEspecies(int id_especie,String nombre_especie){
+
+        SQLiteDatabase db2 = openHelper.getWritableDatabase();
+
+        ContentValues actualizacion = new ContentValues();
+        actualizacion.put("id", id_especie);
+        actualizacion.put("nombre",nombre_especie);
+
+        db2.update("especies",actualizacion,"id = ?", new String[] { String.valueOf(id_especie)});
+
+        db2.close();
+
+    }
+
+    public void eliminarEspecies(int id_especie){
+
+        SQLiteDatabase db2 = openHelper.getWritableDatabase();
+
+        //ContentValues eliminacion = new ContentValues();
+        //eliminacion.put("id", id_especie);
+        //actualizacion.put("nombre",nombre_especie);
+
+        db2.delete("especies","id = ?", new String[] { String.valueOf(id_especie)});
+
+        db2.close();
+
+    }
+
 
 }

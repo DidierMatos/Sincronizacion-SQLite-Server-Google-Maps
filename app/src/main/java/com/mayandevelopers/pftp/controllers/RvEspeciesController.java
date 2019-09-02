@@ -17,9 +17,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mayandevelopers.pftp.MainActivity;
 import com.mayandevelopers.pftp.R;
+import com.mayandevelopers.pftp.databaseHelper.DatabaseAccess;
 import com.mayandevelopers.pftp.models.EspeciesModel;
 import com.mayandevelopers.pftp.views.RanchosActivity;
 
@@ -46,7 +48,7 @@ public class RvEspeciesController extends RecyclerView.Adapter<RvEspeciesControl
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RvEspeciesController.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull RvEspeciesController.ViewHolder viewHolder, final int position) {
         final EspeciesModel misespecies = mData.get(position);
 
         /*holder.precio_nuevo.setText(Lonuevo.getPrecio_nuevo());
@@ -75,9 +77,9 @@ public class RvEspeciesController extends RecyclerView.Adapter<RvEspeciesControl
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(mContext);
                 View mView = mInflater.inflate(R.layout.popup_especies_name,null);
 
-                EditText edtxt_nombre = (EditText) mView.findViewById(R.id.edtxtNombreMain);
+                final EditText edtxt_nombre = (EditText) mView.findViewById(R.id.edtxtNombreMain);
                 Button btn_cancelar = (Button) mView.findViewById(R.id.btnCancelarMain);
-                Button btnguardar = (Button) mView.findViewById(R.id.btnGuardarMain);
+                Button btn_guardar = (Button) mView.findViewById(R.id.btnGuardarMain);
 
 
                 mBuilder.setView(mView);
@@ -93,6 +95,33 @@ public class RvEspeciesController extends RecyclerView.Adapter<RvEspeciesControl
                         dialog.dismiss();
                     }
                 });
+
+                btn_guardar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        String nombre_especie = edtxt_nombre.getText().toString();
+
+                        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(mContext);
+
+                        databaseAccess.open();
+
+                        databaseAccess.editarEspecies(misespecies.getIdEspecie(), nombre_especie);
+
+                        databaseAccess.close();
+
+                        mData.get(position).setNombreEspecie(nombre_especie);
+                        notifyItemChanged(position);
+                        //mData.set(position,mData.get(position));
+
+
+                        //mData.remove(position);
+                        //notifyItemRemoved(position);
+                        //notifyItemRangeChanged(position, mData.size());
+                        dialog.dismiss();
+
+                    }
+                });
             }
         });
 
@@ -106,7 +135,7 @@ public class RvEspeciesController extends RecyclerView.Adapter<RvEspeciesControl
                 View mView = mInflater.inflate(R.layout.popup_eliminar,null);
 
                 Button btn_cancelar = (Button) mView.findViewById(R.id.btnCancelarDelete);
-                Button btnEliminar = (Button) mView.findViewById(R.id.btnEliminar);
+                Button btn_eliminar = (Button) mView.findViewById(R.id.btnEliminar);
 
                 mBuilder.setView(mView);
                 final androidx.appcompat.app.AlertDialog dialog = mBuilder.create();
@@ -119,6 +148,30 @@ public class RvEspeciesController extends RecyclerView.Adapter<RvEspeciesControl
                     public void onClick(View v) {
 
                         dialog.dismiss();
+                    }
+                });
+
+                btn_eliminar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(mContext);
+
+                        databaseAccess.open();
+
+                        databaseAccess.eliminarEspecies(misespecies.getIdEspecie());
+
+                        databaseAccess.close();
+
+                        //mData.get(position).setNombreEspecie(nombre_especie);
+                        //notifyItemChanged(position);
+                        //mData.set(position,mData.get(position));
+
+                        dialog.dismiss();
+                        mData.remove(position);
+                        notifyItemRemoved(position);
+                        //notifyItemRangeChanged(position, mData.size());
+
+
                     }
                 });
             }
