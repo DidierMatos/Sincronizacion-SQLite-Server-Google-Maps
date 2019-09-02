@@ -108,6 +108,7 @@ public class DatabaseAccess {
         SQLiteDatabase db2 = openHelper.getWritableDatabase();
 
         ContentValues registro = new ContentValues();
+        //registro.put("id", 1);
         registro.put("nombre",nombreEspecie);
 
         db2.insert("especies",null,registro);

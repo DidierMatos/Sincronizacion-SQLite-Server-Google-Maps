@@ -81,6 +81,8 @@ public class RvEspeciesController extends RecyclerView.Adapter<RvEspeciesControl
                 Button btn_cancelar = (Button) mView.findViewById(R.id.btnCancelarMain);
                 Button btn_guardar = (Button) mView.findViewById(R.id.btnGuardarMain);
 
+                edtxt_nombre.setText(misespecies.getNombreEspecie());
+
 
                 mBuilder.setView(mView);
                 final AlertDialog dialog = mBuilder.create();
