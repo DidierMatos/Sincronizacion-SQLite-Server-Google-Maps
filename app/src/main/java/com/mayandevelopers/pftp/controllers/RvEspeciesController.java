@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.annotation.NonNull;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,6 +66,9 @@ public class RvEspeciesController extends RecyclerView.Adapter<RvEspeciesControl
             public void onClick(View v) {
 
                 Intent ver_arboles = new Intent(mContext, RanchosActivity.class);
+                ver_arboles.putExtra("id_miespecie",misespecies.getIdEspecie());
+                ver_arboles.putExtra("nombre_miespecie", misespecies.getNombreEspecie());
+                //Log.i("HOLA", String.valueOf(misespecies.getIdEspecie()));
                 ver_arboles.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(ver_arboles);
             }

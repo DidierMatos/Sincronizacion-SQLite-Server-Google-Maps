@@ -45,7 +45,7 @@ public class DatabaseAccessRanchos {
 
         if (c.moveToFirst()){
             do{
-                ranchos.add(new RanchosModel(c.getString(0),c.getString(1),c.getString(2),c.getString(3),c.getString(4),c.getString(5)));
+                ranchos.add(new RanchosModel(c.getInt(0),c.getString(1),c.getString(2),c.getString(3),c.getString(4),c.getString(5)));
             } while (c.moveToNext());
         }
 

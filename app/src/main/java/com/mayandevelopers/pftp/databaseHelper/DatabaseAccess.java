@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.mayandevelopers.pftp.models.EspeciesModel;
+import com.mayandevelopers.pftp.models.RanchosModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -145,6 +146,25 @@ public class DatabaseAccess {
 
         db2.close();
 
+    }
+
+    public List<RanchosModel> getRanchos(int id_especie){
+        List<RanchosModel> ranchos = new ArrayList<>();
+
+        //c=db.rawQuery("select * from centros where id = '"+id_especie+"'",null);
+        c=db.rawQuery("select * from centros",null);
+
+        //StringBuffer buffer = new StringBuffer();
+        /*EspeciesModel especiesModel = new EspeciesModel();*/
+
+        if(c.moveToFirst()){
+            do {
+                ranchos.add(new RanchosModel(c.getInt(0),c.getString(1),c.getString(2),c.getString(3), c.getString(4), c.getString(5)));
+            }while(c.moveToNext());
+        }
+
+        return ranchos;
+        //return buffer.toString();
     }
 
 
