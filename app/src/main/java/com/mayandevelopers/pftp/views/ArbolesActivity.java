@@ -60,10 +60,10 @@ public class ArbolesActivity extends AppCompatActivity {
 
         SharedPreferences prefs = getSharedPreferences("ESPECIE_SELECCIONADA", MODE_PRIVATE);
         id_especie_obtenida = prefs.getInt("id_especie", 77);
-        //Toast.makeText(this, String.valueOf(id_especie_obtenida), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,"id_especie: "+ id_especie_obtenida, Toast.LENGTH_LONG).show();
 
         id_rancho_obtenida = getIntent().getIntExtra("id_rancho", 77);
-        //Toast.makeText(this, String.valueOf(id_rancho_obtenida), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "id_centro: "+id_rancho_obtenida, Toast.LENGTH_SHORT).show();
 
         arboles_model = new ArrayList<>();
 
@@ -105,7 +105,7 @@ public class ArbolesActivity extends AppCompatActivity {
         DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
         databaseAccess.openRead();
 
-        rv_arboles_controller = new RvArbolesController(ArbolesActivity.this, databaseAccess.getArboles());
+        rv_arboles_controller = new RvArbolesController(ArbolesActivity.this, databaseAccess.getArboles(id_especie_obtenida, id_rancho_obtenida));
         rv_mis_arboles.setLayoutManager(new LinearLayoutManager(ArbolesActivity.this, RecyclerView.VERTICAL,false ));
         rv_mis_arboles.setAdapter(rv_arboles_controller);
 

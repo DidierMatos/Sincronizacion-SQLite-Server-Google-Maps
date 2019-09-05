@@ -169,11 +169,11 @@ public class DatabaseAccess {
     }
 
 
-    public List<ArbolesModel> getArboles(){
+    public List<ArbolesModel> getArboles(int id_especie, int id_centro){
         List<ArbolesModel> arboles = new ArrayList<>();
 
         //c=db.rawQuery("select * from centros where id = '"+id_especie+"'",null);
-        c=db.rawQuery("select * from arboles",null);
+        c=db.rawQuery("select * from arboles where id_e" + "= ? and id_c" + " = ?",new String[]{String.valueOf(id_especie), String.valueOf(id_centro)});
 
         //StringBuffer buffer = new StringBuffer();
         /*EspeciesModel especiesModel = new EspeciesModel();*/
