@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.mayandevelopers.pftp.models.ArbolesModel;
 import com.mayandevelopers.pftp.models.EspeciesModel;
 import com.mayandevelopers.pftp.models.RanchosModel;
 
@@ -148,7 +149,7 @@ public class DatabaseAccess {
 
     }
 
-    public List<RanchosModel> getRanchos(int id_especie){
+    public List<RanchosModel> getRanchos(){
         List<RanchosModel> ranchos = new ArrayList<>();
 
         //c=db.rawQuery("select * from centros where id = '"+id_especie+"'",null);
@@ -164,6 +165,26 @@ public class DatabaseAccess {
         }
 
         return ranchos;
+        //return buffer.toString();
+    }
+
+
+    public List<ArbolesModel> getArboles(){
+        List<ArbolesModel> arboles = new ArrayList<>();
+
+        //c=db.rawQuery("select * from centros where id = '"+id_especie+"'",null);
+        c=db.rawQuery("select * from arboles",null);
+
+        //StringBuffer buffer = new StringBuffer();
+        /*EspeciesModel especiesModel = new EspeciesModel();*/
+
+        if(c.moveToFirst()){
+            do {
+                arboles.add(new ArbolesModel(c.getInt(0),c.getString(1),c.getString(2),c.getString(3), c.getString(4), c.getInt(5), c.getInt(6)));
+            }while(c.moveToNext());
+        }
+
+        return arboles;
         //return buffer.toString();
     }
 

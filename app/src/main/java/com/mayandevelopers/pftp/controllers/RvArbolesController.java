@@ -20,15 +20,16 @@ import com.mayandevelopers.pftp.views.AgregarArbolActivity;
 import com.mayandevelopers.pftp.views.VisitasActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RvArbolesController extends RecyclerView.Adapter<RvArbolesController.ViewHolder> {
 
     private Context mContext;
-    private ArrayList<ArbolesModel> mData;
+    private List<ArbolesModel> mData;
     ArrayList<ArbolesModel> actividadItem;
     private int selectPosition;
 
-    public RvArbolesController(Context mContext, ArrayList<ArbolesModel> mData) {
+    public RvArbolesController(Context mContext, List<ArbolesModel> mData) {
         this.mContext = mContext;
         this.mData = mData;
     }

@@ -64,7 +64,7 @@ public class RanchosActivity extends AppCompatActivity {
         DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
         databaseAccess.openRead();
 
-        rv_ranchos_controller = new RvRanchosController(RanchosActivity.this, databaseAccess.getRanchos(id_miespecie));
+        rv_ranchos_controller = new RvRanchosController(RanchosActivity.this, databaseAccess.getRanchos());
         rv_ranchos.setLayoutManager(new LinearLayoutManager(RanchosActivity.this, RecyclerView.VERTICAL,false ));
         rv_ranchos.setAdapter(rv_ranchos_controller);
 

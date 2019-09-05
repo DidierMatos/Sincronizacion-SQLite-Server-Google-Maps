@@ -40,16 +40,17 @@ public class RvRanchosController extends RecyclerView.Adapter<RvRanchosControlle
 
     @Override
     public void onBindViewHolder(@NonNull RvRanchosController.ViewHolder viewHolder, int position) {
-        final RanchosModel rancho = mData.get(position);
+        final RanchosModel misranchos = mData.get(position);
 
-        viewHolder.txt_nombre_rancho.setText(rancho.getNombreRancho());
+        viewHolder.txt_nombre_rancho.setText(misranchos.getNombreRancho());
 
         viewHolder.btn_detalles.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, ArbolesActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mContext.startActivity(intent);
+                Intent btn_detalles = new Intent(mContext, ArbolesActivity.class);
+                btn_detalles.putExtra("id_rancho",misranchos.getIdRancho());
+                btn_detalles.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(btn_detalles);
             }
         });
 

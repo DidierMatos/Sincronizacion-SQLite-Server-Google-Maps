@@ -2,6 +2,7 @@ package com.mayandevelopers.pftp.controllers;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 
@@ -35,6 +36,8 @@ public class RvEspeciesController extends RecyclerView.Adapter<RvEspeciesControl
     Context mContext;
     private List<EspeciesModel> mData;
 
+    private static final String ESPECIE_SELECCIONADA = "ESPECIE_SELECCIONADA";
+
     public RvEspeciesController(Context mContext, List<EspeciesModel> mData) {
         this.mContext = mContext;
         this.mData = mData;
@@ -66,6 +69,13 @@ public class RvEspeciesController extends RecyclerView.Adapter<RvEspeciesControl
             public void onClick(View v) {
 
                 Intent ver_arboles = new Intent(mContext, RanchosActivity.class);
+
+                SharedPreferences sharedPref = mContext.getSharedPreferences(ESPECIE_SELECCIONADA,0);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt("id_especie", misespecies.getIdEspecie());
+                //editor.putString("nombre_empresa", misespecies.getNombreEspecie());
+                editor.apply();
+
                 ver_arboles.putExtra("id_miespecie",misespecies.getIdEspecie());
                 ver_arboles.putExtra("nombre_miespecie", misespecies.getNombreEspecie());
                 //Log.i("HOLA", String.valueOf(misespecies.getIdEspecie()));

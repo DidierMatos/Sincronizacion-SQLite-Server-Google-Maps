@@ -5,6 +5,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.core.view.MenuItemCompat;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,9 +16,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.mayandevelopers.pftp.R;
 import com.mayandevelopers.pftp.controllers.RvArbolesController;
+import com.mayandevelopers.pftp.databaseHelper.DatabaseAccess;
 import com.mayandevelopers.pftp.models.ArbolesModel;
 
 import java.util.ArrayList;
@@ -30,6 +34,9 @@ public class ArbolesActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     ImageButton imgbtn_back;
+
+    int id_especie_obtenida;
+    int id_rancho_obtenida;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,19 +58,28 @@ public class ArbolesActivity extends AppCompatActivity {
         });
 
 
+        SharedPreferences prefs = getSharedPreferences("ESPECIE_SELECCIONADA", MODE_PRIVATE);
+        id_especie_obtenida = prefs.getInt("id_especie", 77);
+        //Toast.makeText(this, String.valueOf(id_especie_obtenida), Toast.LENGTH_SHORT).show();
+
+        id_rancho_obtenida = getIntent().getIntExtra("id_rancho", 77);
+        //Toast.makeText(this, String.valueOf(id_rancho_obtenida), Toast.LENGTH_SHORT).show();
+
         arboles_model = new ArrayList<>();
 
-        for (int i = 0; i< 5; i++){
+        loadMisArboles();
+
+        /*for (int i = 0; i< 5; i++){
 
             //AGREGANDO LO NUEVO A LA LISTA  //
-            arboles_model.add(new ArbolesModel("1"));
+            //arboles_model.add(new ArbolesModel("1"));
 
 
             //ASIGNANDO ADAPTADOR AL RECYCLER VIEW//
             rv_arboles_controller = new RvArbolesController(ArbolesActivity.this,arboles_model);
             rv_mis_arboles.setLayoutManager(new LinearLayoutManager(ArbolesActivity.this, LinearLayoutManager.VERTICAL,false ));
             rv_mis_arboles.setAdapter(rv_arboles_controller);
-        }
+        }*/
 
 
        /* Toolbar toolbar = findViewById(R.id.toolbar);
@@ -84,6 +100,19 @@ public class ArbolesActivity extends AppCompatActivity {
 
 
     }
+
+    public void loadMisArboles(){
+        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
+        databaseAccess.openRead();
+
+        rv_arboles_controller = new RvArbolesController(ArbolesActivity.this, databaseAccess.getArboles());
+        rv_mis_arboles.setLayoutManager(new LinearLayoutManager(ArbolesActivity.this, RecyclerView.VERTICAL,false ));
+        rv_mis_arboles.setAdapter(rv_arboles_controller);
+
+        databaseAccess.close();
+    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
