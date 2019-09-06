@@ -45,7 +45,7 @@ public class RvRanchosMuestrasController extends RecyclerView.Adapter<RvRanchosM
         final RanchosModel rancho = mData.get(position);
 
         viewHolder.txt_nombre_rancho.setText(rancho.getNombreRancho());
-        final String id_c = rancho.getIdRancho();
+        final int id_c = rancho.getIdRancho();
 
 
         // IR A OTRA ACTIVIDAD //
@@ -63,11 +63,11 @@ public class RvRanchosMuestrasController extends RecyclerView.Adapter<RvRanchosM
 
     }
 
-    private static void guardarIdRancho(Context context, String id) {
+    private static void guardarIdRancho(Context context, int id) {
         SharedPreferences Rancho = context.getSharedPreferences("idRancho",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor;
         editor = Rancho.edit();
-        editor.putString("idRancho",id);
+        editor.putString("idRancho",String.valueOf(id));
         editor.apply();
 
     }
