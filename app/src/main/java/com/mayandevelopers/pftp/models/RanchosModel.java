@@ -2,7 +2,7 @@ package com.mayandevelopers.pftp.models;
 
 public class RanchosModel {
 
-    private String idRancho;
+    private int idRancho;
     private String nombreRancho;
     private String ubicacion;
     private String codigo_postal;
@@ -12,7 +12,7 @@ public class RanchosModel {
     public RanchosModel() {
     }
 
-    public RanchosModel(String idRancho, String nombreRancho, String ubicacion, String codigo_postal, String fecha_registro, String fecha_actualizacion) {
+    public RanchosModel(int idRancho, String nombreRancho, String ubicacion, String codigo_postal, String fecha_registro, String fecha_actualizacion) {
         this.idRancho = idRancho;
         this.nombreRancho = nombreRancho;
         this.ubicacion = ubicacion;
@@ -21,11 +21,11 @@ public class RanchosModel {
         this.fecha_actualizacion = fecha_actualizacion;
     }
 
-    public String getIdRancho() {
+    public int getIdRancho() {
         return idRancho;
     }
 
-    public void setIdRancho(String idRancho) {
+    public void setIdRancho(int idRancho) {
         this.idRancho = idRancho;
     }
 

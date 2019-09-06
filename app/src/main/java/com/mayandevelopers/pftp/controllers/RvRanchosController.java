@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,8 @@ public class RvRanchosController extends RecyclerView.Adapter<RvRanchosControlle
     private Context mContext;
     private List<RanchosModel> mData;
 
+    private static final String RANCHO_SELECCIONADO = "RANCHO_SELECCIONADO";
+
     public RvRanchosController(Context mContext, List<RanchosModel> mData) {
         this.mContext = mContext;
         this.mData = mData;
@@ -40,16 +43,24 @@ public class RvRanchosController extends RecyclerView.Adapter<RvRanchosControlle
 
     @Override
     public void onBindViewHolder(@NonNull RvRanchosController.ViewHolder viewHolder, int position) {
-        final RanchosModel rancho = mData.get(position);
+        final RanchosModel misranchos = mData.get(position);
 
-        viewHolder.txt_nombre_rancho.setText(rancho.getNombreRancho());
+        viewHolder.txt_nombre_rancho.setText(misranchos.getNombreRancho());
 
         viewHolder.btn_detalles.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, ArbolesActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mContext.startActivity(intent);
+                Intent btn_detalles = new Intent(mContext, ArbolesActivity.class);
+
+                SharedPreferences sharedPref = mContext.getSharedPreferences(RANCHO_SELECCIONADO,0);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt("id_rancho", misranchos.getIdRancho());
+                //editor.putString("nombre_empresa", misespecies.getNombreEspecie());
+                editor.apply();
+
+                btn_detalles.putExtra("id_rancho",misranchos.getIdRancho());
+                btn_detalles.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(btn_detalles);
             }
         });
 

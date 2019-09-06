@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     RvEspeciesController rv_especies_controller;
     FloatingActionButton flt_action_btn_add;
 
-    TextView txtview_get_especies;
+    //TextView txtview_get_especies;
     private SQLiteOpenHelper openHelper;
     //private SQLiteDatabase db;
 
@@ -89,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         rv_especies =(RecyclerView) findViewById(R.id.rvEspecies);
         flt_action_btn_add=(FloatingActionButton) findViewById(R.id.flactbtnEspeciesMain);
+        //txtview_get_especies = findViewById(R.id.txtviewGetEspeciesPrueba);
 
         // MENU DRAWER LAYOUT///
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -196,16 +197,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         btn_cancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-                DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
+              /*  DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
                 databaseAccess.open();
 
                 String especies = databaseAccess.getEspecies();
 
-                txtview_get_especies.setText(especies);
+                //txtview_get_especies.setText(especies);
 
-                databaseAccess.close();
+                databaseAccess.close();*/
 
                 dialog.dismiss();
             }

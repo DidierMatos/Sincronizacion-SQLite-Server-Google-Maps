@@ -6,7 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.mayandevelopers.pftp.models.ArbolesModel;
 import com.mayandevelopers.pftp.models.EspeciesModel;
+import com.mayandevelopers.pftp.models.RanchosModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,6 +110,7 @@ public class DatabaseAccess {
         SQLiteDatabase db2 = openHelper.getWritableDatabase();
 
         ContentValues registro = new ContentValues();
+        //registro.put("id", 1);
         registro.put("nombre",nombreEspecie);
 
         db2.insert("especies",null,registro);
@@ -117,6 +120,93 @@ public class DatabaseAccess {
 
 
     }
+
+    public void editarEspecies(int id_especie,String nombre_especie){
+
+        SQLiteDatabase db2 = openHelper.getWritableDatabase();
+
+        ContentValues actualizacion = new ContentValues();
+        actualizacion.put("id", id_especie);
+        actualizacion.put("nombre",nombre_especie);
+
+        db2.update("especies",actualizacion,"id = ?", new String[] { String.valueOf(id_especie)});
+
+        db2.close();
+
+    }
+
+    public void eliminarEspecies(int id_especie){
+
+        SQLiteDatabase db2 = openHelper.getWritableDatabase();
+
+        //ContentValues eliminacion = new ContentValues();
+        //eliminacion.put("id", id_especie);
+        //actualizacion.put("nombre",nombre_especie);
+
+        db2.delete("especies","id = ?", new String[] { String.valueOf(id_especie)});
+
+        db2.close();
+
+    }
+
+    public List<RanchosModel> getRanchos(){
+        List<RanchosModel> ranchos = new ArrayList<>();
+
+        //c=db.rawQuery("select * from centros where id = '"+id_especie+"'",null);
+        c=db.rawQuery("select * from centros",null);
+
+        //StringBuffer buffer = new StringBuffer();
+        /*EspeciesModel especiesModel = new EspeciesModel();*/
+
+        if(c.moveToFirst()){
+            do {
+                ranchos.add(new RanchosModel(c.getInt(0),c.getString(1),c.getString(2),c.getString(3), c.getString(4), c.getString(5)));
+            }while(c.moveToNext());
+        }
+
+        return ranchos;
+        //return buffer.toString();
+    }
+
+
+    public List<ArbolesModel> getArboles(int id_especie, int id_centro){
+        List<ArbolesModel> arboles = new ArrayList<>();
+
+        //c=db.rawQuery("select * from centros where id = '"+id_especie+"'",null);
+        c=db.rawQuery("select * from arboles where id_e" + "= ? and id_c" + " = ?",new String[]{String.valueOf(id_especie), String.valueOf(id_centro)});
+
+        //StringBuffer buffer = new StringBuffer();
+        /*EspeciesModel especiesModel = new EspeciesModel();*/
+
+        if(c.moveToFirst()){
+            do {
+                arboles.add(new ArbolesModel(c.getInt(0),c.getString(1),c.getString(2),c.getString(3), c.getString(4), c.getInt(5), c.getInt(6)));
+            }while(c.moveToNext());
+        }
+
+        return arboles;
+        //return buffer.toString();
+    }
+
+    public List<ArbolesModel> editArboles(int id_arbol){
+        List<ArbolesModel> arboles = new ArrayList<>();
+
+        //c=db.rawQuery("select * from centros where id = '"+id_especie+"'",null);
+        c=db.rawQuery("select * from arboles where id" + "= ?",new String[]{String.valueOf(id_arbol)});
+
+        //StringBuffer buffer = new StringBuffer();
+        /*EspeciesModel especiesModel = new EspeciesModel();*/
+
+        if(c.moveToFirst()){
+            do {
+                arboles.add(new ArbolesModel(c.getInt(0),c.getString(1),c.getString(2),c.getString(3), c.getString(4), c.getInt(5), c.getInt(6)));
+            }while(c.moveToNext());
+        }
+
+        return arboles;
+        //return buffer.toString();
+    }
+
 
 
 }
