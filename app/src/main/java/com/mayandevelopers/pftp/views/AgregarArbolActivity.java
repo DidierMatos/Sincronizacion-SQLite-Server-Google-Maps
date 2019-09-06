@@ -131,7 +131,7 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
 
             imgbtn_add_arbol.setText("Actualizar");
             txtview_add_arbol.setText("Actualizar Arbol");
-            edtxt_especie.setText();
+            edtxt_especie.setText("");
             edtxt_centro.setText("Rancho2");
 
 
