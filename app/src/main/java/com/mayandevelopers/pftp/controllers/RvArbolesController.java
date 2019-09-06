@@ -5,6 +5,7 @@ import android.content.Intent;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
@@ -28,6 +29,8 @@ public class RvArbolesController extends RecyclerView.Adapter<RvArbolesControlle
     private List<ArbolesModel> mData;
     ArrayList<ArbolesModel> actividadItem;
     private int selectPosition;
+
+    private static final String ARBOL_SELECCIONADO = "ARBOL_SELECCIONADO";
 
     public RvArbolesController(Context mContext, List<ArbolesModel> mData) {
         this.mContext = mContext;
@@ -67,6 +70,12 @@ public class RvArbolesController extends RecyclerView.Adapter<RvArbolesControlle
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, AgregarArbolActivity.class);
+
+                SharedPreferences sharedPref = mContext.getSharedPreferences(ARBOL_SELECCIONADO,0);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                //editor.putString("nombre_empresa", misespecies.getNombreEspecie());
+                editor.apply();
+
                 intent.putExtra("update","1");
                 intent.putExtra("id_arbol",misarboles.getId());
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

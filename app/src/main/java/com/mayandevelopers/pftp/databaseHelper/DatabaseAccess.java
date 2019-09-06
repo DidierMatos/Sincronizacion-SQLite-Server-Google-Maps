@@ -192,7 +192,7 @@ public class DatabaseAccess {
         List<ArbolesModel> arboles = new ArrayList<>();
 
         //c=db.rawQuery("select * from centros where id = '"+id_especie+"'",null);
-        c=db.rawQuery("select * from arboles where id_e" + "= ? and id_c" + " = ?",new String[]{String.valueOf(id_arbol)});
+        c=db.rawQuery("select * from arboles where id" + "= ?",new String[]{String.valueOf(id_arbol)});
 
         //StringBuffer buffer = new StringBuffer();
         /*EspeciesModel especiesModel = new EspeciesModel();*/

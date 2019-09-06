@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,8 @@ public class RvRanchosController extends RecyclerView.Adapter<RvRanchosControlle
 
     private Context mContext;
     private List<RanchosModel> mData;
+
+    private static final String RANCHO_SELECCIONADO = "RANCHO_SELECCIONADO";
 
     public RvRanchosController(Context mContext, List<RanchosModel> mData) {
         this.mContext = mContext;
@@ -48,6 +51,13 @@ public class RvRanchosController extends RecyclerView.Adapter<RvRanchosControlle
             @Override
             public void onClick(View v) {
                 Intent btn_detalles = new Intent(mContext, ArbolesActivity.class);
+
+                SharedPreferences sharedPref = mContext.getSharedPreferences(RANCHO_SELECCIONADO,0);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt("id_rancho", misranchos.getIdRancho());
+                //editor.putString("nombre_empresa", misespecies.getNombreEspecie());
+                editor.apply();
+
                 btn_detalles.putExtra("id_rancho",misranchos.getIdRancho());
                 btn_detalles.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(btn_detalles);

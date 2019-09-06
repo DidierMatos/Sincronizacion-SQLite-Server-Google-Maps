@@ -26,6 +26,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -100,10 +101,16 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
         imgbtn_back = findViewById(R.id.imgbtnBackAddArbol);
 
         id_arbol_obtenido = getIntent().getIntExtra("id_arbol",77);
-        id_especie_obtenida = getIntent().getIntExtra("id_especie", 77);
-        id_rancho_obtenido = getIntent().getIntExtra("id_rancho", 77);
+        //id_especie_obtenida = getIntent().getIntExtra("id_especie", 77);
+        //id_rancho_obtenido = getIntent().getIntExtra("id_rancho", 77);
+        //Toast.makeText(this, "especie:"+id_especie_obtenida + " rancho:" + id_rancho_obtenido, Toast.LENGTH_SHORT).show();
 
-        Toast.makeText(this, "especie:"+id_especie_obtenida + " rancho:" + id_rancho_obtenido, Toast.LENGTH_SHORT).show();
+       /* SharedPreferences prefs = getSharedPreferences("ESPECIE_SELECCIONADA", MODE_PRIVATE);
+        id_especie_obtenida = prefs.getInt("id_especie", 77);*/
+        /*SharedPreferences prefs2 = getSharedPreferences("RANCHO_SELECCIONADO", MODE_PRIVATE);
+        id_rancho_obtenido = prefs2.getInt("id_rancho", 77);*/
+
+        //Toast.makeText(this, "especie:"+id_especie_obtenida + " rancho:" + id_rancho_obtenido, Toast.LENGTH_SHORT).show();
 
         imgbtn_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,15 +123,18 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
 
         if (valorUpdate == null){
             //CREAR
+            //Toast.makeText(this, "hola", Toast.LENGTH_SHORT).show();
 
         }else{
 
+            editMiArbol();
+
             imgbtn_add_arbol.setText("Actualizar");
             txtview_add_arbol.setText("Actualizar Arbol");
-            edtxt_especie.setText("Caoba");
+            edtxt_especie.setText();
             edtxt_centro.setText("Rancho2");
 
-            //editMiArbol();
+
 
         }
 
@@ -186,6 +196,8 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
     }
 
     public void editMiArbol(){
+
+        //int a=77;
         DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
         databaseAccess.openRead();
 
@@ -195,15 +207,22 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
             for(int i=0; i < arboles_model.size(); i++){
 
                 ArbolesModel arboles_model2 = arboles_model.get(i);
-                arboles_model2.getFolio();
+                id_especie_obtenida = arboles_model2.getId_e();
+                id_rancho_obtenido = arboles_model2.getId_c();
+                //arboles_model2.getId_c();
+                //arboles_model2.getId_e();
             }
 
         //Toast.makeText(this, arbol.toString(), Toast.LENGTH_SHORT).show();
 
         databaseAccess.close();
 
+        //Toast.makeText(this, String.valueOf(a), Toast.LENGTH_SHORT).show();
+
 
     }
+
+
 
     private void msgRecomendacion(){
         final AlertDialog.Builder dialog_delete = new AlertDialog.Builder(AgregarArbolActivity.this);
