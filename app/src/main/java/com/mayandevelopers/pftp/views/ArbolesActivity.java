@@ -92,6 +92,8 @@ public class ArbolesActivity extends AppCompatActivity {
             /*    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
             Intent intent = new Intent(ArbolesActivity.this, AgregarArbolActivity.class);
+            intent.putExtra("id_especie",id_especie_obtenida);
+            intent.putExtra("id_rancho",id_rancho_obtenida);
             startActivity(intent);
             finish();
             }

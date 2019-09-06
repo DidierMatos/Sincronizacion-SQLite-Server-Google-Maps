@@ -17,6 +17,8 @@ import com.google.android.material.textfield.TextInputEditText;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -43,6 +45,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mayandevelopers.pftp.R;
+import com.mayandevelopers.pftp.controllers.RvArbolesController;
+import com.mayandevelopers.pftp.databaseHelper.DatabaseAccess;
+import com.mayandevelopers.pftp.models.ArbolesModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AgregarArbolActivity extends FragmentActivity implements SeekBar.OnSeekBarChangeListener, GoogleMap.OnMarkerDragListener, GoogleMap.OnMapLongClickListener,
         AdapterView.OnItemSelectedListener, OnMapReadyCallback {
@@ -66,9 +74,15 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
 
     double lat;
     double lng;
-
-
     ProgressDialog pdialog_progress_empresa;
+
+    int id_arbol_obtenido, id_especie_obtenida, id_rancho_obtenido;
+    Object arbol;
+
+    List<ArbolesModel> arboles_model;
+    RecyclerView rv_mis_arboles;
+    RvArbolesController rv_arboles_controller;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +99,12 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
         btn_ubicacion = findViewById(R.id.btnUbicacionAddArbol);
         imgbtn_back = findViewById(R.id.imgbtnBackAddArbol);
 
+        id_arbol_obtenido = getIntent().getIntExtra("id_arbol",77);
+        id_especie_obtenida = getIntent().getIntExtra("id_especie", 77);
+        id_rancho_obtenido = getIntent().getIntExtra("id_rancho", 77);
+
+        Toast.makeText(this, "especie:"+id_especie_obtenida + " rancho:" + id_rancho_obtenido, Toast.LENGTH_SHORT).show();
+
         imgbtn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,17 +112,19 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
             }
         });
 
-
         valorUpdate = getIntent().getStringExtra("update");
 
         if (valorUpdate == null){
-
+            //CREAR
 
         }else{
+
             imgbtn_add_arbol.setText("Actualizar");
             txtview_add_arbol.setText("Actualizar Arbol");
             edtxt_especie.setText("Caoba");
             edtxt_centro.setText("Rancho2");
+
+            //editMiArbol();
 
         }
 
@@ -112,8 +134,8 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
         //btn_buscar = findViewById(R.id.btnbuscar);
         //btn_buscar2 = findViewById(R.id.btnbuscar2);
 
-        edtxt_latitud.setText("-99.185594");
-        edtxt_longitud.setText("19.419289");
+        //edtxt_latitud.setText("-99.185594");
+        //edtxt_longitud.setText("19.419289");
         //edtxt_radio.setText("100");
 
 
@@ -160,6 +182,26 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
                 }
             }
         });
+
+    }
+
+    public void editMiArbol(){
+        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
+        databaseAccess.openRead();
+
+            //arbol = databaseAccess.editArboles(id_arbol_obtenido);
+            arboles_model = databaseAccess.editArboles(id_arbol_obtenido);
+
+            for(int i=0; i < arboles_model.size(); i++){
+
+                ArbolesModel arboles_model2 = arboles_model.get(i);
+                arboles_model2.getFolio();
+            }
+
+        //Toast.makeText(this, arbol.toString(), Toast.LENGTH_SHORT).show();
+
+        databaseAccess.close();
+
 
     }
 
