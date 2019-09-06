@@ -4,11 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mayandevelopers.pftp.R;
 import com.mayandevelopers.pftp.models.RanchosModel;
@@ -42,16 +45,7 @@ public class RvRanchosMuestrasController extends RecyclerView.Adapter<RvRanchosM
         final RanchosModel rancho = mData.get(position);
 
         viewHolder.txt_nombre_rancho.setText(rancho.getNombreRancho());
-
-        viewHolder.btn_muestras.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, ArbolesActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mContext.startActivity(intent);
-            }
-        });
-
+        final String id_c = rancho.getIdRancho();
 
 
         // IR A OTRA ACTIVIDAD //
@@ -59,11 +53,22 @@ public class RvRanchosMuestrasController extends RecyclerView.Adapter<RvRanchosM
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, MuestrasRanchosActivity.class);
-
+                // GUARDAR ID DEL RANCHO //
+                guardarIdRancho(mContext, id_c);
+               // Toast.makeText(mContext, id_c, Toast.LENGTH_LONG).show();
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
             }
         });
+
+    }
+
+    private static void guardarIdRancho(Context context, String id) {
+        SharedPreferences Rancho = context.getSharedPreferences("idRancho",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor;
+        editor = Rancho.edit();
+        editor.putString("idRancho",id);
+        editor.apply();
 
     }
 

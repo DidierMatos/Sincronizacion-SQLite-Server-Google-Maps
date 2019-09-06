@@ -90,10 +90,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         rv_especies =(RecyclerView) findViewById(R.id.rvEspecies);
         flt_action_btn_add=(FloatingActionButton) findViewById(R.id.flactbtnEspeciesMain);
 
-        txtview_get_especies = findViewById(R.id.txtviewGetEspeciesPrueba);
-
-
-
         // MENU DRAWER LAYOUT///
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

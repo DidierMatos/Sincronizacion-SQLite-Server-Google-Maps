@@ -1,17 +1,22 @@
 package com.mayandevelopers.pftp.views;
 
+import android.content.Context;
 import android.content.Intent;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.mayandevelopers.pftp.R;
 import com.mayandevelopers.pftp.controllers.RvMuestrasController;
+import com.mayandevelopers.pftp.databaseHelper.DatabaseAccessMuestras;
 import com.mayandevelopers.pftp.models.MuestrasModel;
 
 import java.util.ArrayList;
@@ -21,6 +26,8 @@ public class MuestrasRanchosActivity extends AppCompatActivity {
 
     List<MuestrasModel> muestrasModel;
     RvMuestrasController rv_muestras_controller;
+
+    String id_centro;
 
     RecyclerView rv_muestras;
     ImageButton imgbtn_back;
@@ -36,6 +43,14 @@ public class MuestrasRanchosActivity extends AppCompatActivity {
         imgbtn_back = (ImageButton) findViewById(R.id.imgbtnMuestras);
         floatbtn_establecer_muestra = findViewById(R.id.floatbtnAgregarMuestra);
 
+        // OBTENER EL ID DEL RANCHO SELECCIONADO //
+        SharedPreferences prefs = getSharedPreferences("idRancho", Context.MODE_PRIVATE);
+        id_centro = prefs.getString("idRancho","");
+
+
+
+        DatabaseAccessMuestras databaseAccessMuestras = DatabaseAccessMuestras.getInstance(getApplicationContext());
+
 
         // REGRESAR A LA ACTIVIDAD ANTERIOR //
         imgbtn_back.setOnClickListener(new View.OnClickListener() {
@@ -48,19 +63,18 @@ public class MuestrasRanchosActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent establecer_muestra = new Intent(MuestrasRanchosActivity.this, EstablecerMuestraActivity.class);
+                establecer_muestra.putExtra("id_centro", id_centro);
+                establecer_muestra.putExtra("accion","create");
                 startActivity(establecer_muestra);
             }
         });
 
-        muestrasModel = new ArrayList<>();
 
-        for (int i = 0; i<6; i++){
-            muestrasModel.add(new MuestrasModel(1,"muestra 1","2019-09-12"));
+        // MOSTRAR LAS MUESTRAS //
+        rv_muestras_controller = new RvMuestrasController(MuestrasRanchosActivity.this,databaseAccessMuestras.getMuestras(id_centro));
+        rv_muestras.setLayoutManager(new LinearLayoutManager(MuestrasRanchosActivity.this, RecyclerView.VERTICAL, false));
+        rv_muestras.setAdapter(rv_muestras_controller);
 
-            rv_muestras_controller = new RvMuestrasController(MuestrasRanchosActivity.this,muestrasModel);
-            rv_muestras.setLayoutManager(new LinearLayoutManager(MuestrasRanchosActivity.this, LinearLayoutManager.VERTICAL, false));
-            rv_muestras.setAdapter(rv_muestras_controller);
 
-        }
     }
 }
