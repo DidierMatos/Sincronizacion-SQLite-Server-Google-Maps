@@ -207,6 +207,37 @@ public class DatabaseAccess {
         //return buffer.toString();
     }
 
+    public void addArboles(int id_e, int id_c, String folio_arbol, String latitud_arbol, String longitud_arbol){
 
+        /*SQLiteDatabase db2 = openHelper.getWritableDatabase();
+        int num = 34;
+
+        if(db2 != null){
+
+            db2.execSQL("INSERT INTO especies (id, nombre) " +
+                    "VALUES (num, '"+ nombreEspecie +"')");
+
+        }
+
+        db2.close();*/
+
+        SQLiteDatabase db2 = openHelper.getWritableDatabase();
+
+        ContentValues registro = new ContentValues();
+        //registro.put("id", 1);
+        registro.put("id_e",id_e);
+        registro.put("id_c",id_c);
+        registro.put("folio", folio_arbol);
+        registro.put("latitud",latitud_arbol);
+        registro.put("longitud",longitud_arbol);
+
+
+        db2.insert("arboles",null,registro);
+
+        db2.close();
+
+
+
+    }
 
 }

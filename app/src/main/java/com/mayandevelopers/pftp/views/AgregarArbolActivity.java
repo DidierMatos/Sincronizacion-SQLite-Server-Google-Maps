@@ -101,8 +101,8 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
         imgbtn_back = findViewById(R.id.imgbtnBackAddArbol);
 
         id_arbol_obtenido = getIntent().getIntExtra("id_arbol",77);
-        //id_especie_obtenida = getIntent().getIntExtra("id_especie", 77);
-        //id_rancho_obtenido = getIntent().getIntExtra("id_rancho", 77);
+        id_especie_obtenida = getIntent().getIntExtra("id_especie", 77);
+        id_rancho_obtenido = getIntent().getIntExtra("id_rancho", 77);
         //Toast.makeText(this, "especie:"+id_especie_obtenida + " rancho:" + id_rancho_obtenido, Toast.LENGTH_SHORT).show();
 
        /* SharedPreferences prefs = getSharedPreferences("ESPECIE_SELECCIONADA", MODE_PRIVATE);
@@ -133,8 +133,6 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
             txtview_add_arbol.setText("Actualizar Arbol");
             edtxt_especie.setText("");
             edtxt_centro.setText("Rancho2");
-
-
 
         }
 
@@ -169,11 +167,10 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
             public void onClick(View v) {
 
                 bandera = false;
-
-                latitud = Double.parseDouble(edtxt_latitud.getText().toString());
-                longitud = Double.parseDouble(edtxt_longitud.getText().toString());
-
+                //latitud = Double.parseDouble(edtxt_latitud.getText().toString());
+                //longitud = Double.parseDouble(edtxt_longitud.getText().toString());
                 setMap();
+                addMiArbol();
 
             }
         });
@@ -193,6 +190,39 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
             }
         });
 
+    }
+
+    public void addMiArbol(){
+
+        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
+
+        databaseAccess.open();
+
+        //String id_especie = edtxt_especie.getText().toString();
+        //String id_centro = edtxt_centro.getText().toString();
+        String folio = edtxt_folio.getText().toString();
+        String latitud = edtxt_latitud.getText().toString();
+        String longitud = edtxt_longitud.getText().toString();
+
+        if(folio != null){
+            databaseAccess.addArboles(id_especie_obtenida, id_rancho_obtenido, folio, latitud, longitud);
+        }else{
+            Toast.makeText(AgregarArbolActivity.this, "Ingresa un nombre valido", Toast.LENGTH_SHORT).show();
+        }
+
+        databaseAccess.close();
+
+        reloadActivity();
+
+    }
+
+    private void reloadActivity(){
+        //finish();
+        //startActivity(getIntent());
+        Intent listarArboles = new Intent(AgregarArbolActivity.this, ArbolesActivity.class);
+        listarArboles.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        startActivity(listarArboles);
     }
 
     public void editMiArbol(){

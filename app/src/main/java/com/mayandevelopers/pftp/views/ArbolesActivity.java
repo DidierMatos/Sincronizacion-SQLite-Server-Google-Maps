@@ -60,10 +60,10 @@ public class ArbolesActivity extends AppCompatActivity {
 
         SharedPreferences prefs = getSharedPreferences("ESPECIE_SELECCIONADA", MODE_PRIVATE);
         id_especie_obtenida = prefs.getInt("id_especie", 77);
-        Toast.makeText(this,"id_especie: "+ id_especie_obtenida, Toast.LENGTH_LONG).show();
+        //Toast.makeText(this,"id_especie: "+ id_especie_obtenida, Toast.LENGTH_LONG).show();
 
         id_rancho_obtenida = getIntent().getIntExtra("id_rancho", 77);
-        //Toast.makeText(this, "id_centro: "+id_rancho_obtenida, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "id_centro: "+id_rancho_obtenida, Toast.LENGTH_SHORT).show();
 
         arboles_model = new ArrayList<>();
 
@@ -92,8 +92,8 @@ public class ArbolesActivity extends AppCompatActivity {
             /*    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
             Intent intent = new Intent(ArbolesActivity.this, AgregarArbolActivity.class);
-            //intent.putExtra("id_especie",id_especie_obtenida);
-            //intent.putExtra("id_rancho",id_rancho_obtenida);
+            intent.putExtra("id_especie",id_especie_obtenida);
+            intent.putExtra("id_rancho",id_rancho_obtenida);
             startActivity(intent);
             finish();
             }
