@@ -143,13 +143,8 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
             edtxt_latitud.setText(latitud_arbol_obtenido);
             edtxt_longitud.setText(longitud_arbol_obtenido);
 
-            imgbtn_add_arbol.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //edit
-                }
-            });
-
+            bandera = false;
+            setMap();
 
         }else{
             //CREAR
@@ -189,12 +184,18 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
             @Override
             public void onClick(View v) {
 
-                bandera = false;
-                //latitud = Double.parseDouble(edtxt_latitud.getText().toString());
-                //longitud = Double.parseDouble(edtxt_longitud.getText().toString());
-                setMap();
-                addMiArbol();
+                if (valorUpdate.equals("1")){
+                    editMiArbol();
+                    //Toast.makeText(AgregarArbolActivity.this, "actualziaste", Toast.LENGTH_SHORT).show();
 
+                }else {
+
+                    bandera = false;
+                    //latitud = Double.parseDouble(edtxt_latitud.getText().toString());
+                    //longitud = Double.parseDouble(edtxt_longitud.getText().toString());
+                    setMap();
+                    addMiArbol();
+                }
             }
         });
 
@@ -250,7 +251,7 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
 
     public void editMiArbol(){
 
-            //int a=77;
+ /*           //int a=77;
         DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
         databaseAccess.openRead();
 
@@ -267,10 +268,16 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
             }
 
         //Toast.makeText(this, arbol.toString(), Toast.LENGTH_SHORT).show();
-
         databaseAccess.close();
+        //Toast.makeText(this, String.valueOf(a), Toast.LENGTH_SHORT).show();*/
 
-        //Toast.makeText(this, String.valueOf(a), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, String.valueOf(id_arbol_obtenido), Toast.LENGTH_SHORT).show();
+
+        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
+        databaseAccess.open();
+        databaseAccess.updateArbol(id_arbol_obtenido, folio_arbol_obtenido, latitud_arbol_obtenido, longitud_arbol_obtenido);
+        databaseAccess.close();
+        //Toast.makeText(this, "actualizado", Toast.LENGTH_SHORT).show();
 
     }
 

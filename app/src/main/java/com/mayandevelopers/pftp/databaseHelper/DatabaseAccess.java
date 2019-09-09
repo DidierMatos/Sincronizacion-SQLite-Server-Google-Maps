@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.mayandevelopers.pftp.models.ArbolesModel;
 import com.mayandevelopers.pftp.models.EspeciesModel;
@@ -207,17 +209,25 @@ public class DatabaseAccess {
         //return buffer.toString();
     }
 
-    public void updateArboles(String folio,String nombre_especie){
+    public void updateArbol(int id_arbol, String folio_arbol, String latitud_arbol, String longitud_arbol){
 
-        /*SQLiteDatabase db2 = openHelper.getWritableDatabase();
+        try {
+            SQLiteDatabase db2 = openHelper.getWritableDatabase();
 
-        ContentValues actualizacion = new ContentValues();
-        actualizacion.put("id", id_especie);
-        actualizacion.put("nombre",nombre_especie);
+            ContentValues actualizacion = new ContentValues();
+            actualizacion.put("id", id_arbol);
+            actualizacion.put("folio", folio_arbol);
+            actualizacion.put("latitud", latitud_arbol);
+            actualizacion.put("longitud", longitud_arbol);
 
-        db2.update("especies",actualizacion,"id = ?", new String[] { String.valueOf(id_especie)});
+            db2.update("arboles",actualizacion,"id = ?", new String[] {String.valueOf(id_arbol)});
 
-        db2.close();*/
+            db2.close();
+        }catch(Exception e){
+            Log.e("DATA", e.toString());
+        }
+
+
 
     }
 
