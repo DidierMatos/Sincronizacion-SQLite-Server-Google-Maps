@@ -78,6 +78,7 @@ public class RvArbolesController extends RecyclerView.Adapter<RvArbolesControlle
 
                 intent.putExtra("update","1");
                 intent.putExtra("id_arbol",misarboles.getId());
+                intent.putExtra("folio_arbol", misarboles.getFolio());
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
             }

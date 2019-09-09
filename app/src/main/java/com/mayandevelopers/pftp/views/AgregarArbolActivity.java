@@ -77,7 +77,8 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
     double lng;
     ProgressDialog pdialog_progress_empresa;
 
-    int id_arbol_obtenido, id_especie_obtenida, id_rancho_obtenido;
+    int id_arbol_obtenido, id_especie_obtenido, id_rancho_obtenido;
+    String nombre_especie_obtenido, nombre_rancho_obtenido, folio_arbol_obtenido;
     Object arbol;
 
     List<ArbolesModel> arboles_model;
@@ -100,9 +101,16 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
         btn_ubicacion = findViewById(R.id.btnUbicacionAddArbol);
         imgbtn_back = findViewById(R.id.imgbtnBackAddArbol);
 
-        id_arbol_obtenido = getIntent().getIntExtra("id_arbol",77);
-        id_especie_obtenida = getIntent().getIntExtra("id_especie", 77);
+        id_especie_obtenido = getIntent().getIntExtra("id_especie", 77);
+        nombre_especie_obtenido = getIntent().getStringExtra("nombre_especie");
+        Toast.makeText(this, String.valueOf(id_especie_obtenido), Toast.LENGTH_SHORT).show();
         id_rancho_obtenido = getIntent().getIntExtra("id_rancho", 77);
+        nombre_rancho_obtenido = getIntent().getStringExtra("nombre_rancho");
+
+        id_arbol_obtenido = getIntent().getIntExtra("id_arbol",77);
+        folio_arbol_obtenido =getIntent().getStringExtra("folio_arbol");
+
+
         //Toast.makeText(this, "especie:"+id_especie_obtenida + " rancho:" + id_rancho_obtenido, Toast.LENGTH_SHORT).show();
 
        /* SharedPreferences prefs = getSharedPreferences("ESPECIE_SELECCIONADA", MODE_PRIVATE);
@@ -124,6 +132,8 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
         if (valorUpdate == null){
             //CREAR
             //Toast.makeText(this, "hola", Toast.LENGTH_SHORT).show();
+            edtxt_especie.setText(nombre_especie_obtenido);
+            edtxt_centro.setText(nombre_rancho_obtenido);
 
         }else{
 
@@ -131,8 +141,8 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
 
             imgbtn_add_arbol.setText("Actualizar");
             txtview_add_arbol.setText("Actualizar Arbol");
-            edtxt_especie.setText("");
-            edtxt_centro.setText("Rancho2");
+            edtxt_especie.setText(nombre_especie_obtenido);
+            edtxt_centro.setText(nombre_rancho_obtenido);
 
         }
 
@@ -205,7 +215,7 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
         String longitud = edtxt_longitud.getText().toString();
 
         if(folio != null){
-            databaseAccess.addArboles(id_especie_obtenida, id_rancho_obtenido, folio, latitud, longitud);
+            databaseAccess.addArboles(id_especie_obtenido, id_rancho_obtenido, folio, latitud, longitud);
         }else{
             Toast.makeText(AgregarArbolActivity.this, "Ingresa un nombre valido", Toast.LENGTH_SHORT).show();
         }
@@ -237,7 +247,7 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
             for(int i=0; i < arboles_model.size(); i++){
 
                 ArbolesModel arboles_model2 = arboles_model.get(i);
-                id_especie_obtenida = arboles_model2.getId_e();
+                id_especie_obtenido = arboles_model2.getId_e();
                 id_rancho_obtenido = arboles_model2.getId_c();
                 //arboles_model2.getId_c();
                 //arboles_model2.getId_e();

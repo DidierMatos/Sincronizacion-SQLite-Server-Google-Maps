@@ -89,8 +89,8 @@
                     android:layout_height="wrap_content"
                     android:textSize="20dp"
                     android:inputType="text"
-                    android:textColor="@color/colorBlanco"
-                    android:hint="Especie" />
+                    android:hint="Especie"
+                    android:enabled="false"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -110,8 +110,8 @@
                     android:layout_height="wrap_content"
                     android:textSize="20dp"
                     android:inputType="text"
-                    android:textColor="@color/colorBlanco"
-                    android:hint="Centro" />
+                    android:hint="Centro"
+                    android:enabled="false"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -132,7 +132,8 @@
                     android:textSize="20dp"
                     android:inputType="number"
                     android:textColor="@color/colorBlanco"
-                    android:hint="Folio" />
+                    android:hint="Folio"
+                    />
 
             </com.google.android.material.textfield.TextInputLayout>
 

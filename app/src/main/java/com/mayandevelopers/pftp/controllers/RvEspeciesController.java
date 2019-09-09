@@ -73,11 +73,11 @@ public class RvEspeciesController extends RecyclerView.Adapter<RvEspeciesControl
                 SharedPreferences sharedPref = mContext.getSharedPreferences(ESPECIE_SELECCIONADA,0);
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putInt("id_especie", misespecies.getIdEspecie());
-                //editor.putString("nombre_empresa", misespecies.getNombreEspecie());
+                editor.putString("nombre_especie", misespecies.getNombreEspecie());
                 editor.apply();
 
-                ver_arboles.putExtra("id_miespecie",misespecies.getIdEspecie());
-                ver_arboles.putExtra("nombre_miespecie", misespecies.getNombreEspecie());
+                //ver_arboles.putExtra("id_miespecie",misespecies.getIdEspecie());
+                //ver_arboles.putExtra("nombre_miespecie", misespecies.getNombreEspecie());
                 //Log.i("HOLA", String.valueOf(misespecies.getIdEspecie()));
                 ver_arboles.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(ver_arboles);
