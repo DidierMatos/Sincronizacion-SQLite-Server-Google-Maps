@@ -207,6 +207,20 @@ public class DatabaseAccess {
         //return buffer.toString();
     }
 
+    public void updateArboles(String folio,String nombre_especie){
+
+        /*SQLiteDatabase db2 = openHelper.getWritableDatabase();
+
+        ContentValues actualizacion = new ContentValues();
+        actualizacion.put("id", id_especie);
+        actualizacion.put("nombre",nombre_especie);
+
+        db2.update("especies",actualizacion,"id = ?", new String[] { String.valueOf(id_especie)});
+
+        db2.close();*/
+
+    }
+
     public void addArboles(int id_e, int id_c, String folio_arbol, String latitud_arbol, String longitud_arbol){
 
         /*SQLiteDatabase db2 = openHelper.getWritableDatabase();

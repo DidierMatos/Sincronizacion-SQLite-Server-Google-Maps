@@ -137,6 +137,28 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+<!--            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txtinputNumSerie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtinputFolio"
+                android:textColorHint="@color/colorBlanco"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@color/colorAccent"
+                app:hintTextAppearance="@style/AppTheme.FloatingLabel">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtxtNumSerie"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:inputType="number"
+                    android:textColor="@color/colorBlanco"
+                    android:hint="Numero de serie"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>-->
+
             <RelativeLayout
                 android:id="@+id/relativeUbicacion"
                 android:layout_width="match_parent"

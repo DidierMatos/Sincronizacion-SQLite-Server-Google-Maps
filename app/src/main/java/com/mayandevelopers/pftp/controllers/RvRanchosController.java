@@ -59,8 +59,8 @@ public class RvRanchosController extends RecyclerView.Adapter<RvRanchosControlle
                 //editor.putString("nombre_empresa", misespecies.getNombreEspecie());
                 editor.apply();
 
-                btn_detalles.putExtra("id_rancho",misranchos.getIdRancho());
-                btn_detalles.putExtra("nombre_rancho", misranchos.getNombreRancho());
+                //btn_detalles.putExtra("id_rancho",misranchos.getIdRancho());
+                //btn_detalles.putExtra("nombre_rancho", misranchos.getNombreRancho());
                 btn_detalles.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(btn_detalles);
             }
