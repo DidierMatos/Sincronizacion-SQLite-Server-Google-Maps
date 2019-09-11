@@ -50,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         edtxt_correo = findViewById(R.id.edtxtCorreoLogin);
         edtxt_pass = findViewById(R.id.edtxtPasswordLogin);
 
+        // INICIAR SESION //
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,8 +62,7 @@ public class LoginActivity extends AppCompatActivity {
                 databaseAccessLogin.open();
 
                 String respuesta = databaseAccessLogin.getUserByEmail(correo,pass);
-                Toast.makeText(LoginActivity.this, respuesta, Toast.LENGTH_SHORT).show();
-                /*switch (respuesta) {
+                 switch (respuesta) {
                     //Case statements
                     case "0":
                         // email incorrecto
@@ -80,9 +80,8 @@ public class LoginActivity extends AppCompatActivity {
                         // password incorrecto //
                         popUpDialogPass();
                         break;
-
                 }
-                databaseAccessLogin.close();*/
+                databaseAccessLogin.close();
             }
         });
 

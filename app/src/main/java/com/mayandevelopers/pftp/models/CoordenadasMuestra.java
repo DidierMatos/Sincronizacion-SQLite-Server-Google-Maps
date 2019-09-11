@@ -1,6 +1,6 @@
 package com.mayandevelopers.pftp.models;
 
-public class Coordenadas {
+public class CoordenadasMuestra {
 
 
     String id;
@@ -8,7 +8,7 @@ public class Coordenadas {
     double lng;
 
 
-    public Coordenadas(String id,double lat, double lng) {
+    public CoordenadasMuestra(String id, double lat, double lng) {
         this.id = id;
         this.lat = lat;
         this.lng = lng;

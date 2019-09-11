@@ -63,7 +63,6 @@ public class ArbolesActivity extends AppCompatActivity {
         nombre_especie_obtenido = prefs.getString("nombre_especie",null);
         //Toast.makeText(this, nombre_especie_obtenido, Toast.LENGTH_SHORT).show();
 
-
         SharedPreferences prefs2 = getSharedPreferences("RANCHO_SELECCIONADO", MODE_PRIVATE);
         id_rancho_obtenido = prefs2.getInt("id_rancho", 77);
         //Toast.makeText(this, "id_centro: "+id_rancho_obtenido, Toast.LENGTH_SHORT).show();

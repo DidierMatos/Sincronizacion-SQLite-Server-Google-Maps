@@ -21,11 +21,18 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.mayandevelopers.pftp.R;
+import com.mayandevelopers.pftp.databaseHelper.DatabaseAccessMuestras;
+import com.mayandevelopers.pftp.models.MuestrasModel;
+
+import java.util.Calendar;
+import java.util.List;
 
 public class EstablecerMuestraActivity extends AppCompatActivity {
 
-    double my_latitud;
-    double my_longitud;
+
+
+    DatabaseAccessMuestras databaseAccessMuestras;
+    List<MuestrasModel> listMuestras;
 
     ImageButton imgbtn_back;
     Button btn_obtener_ubicacion;
@@ -36,10 +43,21 @@ public class EstablecerMuestraActivity extends AppCompatActivity {
     EditText edtxt_folio;
     EditText edtxt_radio;
 
+    String nombre_muestra, folio_muestra, radio_muestra, latitud_muestra, longitud_muestra;
+
+    String do_accion;
+    String id_muestra_update;
+    double my_latitud;
+    double my_longitud;
+    private String id_centro;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_establecer_muestra);
+        // OBTENER INSTANCIA DE MI CLASE DATABASE ACCESS //
+        databaseAccessMuestras = DatabaseAccessMuestras.getInstance(getApplicationContext());
 
         imgbtn_back            = findViewById(R.id.imgbtnEstablecerMuestra);
         btn_obtener_ubicacion  = findViewById(R.id.btnObtenerUbicacion);
@@ -49,6 +67,18 @@ public class EstablecerMuestraActivity extends AppCompatActivity {
         edtxt_nombre           = findViewById(R.id.edtxtNombre);
         edtxt_folio            = findViewById(R.id.edtxtFolio);
         edtxt_radio            = findViewById(R.id.edtxtRadio);
+
+        // recuperar valor para identificar que la muestra se actualizara o se esta creando //
+        do_accion = getIntent().getStringExtra("accion");
+
+        // CONDICION PARA ACTUALIZAR //
+        if (do_accion.equals("update")){
+            id_muestra_update = getIntent().getStringExtra("id_muestra");
+            traerDatosMuestra(id_muestra_update);
+        }else{
+
+            id_centro = getIntent().getStringExtra("id_centro");
+        }
 
         // REGRESAR A LA ACTIVIDAD ANTERIOR //
         imgbtn_back.setOnClickListener(new View.OnClickListener() {
@@ -71,15 +101,56 @@ public class EstablecerMuestraActivity extends AppCompatActivity {
             }
         });
 
+
+
+
         btn_establecer_muestra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                guardarDatosMuestra();
-                Intent irMapa = new Intent(EstablecerMuestraActivity.this,MapaMuestraActivity.class);
-                startActivity(irMapa);
 
+                String nombre = edtxt_nombre.getText().toString().trim();
+                String folio = edtxt_folio.getText().toString().trim();
+                String latitud = edtxt_latitud.getText().toString().trim();
+                String longitud = edtxt_longitud.getText().toString().trim();
+                String radio = edtxt_radio.getText().toString().trim();
+
+                if (nombre.equals("") || folio.equals("") || latitud.equals("") || longitud.equals("") || radio.equals("")) {
+                    Toast.makeText(EstablecerMuestraActivity.this, "Por favor llena todos los campos e intentalo de nuevo ", Toast.LENGTH_SHORT).show();
+                } else {
+
+                    guardarDatosMuestra();
+                    Intent irMapa = new Intent(EstablecerMuestraActivity.this,MapaMuestraActivity.class);
+                    startActivity(irMapa);
+                }
             }
         });
+    }
+
+    // EJECUTAR CONSULTA //
+    private void traerDatosMuestra(String id_muestra) {
+        // recibir los datos que regresa la consulta //
+        listMuestras=databaseAccessMuestras.getMuestraById(id_muestra);
+
+        // RECORRER LA LISTA //
+        for (int i=0;i<listMuestras.size();i++){
+            MuestrasModel muestra = listMuestras.get(i);
+
+            nombre_muestra = muestra.getNombreMuestra();
+            folio_muestra = muestra.getFolioMuestra();
+            radio_muestra = muestra.getRadioMuestra();
+            latitud_muestra = muestra.getLatitudMuestra();
+            longitud_muestra = muestra.getLongitudMuestra();
+            id_centro = muestra.getIdCentro();
+            //Toast.makeText(this, muestra.getFechaMuestra(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, muestra.getFechaActualizacion(), Toast.LENGTH_SHORT).show();
+        }
+
+        // SETEAR EN LOS EDTXT LOS DATOS DE LA MUESTRA //
+        edtxt_nombre.setText(nombre_muestra);
+        edtxt_folio.setText(folio_muestra);
+        edtxt_radio.setText(radio_muestra);
+        edtxt_latitud.setText(latitud_muestra);
+        edtxt_longitud.setText(longitud_muestra);
     }
 
     // OBTENER UBICACION GPS //
@@ -170,24 +241,47 @@ public class EstablecerMuestraActivity extends AppCompatActivity {
         String longitud = edtxt_longitud.getText().toString();
         String radio = edtxt_radio.getText().toString();
 
+        String date = obtenerFecha();
 
         // GUARDAR EN SHARED PREFERENCES //
         SharedPreferences coordenadas = getSharedPreferences("Coordenadas",Context.MODE_PRIVATE);
         SharedPreferences.Editor editar = coordenadas.edit();
+
+        editar.putString("id_muestra",id_muestra_update);
         editar.putString("nombre", nombre);
         editar.putString("folio", folio);
         editar.putString("latitud", latitud);
         editar.putString("longitud", longitud);
         editar.putString("radio", radio);
+        editar.putString("fecha_registro",date);
+        editar.putString("fecha_actualizacion",date);
+        editar.putString("id_centro", id_centro);
         editar.apply();
 
         SharedPreferences getcoordenadas = getSharedPreferences("Coordenadas",Context.MODE_PRIVATE);
-        String r = getcoordenadas.getString("longitud","");
-       // Toast.makeText(this, r, Toast.LENGTH_SHORT).show();
+        String r = getcoordenadas.getString("fecha_registro","");
+        //Toast.makeText(this, r, Toast.LENGTH_LONG).show();
 
         /*/ IR A LA VISTA DEL MAPA
         Intent ir = new Intent(EstablecerMuestraActivity.this, MapsActivity1.class);
         startActivity(ir);*/
 
     }
+
+    private String obtenerFecha (){
+        // obtener fecha actual //
+        Calendar calendar = Calendar.getInstance();
+        int dia = calendar.get(Calendar.DAY_OF_MONTH);
+        int mes  = calendar.get(Calendar.MONTH);
+        int año = calendar.get(Calendar.YEAR);
+        int hora = calendar.get(Calendar.HOUR_OF_DAY);
+        int minuto = calendar.get(Calendar.MINUTE);
+        int segundo = calendar.get(Calendar.SECOND);
+
+        String fecha = año + "-" + (mes + 1) + "-" + dia + " " + hora + ":" + minuto + ":" + segundo;
+
+        return fecha;
+    }
+
+
 }

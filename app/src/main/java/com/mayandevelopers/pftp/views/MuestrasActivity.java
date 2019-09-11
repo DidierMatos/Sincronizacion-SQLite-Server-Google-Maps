@@ -48,7 +48,7 @@ public class MuestrasActivity extends AppCompatActivity {
 
         //ASIGNANDO ADAPTADOR AL RECYCLER VIEW//
         rv_ranchos_muestras_controller = new RvRanchosMuestrasController(MuestrasActivity.this,databaseAccessRanchos.obtenerRanchos());
-        rv_ranchos_muestras.setLayoutManager(new LinearLayoutManager(MuestrasActivity.this, LinearLayoutManager.VERTICAL,false ));
+        rv_ranchos_muestras.setLayoutManager(new LinearLayoutManager(MuestrasActivity.this, RecyclerView.VERTICAL,false ));
         rv_ranchos_muestras.setAdapter(rv_ranchos_muestras_controller);
 
        /* for (int i = 0; i<4; i++){

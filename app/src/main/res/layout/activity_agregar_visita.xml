@@ -23,6 +23,7 @@
             android:background="@drawable/ic_action_arrow_left"/>
 
         <TextView
+            android:id="@+id/txt_toolbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Registrar visita"

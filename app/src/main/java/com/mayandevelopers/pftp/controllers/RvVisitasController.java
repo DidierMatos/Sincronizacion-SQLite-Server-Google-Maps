@@ -13,8 +13,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mayandevelopers.pftp.R;
+import com.mayandevelopers.pftp.databaseHelper.DatabaseAccessVisitas;
 import com.mayandevelopers.pftp.models.VisitasModel;
 import com.mayandevelopers.pftp.views.AgregarArbolActivity;
 import com.mayandevelopers.pftp.views.AgregarVisitaActivity;
@@ -26,6 +28,8 @@ public class RvVisitasController extends RecyclerView.Adapter<RvVisitasControlle
 
     private Context mContext;
     private List<VisitasModel> mData;
+
+
 
     public RvVisitasController(Context mContext, List<VisitasModel> mData) {
         this.mContext = mContext;
@@ -42,29 +46,34 @@ public class RvVisitasController extends RecyclerView.Adapter<RvVisitasControlle
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RvVisitasController.ViewHolder viewHolder, int i) {
-       // final EspeciesModel Lonuevo = mData.get(position);
+    public void onBindViewHolder(@NonNull final RvVisitasController.ViewHolder holder, int position) {
+        final VisitasModel visita = mData.get(position);
 
 
 
+        String fecha_visita = "Visita "+visita.getId_visita()+": " +visita.getFecha_registro();
 
-        /*holder.precio_nuevo.setText(Lonuevo.getPrecio_nuevo());
-        holder.vigencia_nuevo.setText(Lonuevo.getVigencia_nuevo());
+        holder.txt_fecha_visita.setText(fecha_visita);
+        /*holder.vigencia_nuevo.setText(Lonuevo.getVigencia_nuevo());
         holder.nombre_nuevo.setText(Lonuevo.getNombre_nuevo());
         Glide.with(mContext).load(mData.get(position).getImg_nuevo()).error(R.drawable.default_picture_promo).into(holder.imag_nuevo);*/
 
-        viewHolder.btn_editar.setOnClickListener(new View.OnClickListener() {
+        holder.btn_editar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, AgregarVisitaActivity.class);
+                intent.putExtra("accion","update");
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
             }
         });
 
-        viewHolder.btn_eliminar.setOnClickListener(new View.OnClickListener() {
+        holder.btn_eliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // INSTANCIA DE MI CLASE DATABASE //
+                final DatabaseAccessVisitas databaseAccessVisitas = DatabaseAccessVisitas.getInstance(mContext);
                 // mostrar un alert dialog personalizado //
                 LayoutInflater mInflater = LayoutInflater.from(mContext);
 
@@ -85,6 +94,21 @@ public class RvVisitasController extends RecyclerView.Adapter<RvVisitasControlle
                     public void onClick(View v) {
 
                         dialog.dismiss();
+                    }
+                });
+
+                // ELIMINAR UNA VISITA //
+                btnEliminar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int id_visita = visita.getId_visita();
+
+                        int res = databaseAccessVisitas.eliminarVisitaArbol(id_visita);
+                        dialog.dismiss();
+                        mData.remove(holder.getLayoutPosition());
+                        notifyItemRemoved(holder.getLayoutPosition());
+                        Toast.makeText(mContext, "Se ha eliminado esta visita", Toast.LENGTH_SHORT).show();
+
                     }
                 });
             }

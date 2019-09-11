@@ -5,6 +5,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,6 +13,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -27,7 +29,10 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.mayandevelopers.pftp.R;
+import com.mayandevelopers.pftp.databaseHelper.DatabaseAccessMuestras;
 import com.mayandevelopers.pftp.models.Coordenadas;
+import com.mayandevelopers.pftp.models.CoordenadasMuestra;
+import com.mayandevelopers.pftp.models.MuestrasModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,8 +47,14 @@ public class MapaMuestraActivity extends FragmentActivity implements OnMapReadyC
     private Marker markerPrueba;
     double myLat, mylng, radio;
     List<Coordenadas> listCoordenadas;
+    List<CoordenadasMuestra> coordenadasMuestra = new ArrayList<>();
 
-    Button btn_guardar;
+    String nombre, folio, la, lo, ra, fecha_registro, fecha_actualizacion, id_centro, id_muestra;
+
+
+    Button btn_guardar, btn_cancelar;
+
+
 
 
     @Override
@@ -52,13 +63,20 @@ public class MapaMuestraActivity extends FragmentActivity implements OnMapReadyC
         setContentView(R.layout.activity_mapa_muestra);
 
         btn_guardar = findViewById(R.id.btnGuardarMuestra);
+        btn_cancelar = findViewById(R.id.btnCancelarMuestra);
 
 
-        // buscar shared preferences //
+        // DATOS DE LA MUESTRA A GUARDAR //
         SharedPreferences coordenadas = getSharedPreferences("Coordenadas", Context.MODE_PRIVATE);
-        String la = coordenadas.getString("latitud","");
-        String lo = coordenadas.getString("longitud","");
-        String ra = coordenadas.getString("radio","");
+        id_muestra = coordenadas.getString("id_muestra","");
+        nombre = coordenadas.getString("nombre","");
+        folio = coordenadas.getString("folio","");
+        la = coordenadas.getString("latitud","");
+        lo = coordenadas.getString("longitud","");
+        ra = coordenadas.getString("radio","");
+        fecha_registro = coordenadas.getString("fecha_registro","");
+        fecha_actualizacion = coordenadas.getString("fecha_actualizacion","");
+        id_centro = coordenadas.getString("id_centro","");
 
         // convertir coordenadas a double //
         myLat = Double.parseDouble(la);
@@ -70,24 +88,74 @@ public class MapaMuestraActivity extends FragmentActivity implements OnMapReadyC
                 .findFragmentById(R.id.mapMuestra);
         mapFragment.getMapAsync(this);
 
-        // COORDENADAS DE EJEMPLO //
-        listCoordenadas = new ArrayList<>();
-        listCoordenadas.add(new Coordenadas(19.5775,-88.0454));
-        listCoordenadas.add(new Coordenadas(19.5785,-88.0454));
-        listCoordenadas.add(new Coordenadas(19.5785,-88.0447));
-        listCoordenadas.add(new Coordenadas(19.5791,-88.0447));
-        listCoordenadas.add(new Coordenadas(19.5785,-88.0457));
-        listCoordenadas.add(new Coordenadas(19.5784,-88.0458));
-        listCoordenadas.add(new Coordenadas(19.5795,-88.0457));
-        listCoordenadas.add(new Coordenadas(19.5791,-88.0442));
-        listCoordenadas.add(new Coordenadas(19.5791,-88.0464));
-        listCoordenadas.add(new Coordenadas(20.212,-87.466));
+        final DatabaseAccessMuestras databaseAccessMuestras = DatabaseAccessMuestras.getInstance(getApplicationContext());
 
+
+        // guardar las coordenadas encontradas en mi lista//
+        listCoordenadas = databaseAccessMuestras.getCoordenadasArboles(id_centro);
+
+        btn_cancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
+        // GUARDAR O ACTUALIZAR LA MUESTRA //
         btn_guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent ir = new Intent(MapaMuestraActivity.this, MuestrasRanchosActivity.class);
-                startActivity(ir);
+
+                // CONDICION PARA IDENTIFICAR SI SE ESTA ACTUALIZANDO UNA MUESTRA O SE ESTA CREANDO UNA MUESTRA //
+                if (!id_muestra.equals("")){
+                    // PREPARAR VALORES A ACTUALIZAR //
+                    ContentValues valuesUpdate = new ContentValues();
+                    valuesUpdate.put("nombre", nombre);
+                    valuesUpdate.put("folio", folio);
+                    valuesUpdate.put("latitud", la);
+                    valuesUpdate.put("longitud", lo);
+                    valuesUpdate.put("radio", ra);
+                    valuesUpdate.put("fecha_actualizacion", fecha_actualizacion);
+                    valuesUpdate.put("id_c", id_centro);
+
+                    // EJECUTAR METODO PARA ACTUALIZAR //
+                    int num_registros_actualizados = databaseAccessMuestras.actualizarMuestra(id_muestra, valuesUpdate);
+                    int num_reg_eliminados = databaseAccessMuestras.eliminarRelacionMuestraArbol(id_muestra);
+
+                    // RETARDO ENTRE INSERCIONES //
+                    new Handler().postDelayed(new Runnable(){
+                        public void run(){
+                            // INSERTAR A LA BD LA RELACION DE LA MUESTRA-ARBOL //
+                            String id = databaseAccessMuestras.agregarRelacionMuestraArbol(id_muestra, coordenadasMuestra);
+                            //Toast.makeText(MapaMuestraActivity.this, id, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MapaMuestraActivity.this, "La muestra se actualizó correctamente", Toast.LENGTH_SHORT).show();
+                            Intent ir = new Intent(MapaMuestraActivity.this,MuestrasRanchosActivity.class);
+                            ir.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(ir);
+                        }
+                    }, 1000);
+
+                }else{
+
+                    // insertar muestra en base de datos //
+                    final String id_muestra =databaseAccessMuestras.agregarMuestra(nombre, folio,la, lo, ra, fecha_registro, id_centro);
+
+                    // RETARDO ENTRE INSERCIONES //
+                    new Handler().postDelayed(new Runnable(){
+                        public void run(){
+                            // INSERTAR A LA BD LA RELACION DE LA MUESTRA-ARBOL //
+                            String id = databaseAccessMuestras.agregarRelacionMuestraArbol(id_muestra, coordenadasMuestra);
+                            //Toast.makeText(MapaMuestraActivity.this, id, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MapaMuestraActivity.this, "La muestra se guardo correctamente", Toast.LENGTH_SHORT).show();
+                            Intent ir = new Intent(MapaMuestraActivity.this,MuestrasRanchosActivity.class);
+                            ir.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(ir);
+                        }
+                    }, 1000);
+
+                }
+               /* Intent ir = new Intent(MapaMuestraActivity.this, MuestrasRanchosActivity.class);
+                startActivity(ir);*/
             }
         });
 
@@ -145,11 +213,13 @@ public class MapaMuestraActivity extends FragmentActivity implements OnMapReadyC
     public void Antut (GoogleMap googleMap){
         mMap = googleMap;
 
+
         for (int i = 0; i<listCoordenadas.size();i++){
 
             Coordenadas listLat = listCoordenadas.get(i);
             double lati = listLat.getLat();
             double longi= listLat.getLng();
+            String id = listLat.getId();
 
             double PI_RAD = Math.PI / 180.0;
             double phi1 = myLat * PI_RAD;
@@ -161,6 +231,9 @@ public class MapaMuestraActivity extends FragmentActivity implements OnMapReadyC
            // Toast.makeText(this, Double.toString(distancia), Toast.LENGTH_SHORT).show();
 
             if (distancia <= radio/1000){
+
+                // AGREGAR COORDENADAS DE LOS ARBOLES A UNA LISTA //
+                addCoordenadas(id, lati, longi);
                 LatLng arbol = new LatLng(lati , longi);
                 mMap.addMarker(new MarkerOptions().position(arbol).title("Cedro").snippet("Arbol en crecimiento altura 1.5 m").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker_tree_green)));
             }else{
@@ -168,6 +241,7 @@ public class MapaMuestraActivity extends FragmentActivity implements OnMapReadyC
                 mMap.addMarker(new MarkerOptions().position(arbol).title("Cedro").snippet("Arbol en crecimiento altura 1.5 m").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker_tree_red)));
             }
         }
+
 
         /*// prueba /
         LatLng prueba = new LatLng(20.212, -87.466 );
@@ -182,6 +256,15 @@ public class MapaMuestraActivity extends FragmentActivity implements OnMapReadyC
         //googleMap.setOnMarkerClickListener(this);
 
 
+    }
+
+    // AGREGAR LAS COORDENADAS QUE ESTAN DENTRO DEL RANGO A UNA NUEVA LISTA //
+    private void addCoordenadas(String id, double latitud, double longitud) {
+
+        coordenadasMuestra.add(new CoordenadasMuestra(id,latitud,longitud));
+        int tamanio = coordenadasMuestra.size();
+        String size = String.valueOf(tamanio);
+        //Toast.makeText(MapaMuestraActivity.this, id, Toast.LENGTH_SHORT).show();
     }
 
     @Override
