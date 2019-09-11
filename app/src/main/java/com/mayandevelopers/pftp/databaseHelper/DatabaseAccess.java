@@ -130,6 +130,7 @@ public class DatabaseAccess {
         ContentValues actualizacion = new ContentValues();
         actualizacion.put("id", id_especie);
         actualizacion.put("nombre",nombre_especie);
+        //actualizacion.put("sad","sad");
 
         db2.update("especies",actualizacion,"id = ?", new String[] { String.valueOf(id_especie)});
 
@@ -211,23 +212,29 @@ public class DatabaseAccess {
 
     public void updateArbol(int id_arbol, String folio_arbol, String latitud_arbol, String longitud_arbol){
 
-        try {
+            //Log.v("UPDATEARBOL", id_arbol+folio_arbol+latitud_arbol+longitud_arbol);
+
             SQLiteDatabase db2 = openHelper.getWritableDatabase();
 
-            ContentValues actualizacion = new ContentValues();
-            actualizacion.put("id", id_arbol);
-            actualizacion.put("folio", folio_arbol);
-            actualizacion.put("latitud", latitud_arbol);
-            actualizacion.put("longitud", longitud_arbol);
+            ContentValues actualizacion2 = new ContentValues();
+            actualizacion2.put("id", id_arbol);
+            actualizacion2.put("folio", folio_arbol);
+            //actualizacion2.put("num_serie","nnnn");
+            actualizacion2.put("latitud", latitud_arbol);
+            actualizacion2.put("longitud", longitud_arbol);
+            //actualizacion2.put("id_c", 1);
+            //actualizacion2.put("id_e",6);
+            //actualizacion2.put("fecha_registro", "sdfsafd");
+            //actualizacion2.put("fecha_actualizacion", "asdafs");
 
-            db2.update("arboles",actualizacion,"id = ?", new String[] {String.valueOf(id_arbol)});
+            //actualizacion2.put("sad","sad");
+
+            db2.update("arboles",actualizacion2,"id = ?", new String[] {String.valueOf(id_arbol)});
+
+             //String strSQL = "UPDATE arboles set folio = "+ folio_arbol +", latitud = "+latitud_arbol+", longitud = "+longitud_arbol+ " WHERE id ="+ id_arbol;
+             //db2.execSQL(strSQL);
 
             db2.close();
-        }catch(Exception e){
-            Log.e("DATA", e.toString());
-        }
-
-
 
     }
 

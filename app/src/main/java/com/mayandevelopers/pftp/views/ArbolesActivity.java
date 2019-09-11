@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -48,29 +50,32 @@ public class ArbolesActivity extends AppCompatActivity {
 
         rv_mis_arboles = findViewById(R.id.rvMisArboles);
         imgbtn_back = findViewById(R.id.imgbtnBackRanchos);
-
-
+        
         imgbtn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
         });
-
-
+        
         SharedPreferences prefs = getSharedPreferences("ESPECIE_SELECCIONADA", MODE_PRIVATE);
         id_especie_obtenido = prefs.getInt("id_especie", 77);
         nombre_especie_obtenido = prefs.getString("nombre_especie",null);
         //Toast.makeText(this, nombre_especie_obtenido, Toast.LENGTH_SHORT).show();
 
-        id_rancho_obtenido = getIntent().getIntExtra("id_rancho", 77);
+
+        SharedPreferences prefs2 = getSharedPreferences("RANCHO_SELECCIONADO", MODE_PRIVATE);
+        id_rancho_obtenido = prefs2.getInt("id_rancho", 77);
+        //Toast.makeText(this, "id_centro: "+id_rancho_obtenido, Toast.LENGTH_SHORT).show();
+        nombre_rancho_obtenido = prefs2.getString("nombre_rancho",null);
+
+  /*      id_rancho_obtenido = getIntent().getIntExtra("id_rancho", 77);
         //Toast.makeText(this, "id_centro: "+id_rancho_obtenido, Toast.LENGTH_SHORT).show();
         nombre_rancho_obtenido = getIntent().getStringExtra("nombre_rancho");
-        //Toast.makeText(this,"id_especie: "+ id_especie_obtenida, Toast.LENGTH_LONG).show();
+        //Toast.makeText(this,"id_especie: "+ id_especie_obtenida, Toast.LENGTH_LONG).show();*/
 
         //nombre_rancho_obtenido = getIntent().getStringExtra("nombre_rancho");
-
-
+        Toast.makeText(this, "id_especie: " + id_especie_obtenido + " nombre_especie: " + nombre_especie_obtenido + " id_rancho: " + id_rancho_obtenido + " nombre_rancho: " + nombre_rancho_obtenido, Toast.LENGTH_SHORT).show();
 
         arboles_model = new ArrayList<>();
 
