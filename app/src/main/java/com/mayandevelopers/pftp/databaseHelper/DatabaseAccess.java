@@ -290,4 +290,18 @@ public class DatabaseAccess {
         //return buffer.toString();
     }
 
+    public void eliminarArboles(int id_arbol){
+
+        SQLiteDatabase db2 = openHelper.getWritableDatabase();
+
+        //ContentValues eliminacion = new ContentValues();
+        //eliminacion.put("id", id_especie);
+        //actualizacion.put("nombre",nombre_especie);
+
+        db2.delete("arboles","id = ?", new String[] { String.valueOf(id_arbol)});
+
+        db2.close();
+
+    }
+
 }
