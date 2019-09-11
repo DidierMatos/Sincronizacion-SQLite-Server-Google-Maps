@@ -186,6 +186,7 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
 
                 if (valorUpdate != null){
                     editMiArbol();
+                    loadMisArboles();
                     reloadActivity();
                     //Toast.makeText(AgregarArbolActivity.this, "actualziaste", Toast.LENGTH_SHORT).show();
 
@@ -274,6 +275,11 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
         //Toast.makeText(this, String.valueO   f(id_arbol_obtenido), Toast.LENGTH_SHORT).show();
 
         //Toast.makeText(this, "id_arbol: " + id_arbol_obtenido + " folio: " + folio_arbol_obtenido + " latitud: " + latitud_arbol_obtenido + " longitud " + longitud_arbol_obtenido, Toast.LENGTH_SHORT).show();
+
+        folio_arbol_obtenido = edtxt_folio.getText().toString();
+        latitud_arbol_obtenido = edtxt_latitud.getText().toString();
+        longitud_arbol_obtenido = edtxt_longitud.getText().toString();
+
         DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
         databaseAccess.open();
         databaseAccess.updateArbol(id_arbol_obtenido, folio_arbol_obtenido, latitud_arbol_obtenido, longitud_arbol_obtenido);
@@ -286,9 +292,23 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
         DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
         databaseAccess.openRead();
 
-        databaseAccess.getArboles2(id_arbol_obtenido);
+        //arbol = databaseAccess.editArboles(id_arbol_obtenido);
+        arboles_model = databaseAccess.getArbolesInfo(id_arbol_obtenido);
 
+        for(int i=0; i < arboles_model.size(); i++){
+
+            ArbolesModel arboles_model2 = arboles_model.get(i);
+            folio_arbol_obtenido = arboles_model2.getFolio();
+            latitud_arbol_obtenido = arboles_model2.getLatitud();
+            longitud_arbol_obtenido = arboles_model2.getLongitud();
+            //arboles_model2.getId_c();
+            //arboles_model2.getId_e();
+        }
+
+        //Toast.makeText(this, arbol.toString(), Toast.LENGTH_SHORT).show();
         databaseAccess.close();
+
+        Toast.makeText(this, "id_arbol: " + id_arbol_obtenido + " folio: " + folio_arbol_obtenido + " latitud: " + latitud_arbol_obtenido + " longitud " + longitud_arbol_obtenido, Toast.LENGTH_SHORT).show();
     }
 
 

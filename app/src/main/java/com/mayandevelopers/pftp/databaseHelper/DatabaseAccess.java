@@ -271,4 +271,23 @@ public class DatabaseAccess {
 
     }
 
+    public List<ArbolesModel> getArbolesInfo(int id_arbol){
+        List<ArbolesModel> arboles = new ArrayList<>();
+
+        //c=db.rawQuery("select * from centros where id = '"+id_especie+"'",null);
+        c=db.rawQuery("select * from arboles where id" + "= ?",new String[]{String.valueOf(id_arbol)});
+
+        //StringBuffer buffer = new StringBuffer();
+        /*EspeciesModel especiesModel = new EspeciesModel();*/
+
+        if(c.moveToFirst()){
+            do {
+                arboles.add(new ArbolesModel(c.getInt(0),c.getString(1),c.getString(2),c.getString(3), c.getString(4), c.getInt(5), c.getInt(6)));
+            }while(c.moveToNext());
+        }
+
+        return arboles;
+        //return buffer.toString();
+    }
+
 }
