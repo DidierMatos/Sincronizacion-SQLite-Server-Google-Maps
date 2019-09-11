@@ -299,6 +299,7 @@ public class DatabaseAccess {
         //actualizacion.put("nombre",nombre_especie);
 
         db2.delete("arboles","id = ?", new String[] { String.valueOf(id_arbol)});
+        db2.delete("muestra_arbol", "id_arbol = ?", new String[] {String.valueOf(id_arbol)});
 
         db2.close();
 

@@ -51,7 +51,7 @@ public class RvArbolesController extends RecyclerView.Adapter<RvArbolesControlle
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RvArbolesController.ViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(@NonNull final RvArbolesController.ViewHolder viewHolder, final int position) {
         final ArbolesModel misarboles = mData.get(position);
 
         viewHolder.txtview_folio.setText(misarboles.getFolio());
@@ -128,8 +128,8 @@ public class RvArbolesController extends RecyclerView.Adapter<RvArbolesControlle
                         //mData.set(position,mData.get(position));
 
                         dialog.dismiss();
-                        mData.remove(position);
-                        notifyItemRemoved(position);
+                        mData.remove(viewHolder.getLayoutPosition());
+                        notifyItemRemoved(viewHolder.getLayoutPosition());
                         //notifyItemRangeChanged(position, mData.size());
 
                     }
