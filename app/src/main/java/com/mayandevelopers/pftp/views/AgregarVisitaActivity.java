@@ -1,11 +1,17 @@
 package com.mayandevelopers.pftp.views;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.location.LocationProvider;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
@@ -14,6 +20,8 @@ import androidx.annotation.NonNull;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
 import android.os.Bundle;
 import android.text.TextWatcher;
 import android.view.View;
@@ -27,6 +35,7 @@ import android.widget.Toast;
 
 import com.mayandevelopers.pftp.MainActivity;
 import com.mayandevelopers.pftp.R;
+import com.mayandevelopers.pftp.databaseHelper.DatabaseAccessVisitas;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -38,24 +47,43 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class AgregarVisitaActivity extends AppCompatActivity {
 
+    DatabaseAccessVisitas databaseAccessVisitas;
+    LocationManager mlocManager;
+    Localizacion Local;
+
     private static final int PICK_IMAGE_REQUEST = 1;
     private final int MY_PERMISSIONS = 100;
     private final int PHOTO_CODE = 200;
     private final int SELECT_PICTURE = 300;
-
     private Bitmap bitmapImage;
     String fecha;
+    int id_arbol;
+    String action;
+    double my_latitud;
+    double my_longitud;
+
+    String lat;
+    String lng;
+
 
     FloatingActionButton floatbtn_tomar_foto;
     ImageView imgview_foto;
     ImageButton imgbtn_back;
     ImageButton imgbtn_fecha;
+    TextView txt_toolbar_text;
+    Button btn_cancelar, btn_guardar;
     EditText edtxt_fecha_visita, edtxt_altura, edtxt_diametro, edtxt_observaciones, edtxt_vigor, edtxt_condicion, edtxt_sanidad;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agregar_visita);
+        // INSTANCIA DE MI CLASE DATABASE //
+        databaseAccessVisitas = DatabaseAccessVisitas.getInstance(getApplicationContext());
+        // permisos en el manifest //
+        permisosManifest();
+
+
 
         floatbtn_tomar_foto = (FloatingActionButton) findViewById(R.id.floatbtnTomarFoto);
         imgview_foto        = (ImageView) findViewById(R.id.imgviewFotoVisita);
@@ -68,6 +96,27 @@ public class AgregarVisitaActivity extends AppCompatActivity {
         edtxt_vigor         = (EditText) findViewById(R.id.edtxtVigor);
         edtxt_condicion     = (EditText) findViewById(R.id.edtxtCondicion);
         edtxt_sanidad       = (EditText) findViewById(R.id.edtxtSanidad);
+        txt_toolbar_text    = (TextView) findViewById(R.id.txt_toolbar);
+        btn_cancelar        = (Button) findViewById(R.id.btnCancelarVisita);
+        btn_guardar        = (Button) findViewById(R.id.btnGuardarVisita);
+
+
+        // OBTENER ID DEL ARBOL //
+        id_arbol = getIntent().getIntExtra("id_arbol",0);
+        // OBTENER ACCION A REALIZAR //
+        action = getIntent().getStringExtra("accion");
+        if (action.equals("update")){
+            txt_toolbar_text.setText("Actualizar visita");
+        }
+
+        // GUARDAR VISITA //
+        btn_guardar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                guardarVisita();
+            }
+        });
 
 
         // TOMAR FOTO //
@@ -82,6 +131,7 @@ public class AgregarVisitaActivity extends AppCompatActivity {
         imgbtn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 onBackPressed();
             }
         });
@@ -95,6 +145,151 @@ public class AgregarVisitaActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    private void permisosManifest(){
+        // PERMISOS DE USO DEL GPS //
+        if (ActivityCompat.checkSelfPermission(AgregarVisitaActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(AgregarVisitaActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(AgregarVisitaActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,}, 1000);
+        } else {
+            obtenerUbicacion();
+        }
+    }
+
+    // OBTENER UBICACION GPS //
+    private void obtenerUbicacion(){
+
+        mlocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        Local = new Localizacion();
+        Local.setMainActivity(this);
+        final boolean gpsEnabled = mlocManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        if (!gpsEnabled) {
+            /// si no esta activado el gps //
+            Intent settingsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            startActivity(settingsIntent);
+        }
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,}, 1000);
+            return;
+        }
+        mlocManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, (LocationListener) Local);
+        mlocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) Local);
+    }
+
+    // GUARDAR LA VISITA //
+    private void guardarVisita() {
+        String fecha = edtxt_fecha_visita.getText().toString().trim();
+        String altura = edtxt_fecha_visita.getText().toString().trim();
+        String diametro = edtxt_fecha_visita.getText().toString().trim();
+        String observaciones = edtxt_fecha_visita.getText().toString().trim();
+        String vigor = edtxt_fecha_visita.getText().toString().trim();
+        String condicion = edtxt_fecha_visita.getText().toString().trim();
+        String sanidad = edtxt_fecha_visita.getText().toString().trim();
+        String latitud = lat;
+        String longitud = lng;
+
+        String fecha_registro = obtenerFecha();
+        String fecha_actualizacion = obtenerFecha();
+
+        if ( bitmapImage == null ||fecha.equals("") || altura.equals("") || diametro.equals("") || observaciones.equals("") || vigor.equals("") || condicion.equals("") || sanidad.equals("")) {
+
+            Toast.makeText(AgregarVisitaActivity.this, "Rellena todos los campos o sube una imagen", Toast.LENGTH_SHORT).show();
+        }else{
+
+            //Toast.makeText(this, lat+" "+lng+" "+ fecha_registro + " " + fecha_actualizacion, Toast.LENGTH_SHORT).show();
+
+            String id_visita = databaseAccessVisitas.registrarVisita(fecha,altura,diametro,observaciones,vigor,condicion,sanidad,
+                   String.valueOf(id_arbol),fecha_registro,fecha_actualizacion,lat,lng);
+            //Toast.makeText(this, id_visita, Toast.LENGTH_SHORT).show();
+
+            ///IR A LA ACTIVIDAD PRINCIPAL//
+            Intent ir = new Intent(AgregarVisitaActivity.this, VisitasActivity.class);
+            ir.putExtra("id_arbol",id_arbol);
+            ir.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(ir);
+        }
+    }
+
+
+   /* // PERMISOS  DE GPS//
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == 1000) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                obtenerUbicacion();
+            }
+        }
+    }*/
+
+    // Aqui empieza la Clase Localizacion //
+    public class Localizacion implements LocationListener {
+        AgregarVisitaActivity establecerMuestraActivity;
+
+        public AgregarVisitaActivity getMainActivity() {
+            return establecerMuestraActivity;
+        }
+        public void setMainActivity(AgregarVisitaActivity mainActivity) {
+            this.establecerMuestraActivity = mainActivity;
+        }
+
+        @Override
+        public void onLocationChanged(Location loc) {
+            // Este metodo se ejecuta cada vez que el GPS recibe nuevas coordenadas debido a la deteccion de un cambio de ubicacion
+            my_latitud = loc.getLatitude();
+            my_longitud = loc.getLongitude();
+            lat = String.valueOf(my_latitud);
+            lng = String.valueOf(my_longitud);
+
+            // REMOVER EL ECUCHADOR DE CAMBIIO DE UBICACION UNA VES QUE SE OBTENGA LA UBICACION DEL DISPOSITIVO //
+            mlocManager.removeUpdates(this);
+
+            //Toast.makeText(establecerMuestraActivity, lat+" ", Toast.LENGTH_SHORT).show();
+
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+            // Este metodo se ejecuta cuando el GPS es desactivado
+            //  String gp = "GPS Desactivado";
+            Toast.makeText(establecerMuestraActivity, "GPS Desactivado", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+            // Este metodo se ejecuta cuando el GPS es activado
+            obtenerUbicacion();
+
+            //Toast.makeText(establecerMuestraActivity, "GPS Activado", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+            switch (status) {
+                case LocationProvider.AVAILABLE:
+                    Toast.makeText(establecerMuestraActivity, "LocationProvider.AVAILABLE\"", Toast.LENGTH_SHORT).show();
+                    break;
+                case LocationProvider.OUT_OF_SERVICE:
+                    Toast.makeText(establecerMuestraActivity, "LocationProvider.OUT_OF_SERVICE\"", Toast.LENGTH_SHORT).show();
+                    break;
+                case LocationProvider.TEMPORARILY_UNAVAILABLE:
+                    Toast.makeText(establecerMuestraActivity, "LocationProvider.TEMPORARILY_UNAVAILABLE\"", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+    }
+
+    private String obtenerFecha (){
+        // obtener fecha actual //
+        Calendar calendar = Calendar.getInstance();
+        int dia = calendar.get(Calendar.DAY_OF_MONTH);
+        int mes  = calendar.get(Calendar.MONTH);
+        int año = calendar.get(Calendar.YEAR);
+        int hora = calendar.get(Calendar.HOUR_OF_DAY);
+        int minuto = calendar.get(Calendar.MINUTE);
+        int segundo = calendar.get(Calendar.SECOND);
+
+        String fecha = año + "-" + (mes + 1) + "-" + dia + " " + hora + ":" + minuto + ":" + segundo;
+
+        return fecha;
     }
 
     // crear pop up //
@@ -113,7 +308,7 @@ public class AgregarVisitaActivity extends AppCompatActivity {
         int dia = calendar.get(Calendar.DAY_OF_MONTH);
         int mes  = calendar.get(Calendar.MONTH);
         int año = calendar.get(Calendar.YEAR);
-        fecha = dia + "/" + (mes + 1) + "/" + año;
+        fecha = año  + "/" + (mes + 1) + "/" +dia ;
 
         text_fecha.setText(fecha);
 
@@ -227,6 +422,12 @@ public class AgregarVisitaActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == 1000) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                obtenerUbicacion();
+            }
+        }
 
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
             if(requestCode == 100) {

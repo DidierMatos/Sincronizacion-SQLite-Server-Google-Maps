@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mayandevelopers.pftp.R;
 import com.mayandevelopers.pftp.models.ArbolesModel;
@@ -54,11 +55,15 @@ public class RvArbolesController extends RecyclerView.Adapter<RvArbolesControlle
 
         viewHolder.txtview_folio.setText(misarboles.getFolio());
 
+        final int id_arbol = misarboles.getId();
+
 
         viewHolder.btn_visitas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, VisitasActivity.class);
+                intent.putExtra("id_arbol",id_arbol);
+
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
 
