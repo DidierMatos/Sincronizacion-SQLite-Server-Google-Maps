@@ -60,7 +60,7 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
     private GoogleMap mMap;
     //EditText edtxt_longitud,edtxt_latitud, edtxt_radio;
     private Button btn_buscar, btn_buscar2;
-    private String longitud, latitud, folio, radio;
+    private String longitud, latitud, folio, numserie, radio;
     private Boolean bandera = false;
     private Marker marcador;
     private UiSettings mUiSettings;
@@ -71,7 +71,7 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
     private TextView txtview_add_arbol;
     private Button btn_ubicacion;
     private Button imgbtn_add_arbol, imgbtn_ubicacion;
-    private TextInputEditText edtxt_especie, edtxt_centro, edtxt_folio, edtxt_latitud, edtxt_longitud;
+    private TextInputEditText edtxt_especie, edtxt_centro, edtxt_folio, edtxt_numserie, edtxt_latitud, edtxt_longitud;
     private ImageButton imgbtn_back;
 
     private double lat, lng, dlatitud, dlongitud;
@@ -85,6 +85,8 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
     private RecyclerView rv_mis_arboles;
     private RvArbolesController rv_arboles_controller;
 
+    private int contador = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +97,7 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
         edtxt_especie = findViewById(R.id.edtxtEspecie);
         edtxt_centro = findViewById(R.id.edtxtCentro);
         edtxt_folio = findViewById(R.id.edtxtFolio);
+        edtxt_numserie = findViewById(R.id.edtxtNumSerie);
         edtxt_latitud = findViewById(R.id.edtxtLatitud);
         edtxt_longitud = findViewById(R.id.edtxtLongitud);
         imgbtn_add_arbol = findViewById(R.id.btnAddArbol);
@@ -119,34 +122,26 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
 
         id_arbol_obtenido = getIntent().getIntExtra("id_arbol",77);
         folio_arbol_obtenido =getIntent().getStringExtra("folio_arbol");
+        numserie_arbol_obtenido = getIntent().getStringExtra("numserie_arbol");
         latitud_arbol_obtenido = getIntent().getStringExtra("latitud_arbol");
         longitud_arbol_obtenido = getIntent().getStringExtra("longitud_arbol");
 
-
-
-        imgbtn_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-
         valorUpdate = getIntent().getStringExtra("update");
 
-        if (valorUpdate != null){
+        if (valorUpdate != null){ //actualizacion
 
             imgbtn_add_arbol.setText("Actualizar");
             txtview_add_arbol.setText("Actualizar Arbol");
             edtxt_especie.setText(nombre_especie_obtenido);
             edtxt_centro.setText(nombre_rancho_obtenido);
             edtxt_folio.setText(folio_arbol_obtenido);
+            edtxt_numserie.setText(numserie_arbol_obtenido);
             edtxt_latitud.setText(latitud_arbol_obtenido);
             edtxt_longitud.setText(longitud_arbol_obtenido);
 
-            bandera = false;
             setMap();
 
-        }else{
+        }else{ //agregar
             //CREAR
             //Toast.makeText(this, "hola", Toast.LENGTH_SHORT).show();
             edtxt_especie.setText(nombre_especie_obtenido);
@@ -194,7 +189,6 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
 
                     //latitud = Double.parseDouble(edtxt_latitud.getText().toString());
                     //longitud = Double.parseDouble(edtxt_longitud.getText().toString());
-
                     addMiArbol();
                     reloadActivity();
                 }
@@ -210,11 +204,17 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
                         msgRecomendacion();
 
                 } else {
+                    contador = 0;
                     locationStart();
-                    bandera = false;
-                    setMap();
                     //Toast.makeText(AgregarArbolActivity.this, "HOLA", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        imgbtn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
 
@@ -227,11 +227,12 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
         //String id_especie = edtxt_especie.getText().toString();
         //String id_centro = edtxt_centro.getText().toString();
         folio = edtxt_folio.getText().toString();
+        numserie = edtxt_numserie.getText().toString();
         latitud = edtxt_latitud.getText().toString();
         longitud = edtxt_longitud.getText().toString();
 
         if(folio != null){
-            databaseAccess.addArboles(id_especie_obtenido, id_rancho_obtenido, folio, latitud, longitud);
+            databaseAccess.addArboles(id_especie_obtenido, id_rancho_obtenido, folio, numserie, latitud, longitud);
         }else{
             Toast.makeText(AgregarArbolActivity.this, "Ingresa un nombre valido", Toast.LENGTH_SHORT).show();
         }
@@ -350,8 +351,8 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,}, 1000);
             return;
         }
-        mlocManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, (LocationListener) Local);
-        mlocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) Local);
+        mlocManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0, (LocationListener) Local);
+        mlocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, (LocationListener) Local);
 
     }
 
@@ -381,12 +382,17 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
         public void onLocationChanged(Location loc) {
             // Este metodo se ejecuta cada vez que el GPS recibe nuevas coordenadas debido a la deteccion de un cambio de ubicacion
 
-            String Text = "Mi ubicacion actual es: " + loc.getLatitude() + " " + loc.getLongitude();
-            lat = loc.getLatitude();
-            lng = loc.getLongitude();
+            if(contador < 10) {
 
-            edtxt_latitud.setText(String.valueOf(lat));
-            edtxt_longitud.setText(String.valueOf(lng));
+                String Text = "Mi ubicacion actual es: " + loc.getLatitude() + " " + loc.getLongitude();
+                lat = loc.getLatitude();
+                lng = loc.getLongitude();
+
+                edtxt_latitud.setText(String.valueOf(lat));
+                edtxt_longitud.setText(String.valueOf(lng));
+
+                contador++;
+            }
 
             // Toast.makeText(mainActivity, Text, Toast.LENGTH_SHORT).show();
             //this.mainActivity.setLocation(loc);
@@ -427,14 +433,20 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
     ////////  A ////////
     public void setMap(){
 
-        latitud = edtxt_latitud.getText().toString();
-        longitud = edtxt_longitud.getText().toString();
-
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment)getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(AgregarArbolActivity.this);
 
+    }
+
+    public void deleteMap(){
+        marcador.remove();
+    }
+
+    public void updateMap(){
+        //deleteMap();
+        setMap();
     }
 
 
@@ -452,27 +464,18 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        dlatitud = Double.valueOf(latitud);
-        dlongitud = Double.valueOf(longitud);
 
-        LatLng sydney = new LatLng(Double.valueOf(dlatitud), Double.valueOf(dlongitud));
+        latitud = edtxt_latitud.getText().toString();
+        longitud = edtxt_longitud.getText().toString();
+
+        lat = Double.valueOf(latitud);
+        lng = Double.valueOf(longitud);
+
+        LatLng sydney = new LatLng(Double.valueOf(lat), Double.valueOf(lng));
 
         /*mMap.addMarker(new MarkerOptions().position(sydney).title("AQUI"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));*/
 
-        if(bandera){
-            // Instantiates a new CircleOptions object and defines the center and radius
-            CircleOptions circleOptions = new CircleOptions()
-                    .center(sydney)
-                    .radius(Double.valueOf(radio))
-                    .strokeColor(Color.parseColor("#FF008000"))
-                    .fillColor(Color.parseColor("#F24B3621"))
-                    .strokeWidth(10)
-                    .clickable(true); // In meters
-
-            // Get back the mutable Circle
-            Circle circle = mMap.addCircle(circleOptions);
-        }else{
             //Toast.makeText(this, "HOLIII", Toast.LENGTH_SHORT).show();
             Bitmap imagenOriginal = BitmapFactory.decodeResource(getResources(),R.drawable.icon_marcador_arbol);
             Bitmap imagenFinal = Bitmap.createScaledBitmap(imagenOriginal,80,80,false);
@@ -487,7 +490,6 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
                     .icon(BitmapDescriptorFactory.fromBitmap(imagenFinal))
             );
             marcador.setTag(0);
-        }
 
         onGoToBondi();
 
@@ -510,7 +512,7 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
         }
 
         BONDI =
-                new CameraPosition.Builder().target(new LatLng(dlatitud, dlongitud))
+                new CameraPosition.Builder().target(new LatLng(lat, lng))
                         /*.zoom(10.5f)
                         .bearing(300)
                         .tilt(50)
