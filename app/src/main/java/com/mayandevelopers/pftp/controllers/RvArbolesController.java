@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mayandevelopers.pftp.R;
+import com.mayandevelopers.pftp.databaseHelper.DatabaseAccess;
 import com.mayandevelopers.pftp.models.ArbolesModel;
 import com.mayandevelopers.pftp.views.AgregarArbolActivity;
 import com.mayandevelopers.pftp.views.VisitasActivity;
@@ -50,7 +51,7 @@ public class RvArbolesController extends RecyclerView.Adapter<RvArbolesControlle
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RvArbolesController.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull final RvArbolesController.ViewHolder viewHolder, final int position) {
         final ArbolesModel misarboles = mData.get(position);
 
         viewHolder.txtview_folio.setText(misarboles.getFolio());
@@ -83,6 +84,10 @@ public class RvArbolesController extends RecyclerView.Adapter<RvArbolesControlle
 
                 intent.putExtra("update","1");
                 intent.putExtra("id_arbol",misarboles.getId());
+                intent.putExtra("folio_arbol", misarboles.getFolio());
+                //intent.putExtra("numserie_arbol", misarboles.getNum_serie());
+                intent.putExtra("latitud_arbol", misarboles.getLatitud());
+                intent.putExtra("longitud_arbol", misarboles.getLongitud());
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
             }
@@ -106,6 +111,29 @@ public class RvArbolesController extends RecyclerView.Adapter<RvArbolesControlle
                 dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
+
+                btnEliminar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(mContext);
+
+                        databaseAccess.open();
+
+                        databaseAccess.eliminarArboles(misarboles.getId());
+
+                        databaseAccess.close();
+
+                        //mData.get(position).setNombreEspecie(nombre_especie);
+                        //notifyItemChanged(position);
+                        //mData.set(position,mData.get(position));
+
+                        dialog.dismiss();
+                        mData.remove(viewHolder.getLayoutPosition());
+                        notifyItemRemoved(viewHolder.getLayoutPosition());
+                        //notifyItemRangeChanged(position, mData.size());
+
+                    }
+                });
 
                 btn_cancelar.setOnClickListener(new View.OnClickListener() {
                     @Override

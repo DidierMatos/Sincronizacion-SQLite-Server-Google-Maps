@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,8 +37,8 @@ public class ArbolesActivity extends AppCompatActivity {
     Toolbar toolbar;
     ImageButton imgbtn_back;
 
-    int id_especie_obtenida;
-    int id_rancho_obtenida;
+    int id_especie_obtenido, id_rancho_obtenido;
+    String nombre_especie_obtenido, nombre_rancho_obtenido;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,22 +50,31 @@ public class ArbolesActivity extends AppCompatActivity {
 
         rv_mis_arboles = findViewById(R.id.rvMisArboles);
         imgbtn_back = findViewById(R.id.imgbtnBackRanchos);
-
-
+        
         imgbtn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
         });
-
-
+        
         SharedPreferences prefs = getSharedPreferences("ESPECIE_SELECCIONADA", MODE_PRIVATE);
-        id_especie_obtenida = prefs.getInt("id_especie", 77);
-        //Toast.makeText(this,"id_especie: "+ id_especie_obtenida, Toast.LENGTH_LONG).show();
+        id_especie_obtenido = prefs.getInt("id_especie", 77);
+        nombre_especie_obtenido = prefs.getString("nombre_especie",null);
+        //Toast.makeText(this, nombre_especie_obtenido, Toast.LENGTH_SHORT).show();
 
-        id_rancho_obtenida = getIntent().getIntExtra("id_rancho", 77);
-        //Toast.makeText(this, "id_centro: "+id_rancho_obtenida, Toast.LENGTH_SHORT).show();
+        SharedPreferences prefs2 = getSharedPreferences("RANCHO_SELECCIONADO", MODE_PRIVATE);
+        id_rancho_obtenido = prefs2.getInt("id_rancho", 77);
+        //Toast.makeText(this, "id_centro: "+id_rancho_obtenido, Toast.LENGTH_SHORT).show();
+        nombre_rancho_obtenido = prefs2.getString("nombre_rancho",null);
+
+  /*      id_rancho_obtenido = getIntent().getIntExtra("id_rancho", 77);
+        //Toast.makeText(this, "id_centro: "+id_rancho_obtenido, Toast.LENGTH_SHORT).show();
+        nombre_rancho_obtenido = getIntent().getStringExtra("nombre_rancho");
+        //Toast.makeText(this,"id_especie: "+ id_especie_obtenida, Toast.LENGTH_LONG).show();*/
+
+        //nombre_rancho_obtenido = getIntent().getStringExtra("nombre_rancho");
+        Toast.makeText(this, "id_especie: " + id_especie_obtenido + " nombre_especie: " + nombre_especie_obtenido + " id_rancho: " + id_rancho_obtenido + " nombre_rancho: " + nombre_rancho_obtenido, Toast.LENGTH_SHORT).show();
 
         arboles_model = new ArrayList<>();
 
@@ -92,8 +103,10 @@ public class ArbolesActivity extends AppCompatActivity {
             /*    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
             Intent intent = new Intent(ArbolesActivity.this, AgregarArbolActivity.class);
-            //intent.putExtra("id_especie",id_especie_obtenida);
-            //intent.putExtra("id_rancho",id_rancho_obtenida);
+    /*        intent.putExtra("id_especie",id_especie_obtenido);
+            intent.putExtra("nombre_especie",nombre_especie_obtenido);
+            intent.putExtra("id_rancho",id_rancho_obtenido);
+            intent.putExtra("nombre_rancho", nombre_rancho_obtenido);*/
             startActivity(intent);
             finish();
             }
@@ -107,7 +120,7 @@ public class ArbolesActivity extends AppCompatActivity {
         DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
         databaseAccess.openRead();
 
-        rv_arboles_controller = new RvArbolesController(ArbolesActivity.this, databaseAccess.getArboles(id_especie_obtenida, id_rancho_obtenida));
+        rv_arboles_controller = new RvArbolesController(ArbolesActivity.this, databaseAccess.getArboles(id_especie_obtenido, id_rancho_obtenido));
         rv_mis_arboles.setLayoutManager(new LinearLayoutManager(ArbolesActivity.this, RecyclerView.VERTICAL,false ));
         rv_mis_arboles.setAdapter(rv_arboles_controller);
 

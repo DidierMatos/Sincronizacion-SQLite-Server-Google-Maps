@@ -4,7 +4,7 @@ public class ArbolesModel {
 
     private int id;
     private String folio;
-    private String num_serie;
+    //private String num_serie;
     private String latitud;
     private String longitud;
     private int id_e;
@@ -13,7 +13,7 @@ public class ArbolesModel {
     public ArbolesModel(int id, String folio, String num_serie, String latitud, String longitud, int id_e, int id_c) {
         this.id = id;
         this.folio = folio;
-        this.num_serie = num_serie;
+        //this.num_serie = num_serie;
         this.latitud = latitud;
         this.longitud = longitud;
         this.id_e = id_e;
@@ -36,13 +36,13 @@ public class ArbolesModel {
         this.folio = folio;
     }
 
-    public String getNum_serie() {
+    /*public String getNum_serie() {
         return num_serie;
     }
 
     public void setNum_serie(String num_serie) {
         this.num_serie = num_serie;
-    }
+    }*/
 
     public String getLatitud() {
         return latitud;

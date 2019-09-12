@@ -26,7 +26,8 @@ public class RanchosActivity extends AppCompatActivity {
     RecyclerView rv_ranchos;
     ImageButton imgbtn_back;
 
-    int id_miespecie;
+    int id_especie_obtenida;
+    String nombre_especie_obtenida;
 
 
     @Override
@@ -40,7 +41,8 @@ public class RanchosActivity extends AppCompatActivity {
         //String id_miespecie;
         //Bundle parametros = this.getIntent().getExtras();
 
-        id_miespecie = getIntent().getIntExtra("id_miespecie",0);
+        //id_especie_obtenida = getIntent().getIntExtra("id_miespecie",77);
+        //nombre_especie_obtenida = getIntent().getStringExtra("nombre_especie");
 
         //id_miespecie = parametros.getString("id_miespecie");
         //Toast.makeText(this, String.valueOf(id_miespecie) , Toast.LENGTH_SHORT).show();

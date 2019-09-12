@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.mayandevelopers.pftp.models.ArbolesModel;
 import com.mayandevelopers.pftp.models.EspeciesModel;
@@ -128,6 +130,7 @@ public class DatabaseAccess {
         ContentValues actualizacion = new ContentValues();
         actualizacion.put("id", id_especie);
         actualizacion.put("nombre",nombre_especie);
+        //actualizacion.put("sad","sad");
 
         db2.update("especies",actualizacion,"id = ?", new String[] { String.valueOf(id_especie)});
 
@@ -207,6 +210,99 @@ public class DatabaseAccess {
         //return buffer.toString();
     }
 
+    public void updateArbol(int id_arbol, String folio_arbol, String latitud_arbol, String longitud_arbol){
 
+            //Log.v("UPDATEARBOL", id_arbol+folio_arbol+latitud_arbol+longitud_arbol);
+
+            SQLiteDatabase db2 = openHelper.getWritableDatabase();
+
+            ContentValues actualizacion2 = new ContentValues();
+            actualizacion2.put("id", id_arbol);
+            actualizacion2.put("folio", folio_arbol);
+            //actualizacion2.put("num_serie","nnnn");
+            actualizacion2.put("latitud", latitud_arbol);
+            actualizacion2.put("longitud", longitud_arbol);
+            //actualizacion2.put("id_c", 1);
+            //actualizacion2.put("id_e",6);
+            //actualizacion2.put("fecha_registro", "sdfsafd");
+            //actualizacion2.put("fecha_actualizacion", "asdafs");
+
+            //actualizacion2.put("sad","sad");
+
+            db2.update("arboles",actualizacion2,"id = ?", new String[] {String.valueOf(id_arbol)});
+
+             //String strSQL = "UPDATE arboles set folio = "+ folio_arbol +", latitud = "+latitud_arbol+", longitud = "+longitud_arbol+ " WHERE id ="+ id_arbol;
+             //db2.execSQL(strSQL);
+
+            db2.close();
+
+    }
+
+    public void addArboles(int id_e, int id_c, String folio_arbol, String latitud_arbol, String longitud_arbol){
+
+        /*SQLiteDatabase db2 = openHelper.getWritableDatabase();
+        int num = 34;
+
+        if(db2 != null){
+
+            db2.execSQL("INSERT INTO especies (id, nombre) " +
+                    "VALUES (num, '"+ nombreEspecie +"')");
+
+        }
+
+        db2.close();*/
+
+        SQLiteDatabase db2 = openHelper.getWritableDatabase();
+
+        ContentValues registro = new ContentValues();
+        //registro.put("id", 1);
+        registro.put("id_e",id_e);
+        registro.put("id_c",id_c);
+        registro.put("folio", folio_arbol);
+        registro.put("latitud",latitud_arbol);
+        registro.put("longitud",longitud_arbol);
+
+
+        db2.insert("arboles",null,registro);
+
+        db2.close();
+
+
+
+    }
+
+    public List<ArbolesModel> getArbolesInfo(int id_arbol){
+        List<ArbolesModel> arboles = new ArrayList<>();
+
+        //c=db.rawQuery("select * from centros where id = '"+id_especie+"'",null);
+        c=db.rawQuery("select * from arboles where id" + "= ?",new String[]{String.valueOf(id_arbol)});
+
+        //StringBuffer buffer = new StringBuffer();
+        /*EspeciesModel especiesModel = new EspeciesModel();*/
+
+        if(c.moveToFirst()){
+            do {
+                arboles.add(new ArbolesModel(c.getInt(0),c.getString(1),c.getString(2),c.getString(3), c.getString(4), c.getInt(5), c.getInt(6)));
+            }while(c.moveToNext());
+        }
+
+        return arboles;
+        //return buffer.toString();
+    }
+
+    public void eliminarArboles(int id_arbol){
+
+        SQLiteDatabase db2 = openHelper.getWritableDatabase();
+
+        //ContentValues eliminacion = new ContentValues();
+        //eliminacion.put("id", id_especie);
+        //actualizacion.put("nombre",nombre_especie);
+
+        db2.delete("arboles","id = ?", new String[] { String.valueOf(id_arbol)});
+        db2.delete("muestra_arbol", "id_arbol = ?", new String[] {String.valueOf(id_arbol)});
+
+        db2.close();
+
+    }
 
 }
