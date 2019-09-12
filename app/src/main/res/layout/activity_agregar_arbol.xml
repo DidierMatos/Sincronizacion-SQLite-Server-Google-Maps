@@ -130,7 +130,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="20dp"
-                    android:inputType="number"
+                    android:inputType="text"
                     android:textColor="@color/colorBlanco"
                     android:hint="Folio"
                     />
@@ -180,7 +180,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="20dp"
-                        android:inputType="numberDecimal"
+                        android:inputType="numberSigned|numberDecimal"
                         android:textColor="@color/colorBlanco"
                         android:hint="Latitud" />
 
@@ -201,7 +201,7 @@
                         android:layout_width="220dp"
                         android:layout_height="wrap_content"
                         android:textSize="20dp"
-                        android:inputType="numberDecimal"
+                        android:inputType="numberSigned|numberDecimal"
                         android:textColor="@color/colorBlanco"
                         android:hint="Longitud" />
 
