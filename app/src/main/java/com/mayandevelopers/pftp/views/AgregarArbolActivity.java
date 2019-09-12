@@ -64,27 +64,27 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
     private Boolean bandera = false;
     private Marker marcador;
     private UiSettings mUiSettings;
-    CameraPosition BONDI;
+    private CameraPosition BONDI;
 
 
-    String valorUpdate;
-    TextView txtview_add_arbol;
-    Button btn_ubicacion;
-    Button imgbtn_add_arbol, imgbtn_ubicacion;
-    TextInputEditText edtxt_especie, edtxt_centro, edtxt_folio, edtxt_latitud, edtxt_longitud;
-    ImageButton imgbtn_back;
+    private String valorUpdate;
+    private TextView txtview_add_arbol;
+    private Button btn_ubicacion;
+    private Button imgbtn_add_arbol, imgbtn_ubicacion;
+    private TextInputEditText edtxt_especie, edtxt_centro, edtxt_folio, edtxt_latitud, edtxt_longitud;
+    private ImageButton imgbtn_back;
 
-    double lat;
-    double lng;
-    ProgressDialog pdialog_progress_empresa;
+    private double lat;
+    private double lng;
+    private ProgressDialog pdialog_progress_empresa;
 
-    int id_arbol_obtenido, id_especie_obtenido, id_rancho_obtenido;
-    String nombre_especie_obtenido, nombre_rancho_obtenido, folio_arbol_obtenido, numserie_arbol_obtenido, latitud_arbol_obtenido, longitud_arbol_obtenido;
-    Object arbol;
+    private int id_arbol_obtenido, id_especie_obtenido, id_rancho_obtenido;
+    private String nombre_especie_obtenido, nombre_rancho_obtenido, folio_arbol_obtenido, numserie_arbol_obtenido, latitud_arbol_obtenido, longitud_arbol_obtenido;
+    private Object arbol;
 
-    List<ArbolesModel> arboles_model;
-    RecyclerView rv_mis_arboles;
-    RvArbolesController rv_arboles_controller;
+    private List<ArbolesModel> arboles_model;
+    private RecyclerView rv_mis_arboles;
+    private RvArbolesController rv_arboles_controller;
 
 
     @Override

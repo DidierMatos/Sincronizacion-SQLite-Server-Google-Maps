@@ -2,7 +2,7 @@ package com.mayandevelopers.pftp.models;
 
 public class EspeciesModel {
 
-    int idEspecie;
+    private int idEspecie;
     private String nombreEspecie ;
 
     public EspeciesModel(int idEspecie, String nombreEspecie) {

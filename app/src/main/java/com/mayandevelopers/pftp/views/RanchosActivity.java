@@ -21,13 +21,13 @@ import java.util.List;
 
 public class RanchosActivity extends AppCompatActivity {
 
-    RvRanchosController rv_ranchos_controller;
+    private RvRanchosController rv_ranchos_controller;
 
-    RecyclerView rv_ranchos;
-    ImageButton imgbtn_back;
+    private RecyclerView rv_ranchos;
+    private ImageButton imgbtn_back;
 
-    int id_especie_obtenida;
-    String nombre_especie_obtenida;
+    private int id_especie_obtenida;
+    private String nombre_especie_obtenida;
 
 
     @Override

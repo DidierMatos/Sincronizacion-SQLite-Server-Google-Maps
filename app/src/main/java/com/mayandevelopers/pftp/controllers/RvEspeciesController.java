@@ -34,7 +34,7 @@ import java.util.List;
 public class RvEspeciesController extends RecyclerView.Adapter<RvEspeciesController.ViewHolder> {
 
 
-    Context mContext;
+    private Context mContext;
     private List<EspeciesModel> mData;
 
     private static final String ESPECIE_SELECCIONADA = "ESPECIE_SELECCIONADA";
@@ -57,14 +57,10 @@ public class RvEspeciesController extends RecyclerView.Adapter<RvEspeciesControl
     public void onBindViewHolder(@NonNull RvEspeciesController.ViewHolder viewHolder, final int position) {
         final EspeciesModel misespecies = mData.get(position);
 
-        /*holder.precio_nuevo.setText(Lonuevo.getPrecio_nuevo());
-        holder.vigencia_nuevo.setText(Lonuevo.getVigencia_nuevo());
-        holder.nombre_nuevo.setText(Lonuevo.getNombre_nuevo());
-        Glide.with(mContext).load(mData.get(position).getImg_nuevo()).error(R.drawable.default_picture_promo).into(holder.imag_nuevo);*/
+        //Glide.with(mContext).load(mData.get(position).getImg_nuevo()).error(R.drawable.default_picture_promo).into(holder.imag_nuevo);
 
         viewHolder.nombre_especie.setText(misespecies.getNombreEspecie());
 
-        // intent //
         viewHolder.ver_arboles.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,7 +94,6 @@ public class RvEspeciesController extends RecyclerView.Adapter<RvEspeciesControl
                 Button btn_guardar = (Button) mView.findViewById(R.id.btnGuardarMain);
 
                 edtxt_nombre.setText(misespecies.getNombreEspecie());
-
 
                 mBuilder.setView(mView);
                 final AlertDialog dialog = mBuilder.create();
@@ -193,10 +188,10 @@ public class RvEspeciesController extends RecyclerView.Adapter<RvEspeciesControl
 
     public static class ViewHolder extends RecyclerView.ViewHolder  {
 
-        TextView nombre_especie;
-        ImageButton ver_arboles;
-        ImageButton editar_especie;
-        ImageButton eliminar_especie;
+        private TextView nombre_especie;
+        private ImageButton ver_arboles;
+        private ImageButton editar_especie;
+        private ImageButton eliminar_especie;
 
         public ViewHolder(View view) {
             super(view);

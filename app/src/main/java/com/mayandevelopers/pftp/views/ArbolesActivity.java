@@ -31,15 +31,15 @@ import java.util.ArrayList;
 public class ArbolesActivity extends AppCompatActivity {
 
 
-    ArrayList<ArbolesModel> arboles_model;
-    RecyclerView rv_mis_arboles;
-    RvArbolesController rv_arboles_controller;
+    private ArrayList<ArbolesModel> arboles_model;
+    private RecyclerView rv_mis_arboles;
+    private RvArbolesController rv_arboles_controller;
 
-    Toolbar toolbar;
-    ImageButton imgbtn_back;
+    private Toolbar toolbar;
+    private ImageButton imgbtn_back;
 
-    int id_especie_obtenido, id_rancho_obtenido;
-    String nombre_especie_obtenido, nombre_rancho_obtenido;
+    private int id_especie_obtenido, id_rancho_obtenido;
+    private String nombre_especie_obtenido, nombre_rancho_obtenido;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +104,7 @@ public class ArbolesActivity extends AppCompatActivity {
             /*    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
             Intent intent = new Intent(ArbolesActivity.this, AgregarArbolActivity.class);
-    /*        intent.putExtra("id_especie",id_especie_obtenido);
+    /*      intent.putExtra("id_especie",id_especie_obtenido);
             intent.putExtra("nombre_especie",nombre_especie_obtenido);
             intent.putExtra("id_rancho",id_rancho_obtenido);
             intent.putExtra("nombre_rancho", nombre_rancho_obtenido);*/

@@ -30,7 +30,7 @@ public class RvArbolesController extends RecyclerView.Adapter<RvArbolesControlle
 
     private Context mContext;
     private List<ArbolesModel> mData;
-    ArrayList<ArbolesModel> actividadItem;
+    private ArrayList<ArbolesModel> actividadItem;
     private int selectPosition;
 
     private static final String ARBOL_SELECCIONADO = "ARBOL_SELECCIONADO";
