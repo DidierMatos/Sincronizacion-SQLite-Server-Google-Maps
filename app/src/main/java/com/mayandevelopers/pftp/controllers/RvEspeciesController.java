@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.mayandevelopers.pftp.MainActivity;
 import com.mayandevelopers.pftp.R;
 import com.mayandevelopers.pftp.databaseHelper.DatabaseAccess;
+import com.mayandevelopers.pftp.databaseHelper.DatabaseAccessEspecies;
 import com.mayandevelopers.pftp.models.EspeciesModel;
 import com.mayandevelopers.pftp.views.RanchosActivity;
 
@@ -119,18 +120,12 @@ public class RvEspeciesController extends RecyclerView.Adapter<RvEspeciesControl
 
                         String nombre_especie = edtxt_nombre.getText().toString();
 
-                        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(mContext);
-
-                        databaseAccess.open();
+                        DatabaseAccessEspecies databaseAccess = DatabaseAccessEspecies.getInstance(mContext);
 
                         databaseAccess.editarEspecies(misespecies.getIdEspecie(), nombre_especie);
-
-                        databaseAccess.close();
-
                         mData.get(position).setNombreEspecie(nombre_especie);
                         notifyItemChanged(position);
                         //mData.set(position,mData.get(position));
-
 
                         //mData.remove(position);
                         //notifyItemRemoved(position);
@@ -171,13 +166,9 @@ public class RvEspeciesController extends RecyclerView.Adapter<RvEspeciesControl
                 btn_eliminar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(mContext);
-
-                        databaseAccess.open();
+                        DatabaseAccessEspecies databaseAccess = DatabaseAccessEspecies.getInstance(mContext);
 
                         databaseAccess.eliminarEspecies(misespecies.getIdEspecie());
-
-                        databaseAccess.close();
 
                         //mData.get(position).setNombreEspecie(nombre_especie);
                         //notifyItemChanged(position);

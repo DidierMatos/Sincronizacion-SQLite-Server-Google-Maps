@@ -63,13 +63,11 @@ public class RanchosActivity extends AppCompatActivity {
 
 
     public void loadMisRanchos(){
-        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
-        databaseAccess.openRead();
+        DatabaseAccessRanchos databaseAccess = DatabaseAccessRanchos.getInstance(getApplicationContext());
 
-        rv_ranchos_controller = new RvRanchosController(RanchosActivity.this, databaseAccess.getRanchos());
+        rv_ranchos_controller = new RvRanchosController(RanchosActivity.this, databaseAccess.obtenerRanchos());
         rv_ranchos.setLayoutManager(new LinearLayoutManager(RanchosActivity.this, RecyclerView.VERTICAL,false ));
         rv_ranchos.setAdapter(rv_ranchos_controller);
 
-        databaseAccess.close();
     }
 }

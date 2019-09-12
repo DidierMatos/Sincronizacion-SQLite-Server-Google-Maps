@@ -48,6 +48,7 @@ import android.widget.Toast;
 import com.mayandevelopers.pftp.R;
 import com.mayandevelopers.pftp.controllers.RvArbolesController;
 import com.mayandevelopers.pftp.databaseHelper.DatabaseAccess;
+import com.mayandevelopers.pftp.databaseHelper.DatabaseAccessArboles;
 import com.mayandevelopers.pftp.models.ArbolesModel;
 
 import java.util.ArrayList;
@@ -221,9 +222,7 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
 
     public void addMiArbol(){
 
-        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
-
-        databaseAccess.open();
+        DatabaseAccessArboles databaseAccess = DatabaseAccessArboles.getInstance(getApplicationContext());
 
         //String id_especie = edtxt_especie.getText().toString();
         //String id_centro = edtxt_centro.getText().toString();
@@ -236,8 +235,6 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
         }else{
             Toast.makeText(AgregarArbolActivity.this, "Ingresa un nombre valido", Toast.LENGTH_SHORT).show();
         }
-
-        databaseAccess.close();
 
     }
 
@@ -280,17 +277,14 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
         latitud_arbol_obtenido = edtxt_latitud.getText().toString();
         longitud_arbol_obtenido = edtxt_longitud.getText().toString();
 
-        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
-        databaseAccess.open();
+        DatabaseAccessArboles databaseAccess = DatabaseAccessArboles.getInstance(getApplicationContext());
         databaseAccess.updateArbol(id_arbol_obtenido, folio_arbol_obtenido, latitud_arbol_obtenido, longitud_arbol_obtenido);
-        databaseAccess.close();
-        //Toast.makeText(this, "actualizado", Toast.LENGTH_SHORT).show();
 
+        //Toast.makeText(this, "actualizado", Toast.LENGTH_SHORT).show();
     }
 
     public void loadMisArboles(){
-        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
-        databaseAccess.openRead();
+        DatabaseAccessArboles databaseAccess = DatabaseAccessArboles.getInstance(getApplicationContext());
 
         //arbol = databaseAccess.editArboles(id_arbol_obtenido);
         arboles_model = databaseAccess.getArbolesInfo(id_arbol_obtenido);
@@ -306,8 +300,6 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
         }
 
         //Toast.makeText(this, arbol.toString(), Toast.LENGTH_SHORT).show();
-        databaseAccess.close();
-
         Toast.makeText(this, "id_arbol: " + id_arbol_obtenido + " folio: " + folio_arbol_obtenido + " latitud: " + latitud_arbol_obtenido + " longitud " + longitud_arbol_obtenido, Toast.LENGTH_SHORT).show();
     }
 

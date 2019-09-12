@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.mayandevelopers.pftp.R;
 import com.mayandevelopers.pftp.controllers.RvArbolesController;
 import com.mayandevelopers.pftp.databaseHelper.DatabaseAccess;
+import com.mayandevelopers.pftp.databaseHelper.DatabaseAccessArboles;
 import com.mayandevelopers.pftp.models.ArbolesModel;
 
 import java.util.ArrayList;
@@ -117,14 +118,11 @@ public class ArbolesActivity extends AppCompatActivity {
     }
 
     public void loadMisArboles(){
-        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
-        databaseAccess.openRead();
+        DatabaseAccessArboles databaseAccess = DatabaseAccessArboles.getInstance(getApplicationContext());
 
         rv_arboles_controller = new RvArbolesController(ArbolesActivity.this, databaseAccess.getArboles(id_especie_obtenido, id_rancho_obtenido));
         rv_mis_arboles.setLayoutManager(new LinearLayoutManager(ArbolesActivity.this, RecyclerView.VERTICAL,false ));
         rv_mis_arboles.setAdapter(rv_arboles_controller);
-
-        databaseAccess.close();
     }
 
 

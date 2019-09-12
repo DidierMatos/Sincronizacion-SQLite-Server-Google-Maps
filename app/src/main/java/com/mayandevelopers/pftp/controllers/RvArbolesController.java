@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.mayandevelopers.pftp.R;
 import com.mayandevelopers.pftp.databaseHelper.DatabaseAccess;
+import com.mayandevelopers.pftp.databaseHelper.DatabaseAccessArboles;
 import com.mayandevelopers.pftp.models.ArbolesModel;
 import com.mayandevelopers.pftp.views.AgregarArbolActivity;
 import com.mayandevelopers.pftp.views.VisitasActivity;
@@ -115,13 +116,9 @@ public class RvArbolesController extends RecyclerView.Adapter<RvArbolesControlle
                 btnEliminar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(mContext);
-
-                        databaseAccess.open();
+                        DatabaseAccessArboles databaseAccess = DatabaseAccessArboles.getInstance(mContext);
 
                         databaseAccess.eliminarArboles(misarboles.getId());
-
-                        databaseAccess.close();
 
                         //mData.get(position).setNombreEspecie(nombre_especie);
                         //notifyItemChanged(position);

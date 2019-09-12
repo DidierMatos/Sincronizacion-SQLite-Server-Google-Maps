@@ -50,6 +50,7 @@ import android.widget.Toast;
 import com.mayandevelopers.pftp.controllers.RvEspeciesController;
 import com.mayandevelopers.pftp.databaseHelper.ConexionDataBase;
 import com.mayandevelopers.pftp.databaseHelper.DatabaseAccess;
+import com.mayandevelopers.pftp.databaseHelper.DatabaseAccessEspecies;
 import com.mayandevelopers.pftp.models.EspeciesModel;
 import com.mayandevelopers.pftp.views.BuscarFolioActivity;
 import com.mayandevelopers.pftp.views.LoginActivity;
@@ -162,14 +163,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void loadMisEspecies(){
-        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
-        databaseAccess.openRead();
 
-        rv_especies_controller = new RvEspeciesController(MainActivity.this, databaseAccess.getEspecies2());
+        DatabaseAccessEspecies databaseAccess = DatabaseAccessEspecies.getInstance(getApplicationContext());
+
+        rv_especies_controller = new RvEspeciesController(MainActivity.this, databaseAccess.getEspecies());
         rv_especies.setLayoutManager(new LinearLayoutManager(MainActivity.this, RecyclerView.VERTICAL,false ));
         rv_especies.setAdapter(rv_especies_controller);
-
-        databaseAccess.close();
     }
 
     // crear pop up //
@@ -215,9 +214,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(View v) {
 
 
-                DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
-
-                databaseAccess.open();
+                DatabaseAccessEspecies databaseAccess = DatabaseAccessEspecies.getInstance(getApplicationContext());
 
                 String nombre_especie = edtxt_nombre.getText().toString();
 
@@ -226,8 +223,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }else{
                     Toast.makeText(MainActivity.this, "Ingresa un nombre valido", Toast.LENGTH_SHORT).show();
                 }
-
-                databaseAccess.close();
 
                 loadMisEspecies();
 
