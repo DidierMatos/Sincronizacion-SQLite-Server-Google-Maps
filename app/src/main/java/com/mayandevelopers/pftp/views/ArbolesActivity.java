@@ -108,8 +108,9 @@ public class ArbolesActivity extends AppCompatActivity {
             intent.putExtra("nombre_especie",nombre_especie_obtenido);
             intent.putExtra("id_rancho",id_rancho_obtenido);
             intent.putExtra("nombre_rancho", nombre_rancho_obtenido);*/
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
-            finish();
+            //finish();
             }
         });
 

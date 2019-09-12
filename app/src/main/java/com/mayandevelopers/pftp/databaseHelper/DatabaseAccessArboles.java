@@ -109,7 +109,7 @@ public class DatabaseAccessArboles {
 
     }
 
-    public void addArboles(int id_e, int id_c, String folio_arbol, String latitud_arbol, String longitud_arbol){
+    public void addArboles(int id_e, int id_c, String folio_arbol, String numserie_arbol, String latitud_arbol, String longitud_arbol){
 
         openWriteBD();
 
@@ -120,6 +120,7 @@ public class DatabaseAccessArboles {
         registro.put("id_e",id_e);
         registro.put("id_c",id_c);
         registro.put("folio", folio_arbol);
+        registro.put("num_serie", numserie_arbol);
         registro.put("latitud",latitud_arbol);
         registro.put("longitud",longitud_arbol);
 

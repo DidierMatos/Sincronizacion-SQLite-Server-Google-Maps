@@ -137,7 +137,7 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-<!--            <com.google.android.material.textfield.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/txtinputNumSerie"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -157,13 +157,13 @@
                     android:hint="Numero de serie"
                     />
 
-            </com.google.android.material.textfield.TextInputLayout>-->
+            </com.google.android.material.textfield.TextInputLayout>
 
             <RelativeLayout
                 android:id="@+id/relativeUbicacion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="180dp">
+                android:layout_below="@id/txtinputNumSerie">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/txtinputLatitud"
