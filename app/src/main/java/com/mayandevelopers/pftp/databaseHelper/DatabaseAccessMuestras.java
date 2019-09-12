@@ -102,8 +102,6 @@ public class DatabaseAccessMuestras {
         openBD();
         c = db.rawQuery("SELECT  id, latitud, longitud FROM arboles WHERE id_c ='"+id_centro+"'",null);
         if (c.moveToFirst()){
-
-
             do {
                 coordenadas.add(new Coordenadas(c.getString(0),c.getDouble(1),c.getDouble(2)));
             } while (c.moveToNext());

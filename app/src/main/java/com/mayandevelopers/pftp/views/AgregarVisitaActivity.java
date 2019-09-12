@@ -1,12 +1,15 @@
 package com.mayandevelopers.pftp.views;
 
 import android.Manifest;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationListener;
@@ -36,11 +39,18 @@ import android.widget.Toast;
 import com.mayandevelopers.pftp.MainActivity;
 import com.mayandevelopers.pftp.R;
 import com.mayandevelopers.pftp.databaseHelper.DatabaseAccessVisitas;
+import com.mayandevelopers.pftp.models.VisitasModel;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.ListIterator;
 
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -50,6 +60,7 @@ public class AgregarVisitaActivity extends AppCompatActivity {
     DatabaseAccessVisitas databaseAccessVisitas;
     LocationManager mlocManager;
     Localizacion Local;
+    List<VisitasModel> visita;
 
     private static final int PICK_IMAGE_REQUEST = 1;
     private final int MY_PERMISSIONS = 100;
@@ -58,6 +69,7 @@ public class AgregarVisitaActivity extends AppCompatActivity {
     private Bitmap bitmapImage;
     String fecha;
     int id_arbol;
+    int id_visita;
     String action;
     double my_latitud;
     double my_longitud;
@@ -80,9 +92,6 @@ public class AgregarVisitaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_agregar_visita);
         // INSTANCIA DE MI CLASE DATABASE //
         databaseAccessVisitas = DatabaseAccessVisitas.getInstance(getApplicationContext());
-        // permisos en el manifest //
-        permisosManifest();
-
 
 
         floatbtn_tomar_foto = (FloatingActionButton) findViewById(R.id.floatbtnTomarFoto);
@@ -101,20 +110,45 @@ public class AgregarVisitaActivity extends AppCompatActivity {
         btn_guardar        = (Button) findViewById(R.id.btnGuardarVisita);
 
 
-        // OBTENER ID DEL ARBOL //
-        id_arbol = getIntent().getIntExtra("id_arbol",0);
         // OBTENER ACCION A REALIZAR //
         action = getIntent().getStringExtra("accion");
+
         if (action.equals("update")){
+            // OBTENER ID DE LA VISITA Y ID DEL ARBOL //
+            id_visita = getIntent().getIntExtra("id_visita",0);
+            id_arbol = getIntent().getIntExtra("id_arbol",0);
+
+            // TRAER DATOS Y LA IMAGEN DE LA VISITA A EDITAR //
+            traerDatosVisita(id_visita);
             txt_toolbar_text.setText("Actualizar visita");
+        }else {
+            // OBTENER ID DEL ARBOL //
+            id_arbol = getIntent().getIntExtra("id_arbol",0);
+            // permisos en el manifest //
+            permisosManifest();
         }
 
-        // GUARDAR VISITA //
+        // GUARDAR O ACTUALIZAR VISITA //
         btn_guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                guardarVisita();
+                if (action.equals("agregar")){
+                    // EJECUTAR METODO PARA GUARDAR //
+                    guardarVisita();
+
+                } else if (action.equals("update")){
+                    // EJECUTAR METODO ACTUALIZAR //
+                    actualizarVisita(String.valueOf(id_visita));
+
+                }
+            }
+        });
+
+        btn_cancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
 
@@ -131,7 +165,6 @@ public class AgregarVisitaActivity extends AppCompatActivity {
         imgbtn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 onBackPressed();
             }
         });
@@ -144,6 +177,94 @@ public class AgregarVisitaActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    // ACTUALIZAR VISITA //
+    private void actualizarVisita(String id_visita){
+
+        String fecha = edtxt_fecha_visita.getText().toString().trim();
+        String altura = edtxt_altura.getText().toString().trim();
+        String diametro = edtxt_diametro.getText().toString().trim();
+        String observaciones = edtxt_observaciones.getText().toString().trim();
+        String vigor = edtxt_vigor.getText().toString().trim();
+        String condicion = edtxt_condicion.getText().toString().trim();
+        String sanidad = edtxt_sanidad.getText().toString().trim();
+        //String fecha_registro = obtenerFecha();
+        String fecha_actualizacion = obtenerFecha();
+        //String latitud = lat;
+        //String longitud = lng;
+
+
+        if ( fecha.equals("") || altura.equals("") || diametro.equals("") || observaciones.equals("") || vigor.equals("") || condicion.equals("") || sanidad.equals("")) {
+
+            Toast.makeText(AgregarVisitaActivity.this, "Todos los campos son requeridos", Toast.LENGTH_SHORT).show();
+        }else{
+            ContentValues values = new ContentValues();
+            values.put("fecha_visita",fecha);
+            values.put("altura",altura);
+            values.put("diametro",diametro);
+            values.put("observaciones",observaciones);
+            values.put("vigor",vigor);
+            values.put("condicion",condicion);
+            values.put("sanidad",sanidad);
+            values.put("fecha_actualizacion",fecha_actualizacion);
+
+            //ACTUALIZAR Y RECUPERAR EL ID DE LA VISITA //
+            int id_res_visi = databaseAccessVisitas.actualizarVisita(id_visita,values);
+            //Toast.makeText(this, String.valueOf(id_res_visi), Toast.LENGTH_SHORT).show();
+
+            // SI EL USUARIO AGREGO UNA NUEVA IMAGEN GUARDARLA //
+            if (bitmapImage != null){
+                eliminarImagenVisita(id_visita);
+                guardarImagenVisita(id_visita);
+
+            }else{
+                terminarActividad();
+            }
+
+        }
+    }
+
+    // ELIMINAR IMAGEN DE LA VISITA //
+    private void eliminarImagenVisita (String id){
+        int num_reg_deleted = databaseAccessVisitas.eliminarImagenVisita(id);
+        //Toast.makeText(this, String.valueOf(num_reg_deleted), Toast.LENGTH_SHORT).show();
+    }
+
+    // TRAER DATOS DE LA VISITA A ACTUALIZAR
+    private void traerDatosVisita(int id_visita) {
+        // consultar datos //
+        visita = databaseAccessVisitas.getDatosVisitaUpdate(id_visita);
+
+        for (int i=0; i<visita.size();i++){
+            VisitasModel datos_visita = visita.get(i);
+
+            String fecha_visita = datos_visita.getFecha_visita();
+            String altura = datos_visita.getAltura();
+            String diametro = datos_visita.getDiametro();
+            String observaciones = datos_visita.getObservaciones();
+            String vigor = datos_visita.getVigor();
+            String condicion = datos_visita.getCondicion();
+            String sanidad = datos_visita.getSanidad();
+
+            edtxt_fecha_visita.setText(fecha_visita);
+            edtxt_altura.setText(altura);
+            edtxt_diametro.setText(diametro);
+            edtxt_observaciones.setText(observaciones);
+            edtxt_vigor.setText(vigor);
+            edtxt_condicion.setText(condicion);
+            edtxt_sanidad.setText(sanidad);
+        }
+        // EJECUTAR METODO//
+        traerImagenVisita(id_visita);
+    }
+
+    // TRAER LA IMAGEN //
+    private void  traerImagenVisita(int visita_id){
+
+        Bitmap imagen = databaseAccessVisitas.traerImagenVisita(visita_id);
+        imgview_foto.setImageBitmap(imagen);
 
     }
 
@@ -179,35 +300,72 @@ public class AgregarVisitaActivity extends AppCompatActivity {
     // GUARDAR LA VISITA //
     private void guardarVisita() {
         String fecha = edtxt_fecha_visita.getText().toString().trim();
-        String altura = edtxt_fecha_visita.getText().toString().trim();
-        String diametro = edtxt_fecha_visita.getText().toString().trim();
-        String observaciones = edtxt_fecha_visita.getText().toString().trim();
-        String vigor = edtxt_fecha_visita.getText().toString().trim();
-        String condicion = edtxt_fecha_visita.getText().toString().trim();
-        String sanidad = edtxt_fecha_visita.getText().toString().trim();
+        String altura = edtxt_altura.getText().toString().trim();
+        String diametro = edtxt_diametro.getText().toString().trim();
+        String observaciones = edtxt_observaciones.getText().toString().trim();
+        String vigor = edtxt_vigor.getText().toString().trim();
+        String condicion = edtxt_condicion.getText().toString().trim();
+        String sanidad = edtxt_sanidad.getText().toString().trim();
         String latitud = lat;
         String longitud = lng;
 
         String fecha_registro = obtenerFecha();
-        String fecha_actualizacion = obtenerFecha();
+        //String fecha_actualizacion = obtenerFecha();
 
         if ( bitmapImage == null ||fecha.equals("") || altura.equals("") || diametro.equals("") || observaciones.equals("") || vigor.equals("") || condicion.equals("") || sanidad.equals("")) {
 
             Toast.makeText(AgregarVisitaActivity.this, "Rellena todos los campos o sube una imagen", Toast.LENGTH_SHORT).show();
         }else{
-
-            //Toast.makeText(this, lat+" "+lng+" "+ fecha_registro + " " + fecha_actualizacion, Toast.LENGTH_SHORT).show();
-
+           //GUARDAR Y RECUPERAR EL ID DE LA VISITA //
             String id_visita = databaseAccessVisitas.registrarVisita(fecha,altura,diametro,observaciones,vigor,condicion,sanidad,
-                   String.valueOf(id_arbol),fecha_registro,fecha_actualizacion,lat,lng);
-            //Toast.makeText(this, id_visita, Toast.LENGTH_SHORT).show();
+                  String.valueOf(id_arbol),fecha_registro,latitud,longitud);
 
-            ///IR A LA ACTIVIDAD PRINCIPAL//
-            Intent ir = new Intent(AgregarVisitaActivity.this, VisitasActivity.class);
-            ir.putExtra("id_arbol",id_arbol);
-            ir.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(ir);
+            // GUARDAR LA IMAGEN DE LA VISITA //
+            guardarImagenVisita(id_visita);
+
         }
+    }
+
+    // GUARDAR IMAGEN DE VISITA //
+    private void guardarImagenVisita(String id_visita)  {
+        String origen = "3";
+        String id_refe = id_visita;
+        String nombre = generarNombreImagen();
+        byte [] imagen = imageToByte(bitmapImage);
+        String fecha_reg = obtenerFecha();
+
+        // guardar la imagen //
+        String id_regis = databaseAccessVisitas.agregarImagenVisita(origen,id_refe,nombre,imagen,fecha_reg);
+
+        // CERRAR ACTIVIDAD //
+        terminarActividad();
+
+    }
+
+    private void terminarActividad(){
+        Intent ir = new Intent(AgregarVisitaActivity.this,VisitasActivity.class);
+        ir.putExtra("id_arbol",id_arbol);
+        ir.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(ir);
+    }
+
+    // generar nombre unico de la imagen //
+    private String generarNombreImagen(){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");
+        String date = dateFormat.format(new Date());
+        String nombre_foto = "TREE -" + date + "- PPM.jpg";
+
+        return nombre_foto;
+    }
+
+    // CONVERTIR IMAGEN A BYTE //
+    private byte [] imageToByte(Bitmap bitmap){
+
+        ByteArrayOutputStream stream = new ByteArrayOutputStream(20480);
+        bitmap.compress(Bitmap.CompressFormat.JPEG,80, stream);
+        byte[] byteArray = stream.toByteArray();
+
+        return byteArray;
     }
 
 
@@ -344,7 +502,6 @@ public class AgregarVisitaActivity extends AppCompatActivity {
             }
         });
     }
-
 
     // TOMAR FOTO //
     private void tomarFoto() {

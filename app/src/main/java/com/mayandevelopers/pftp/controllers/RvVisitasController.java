@@ -52,6 +52,8 @@ public class RvVisitasController extends RecyclerView.Adapter<RvVisitasControlle
 
 
         String fecha_visita = "Visita "+visita.getId_visita()+": " +visita.getFecha_registro();
+        final int id_visita = visita.getId_visita();
+        final int id_arbol = Integer.parseInt(visita.getId_arbol());
 
         holder.txt_fecha_visita.setText(fecha_visita);
         /*holder.vigencia_nuevo.setText(Lonuevo.getVigencia_nuevo());
@@ -63,6 +65,8 @@ public class RvVisitasController extends RecyclerView.Adapter<RvVisitasControlle
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, AgregarVisitaActivity.class);
                 intent.putExtra("accion","update");
+                intent.putExtra("id_visita",id_visita);
+                intent.putExtra("id_arbol",id_arbol);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
             }
