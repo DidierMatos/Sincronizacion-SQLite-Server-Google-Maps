@@ -76,7 +76,7 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
     private ImageButton imgbtn_back;
 
     private double lat, lng, dlatitud, dlongitud;
-    private ProgressDialog pdialog_progress_empresa;
+    private ProgressDialog pdialog_progress_arbol;
 
     private int id_arbol_obtenido, id_especie_obtenido, id_rancho_obtenido;
     private String nombre_especie_obtenido, nombre_rancho_obtenido, folio_arbol_obtenido, numserie_arbol_obtenido, latitud_arbol_obtenido, longitud_arbol_obtenido;
@@ -208,6 +208,7 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
                 } else {
                     //contador = 0;
                     locationStart();
+                    dialogArbol("Obteniendo ubicación, porfavor espere...");
                     //setMap();
                     //Toast.makeText(AgregarArbolActivity.this, "HOLA", Toast.LENGTH_SHORT).show();
                 }
@@ -355,12 +356,14 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
         dialog_delete.show();
     }
 
-    private void dialogAddEmpresa(String showText){
-        pdialog_progress_empresa = new ProgressDialog(AgregarArbolActivity.this);
-        pdialog_progress_empresa.setCancelable(false);
-        pdialog_progress_empresa.setTitle(showText);
-        pdialog_progress_empresa.setMessage("Este proceso no debe tardar mucho");
-        pdialog_progress_empresa.show();
+    private void dialogArbol(String showText){
+        pdialog_progress_arbol = new ProgressDialog(AgregarArbolActivity.this);
+        pdialog_progress_arbol.setCancelable(false);
+        pdialog_progress_arbol.setTitle(showText);
+        pdialog_progress_arbol.setMessage("Este proceso no debe tardar mucho, recuerda verificar que tu GPS este en modo alta precisión");
+        pdialog_progress_arbol.show();
+        btn_ubicacion.setEnabled(false);
+        imgbtn_add_arbol.setEnabled(false);
         //pdialog_progress_empresa.setContentView(R.layout.);
     }
 
@@ -378,8 +381,8 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,}, 1000);
             return;
         }
-        mlocManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0, (LocationListener) Local);
-        mlocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, (LocationListener) Local);
+        mlocManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, (LocationListener) Local);
+        mlocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) Local);
 
     }
 
@@ -416,8 +419,10 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
                 edtxt_latitud.setText(String.valueOf(lat));
                 edtxt_longitud.setText(String.valueOf(lng));
 
+                pdialog_progress_arbol.dismiss();
+                btn_ubicacion.setEnabled(true);
+                imgbtn_add_arbol.setEnabled(true);
                 updateMap();
-
                 mlocManager.removeUpdates(this);
 
             // Toast.makeText(mainActivity, Text, Toast.LENGTH_SHORT).show();
