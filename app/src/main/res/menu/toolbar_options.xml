@@ -4,14 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.mayandevelopers.pftp.MainActivity">
 
-
     <item
         android:id="@+id/find"
-        android:icon="@drawable/ic_search_folio"
+        android:icon="@android:drawable/ic_search_category_default"
         android:orderInCategory="100"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="always|collapseActionView"
         android:title="buscar" />
-
 
 </menu>

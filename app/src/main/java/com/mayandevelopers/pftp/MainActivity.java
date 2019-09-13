@@ -60,7 +60,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener, SearchView.OnSuggestionListener {
 
     Toolbar toolbar;
     NavigationView navigationView;
@@ -102,8 +102,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // set checked true //
         item = navigationView.getMenu().findItem(R.id.nav_crecimiento);
         item.setChecked(true);
-
-        especiesModel = new ArrayList<>();
 
         loadMisEspecies();
 
@@ -157,6 +155,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 popUpDialog();
             }
         });
+        /*DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
+        databaseAccess.openRead();
+        especiesModel = databaseAccess.getEspecies2();
+        databaseAccess.close();*/
 
 
     }
@@ -214,7 +216,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View v) {
 
-
                 DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
 
                 databaseAccess.open();
@@ -233,14 +234,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 dialog.dismiss();
 
-
-
-
             }
         });
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -251,9 +247,50 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         SearchView searchView = (SearchView) menuItem.getActionView();
         searchView.setQueryHint("Escribe algo");
         MenuItemCompat.getActionView(menuItem);
-       // searchView.setOnQueryTextListener(this);
+        searchView.setOnQueryTextListener(this);
+        searchView.setOnSuggestionListener(this);
 
         return true;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    // IMPLEMENTACION DEL BUSCADOR //
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        // CREAR NUEVO ARRAY LIST PARA ALMACENAR LA ESPECIE ENCONTRADA //
+        ArrayList<EspeciesModel> especie = new ArrayList<>();
+        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
+        databaseAccess.openRead();
+
+
+        for (EspeciesModel especieItem : databaseAccess.getEspecies2() ){
+            if (especieItem.getNombreEspecie().toLowerCase().contains(newText.toLowerCase())){
+                especie.add(especieItem);
+            }
+        }
+
+        rv_especies_controller = new RvEspeciesController(MainActivity.this, especie);
+        rv_especies.setLayoutManager(new LinearLayoutManager(MainActivity.this, RecyclerView.VERTICAL,false ));
+        rv_especies.setAdapter(rv_especies_controller);
+
+        databaseAccess.close();
+
+        return true;
+    }
+
+
+    @Override
+    public boolean onSuggestionSelect(int position) {
+        return false;
+    }
+
+    @Override
+    public boolean onSuggestionClick(int position) {
+        return false;
     }
 
     @Override
@@ -294,4 +331,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         editor.clear();
         editor.apply();
     }
+
+
 }

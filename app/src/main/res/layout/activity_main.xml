@@ -16,7 +16,7 @@
             android:id="@+id/toolbarMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorAccent">
+            android:background="@color/colorBlanco">
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -36,7 +36,8 @@
             android:layout_margin="7dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            app:srcCompat= "@drawable/ic_agregar"/>
+            android:tint="@color/colorBlanco"
+            app:srcCompat="@android:drawable/ic_input_add" />
 
         <!--<TextView
             android:id="@+id/txtviewGetEspeciesPrueba"
