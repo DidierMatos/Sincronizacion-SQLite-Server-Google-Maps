@@ -27,7 +27,7 @@ import com.mayandevelopers.pftp.models.ArbolesModel;
 
 import java.util.ArrayList;
 
-public class ArbolesActivity extends AppCompatActivity {
+public class ArbolesActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, SearchView.OnSuggestionListener {
 
 
     ArrayList<ArbolesModel> arboles_model;
@@ -139,7 +139,45 @@ public class ArbolesActivity extends AppCompatActivity {
         searchView.setQueryHint("Escribe algo");
         MenuItemCompat.getActionView(menuItem);
         // searchView.setOnQueryTextListener(this);
+        searchView.setOnQueryTextListener(this);
+        searchView.setOnSuggestionListener(this);
 
         return true;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    // FUNCIONALIDAD DEL BUSCADOR POR FOLIO //
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        // CREAR NUEVO ARRAY LIST PARA ALMACENAR LOS ARBOLES ENCONTRADA //
+        ArrayList<ArbolesModel> arboles = new ArrayList<>();
+        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
+        databaseAccess.openRead();
+
+        for (ArbolesModel arbolesItem : databaseAccess.getArboles(id_especie_obtenido, id_rancho_obtenido) ){
+            if (arbolesItem.getFolio().toLowerCase().contains(newText.toLowerCase())){
+                arboles.add(arbolesItem);
+            }
+        }
+        rv_arboles_controller = new RvArbolesController(ArbolesActivity.this, arboles);
+        rv_mis_arboles.setLayoutManager(new LinearLayoutManager(ArbolesActivity.this, RecyclerView.VERTICAL,false ));
+        rv_mis_arboles.setAdapter(rv_arboles_controller);
+
+        databaseAccess.close();
+        return true;
+    }
+
+    @Override
+    public boolean onSuggestionSelect(int position) {
+        return false;
+    }
+
+    @Override
+    public boolean onSuggestionClick(int position) {
+        return false;
     }
 }
