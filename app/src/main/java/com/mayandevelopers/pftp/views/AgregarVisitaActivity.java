@@ -319,6 +319,7 @@ public class AgregarVisitaActivity extends AppCompatActivity {
            //GUARDAR Y RECUPERAR EL ID DE LA VISITA //
             String id_visita = databaseAccessVisitas.registrarVisita(fecha,altura,diametro,observaciones,vigor,condicion,sanidad,
                   String.valueOf(id_arbol),fecha_registro,latitud,longitud);
+            //Toast.makeText(this, id_visita, Toast.LENGTH_SHORT).show();
 
             // GUARDAR LA IMAGEN DE LA VISITA //
             guardarImagenVisita(id_visita);
