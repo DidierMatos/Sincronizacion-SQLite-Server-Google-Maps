@@ -87,6 +87,8 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
 
     private int contador = 0;
 
+    LocationManager mlocManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,6 +140,7 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
             edtxt_numserie.setText(numserie_arbol_obtenido);
             edtxt_latitud.setText(latitud_arbol_obtenido);
             edtxt_longitud.setText(longitud_arbol_obtenido);
+            contador = 1;
 
             setMap();
 
@@ -204,8 +207,9 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
                         msgRecomendacion();
 
                 } else {
-                    contador = 0;
+                    //contador = 0;
                     locationStart();
+                    //setMap();
                     //Toast.makeText(AgregarArbolActivity.this, "HOLA", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -339,7 +343,7 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
 
     // lLOCATION START //
     private void locationStart() {
-        LocationManager mlocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        mlocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Localizacion Local = new Localizacion();
         Local.setMainActivity(this);
         final boolean gpsEnabled = mlocManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
@@ -382,8 +386,6 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
         public void onLocationChanged(Location loc) {
             // Este metodo se ejecuta cada vez que el GPS recibe nuevas coordenadas debido a la deteccion de un cambio de ubicacion
 
-            if(contador < 10) {
-
                 String Text = "Mi ubicacion actual es: " + loc.getLatitude() + " " + loc.getLongitude();
                 lat = loc.getLatitude();
                 lng = loc.getLongitude();
@@ -391,8 +393,9 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
                 edtxt_latitud.setText(String.valueOf(lat));
                 edtxt_longitud.setText(String.valueOf(lng));
 
-                contador++;
-            }
+                updateMap();
+
+                mlocManager.removeUpdates(this);
 
             // Toast.makeText(mainActivity, Text, Toast.LENGTH_SHORT).show();
             //this.mainActivity.setLocation(loc);
@@ -441,11 +444,13 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
     }
 
     public void deleteMap(){
-        marcador.remove();
+        mMap.clear();
+        //marcador.remove();
     }
 
     public void updateMap(){
         //deleteMap();
+        contador = 1;
         setMap();
     }
 
@@ -461,7 +466,16 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
+
+
         mMap = googleMap;
+
+        if(contador == 1){
+            mMap.clear();
+        }
+
+
 
         // Add a marker in Sydney and move the camera
 

@@ -130,17 +130,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 DatabaseAccessEspecies databaseAccess = DatabaseAccessEspecies.getInstance(getApplicationContext());
 
-                String nombre_especie = edtxt_nombre.getText().toString();
+                String nombre_especie = edtxt_nombre.getText().toString().trim();
 
-                if(nombre_especie != null){
-                    databaseAccess.addEspecies(nombre_especie);
-                }else{
+                if(nombre_especie == null || nombre_especie.equals("")){
                     Toast.makeText(MainActivity.this, "Ingresa un nombre valido", Toast.LENGTH_SHORT).show();
+
+                }else{
+                    databaseAccess.addEspecies(nombre_especie);
+                    dialog.dismiss();
                 }
 
                 loadMisEspecies();
-
-                dialog.dismiss();
             }
         });
     }
