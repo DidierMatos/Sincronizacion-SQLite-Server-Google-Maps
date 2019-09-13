@@ -81,7 +81,7 @@ public class DatabaseAccessArboles {
         return arboles;
     }
 
-    public void updateArbol(int id_arbol, String folio_arbol, String numserie_arbol, String latitud_arbol, String longitud_arbol){
+    public void updateArbol(int id_arbol, String folio_arbol, String numserie_arbol, String latitud_arbol, String longitud_arbol, String fecha_actualizacion){
 
         //Log.v("UPDATEARBOL", id_arbol+folio_arbol+latitud_arbol+longitud_arbol);
         openWriteBD();
@@ -93,6 +93,7 @@ public class DatabaseAccessArboles {
         actualizacion2.put("num_serie", numserie_arbol);
         actualizacion2.put("latitud", latitud_arbol);
         actualizacion2.put("longitud", longitud_arbol);
+        actualizacion2.put("fecha_actualizacion", fecha_actualizacion);
         //actualizacion2.put("id_c", 1);
         //actualizacion2.put("id_e",6);
         //actualizacion2.put("fecha_registro", "sdfsafd");
@@ -109,7 +110,7 @@ public class DatabaseAccessArboles {
 
     }
 
-    public void addArboles(int id_e, int id_c, String folio_arbol, String numserie_arbol, String latitud_arbol, String longitud_arbol){
+    public void addArboles(int id_e, int id_c, String folio_arbol, String numserie_arbol, String latitud_arbol, String longitud_arbol, String fecha_registro){
 
         openWriteBD();
 
@@ -123,6 +124,7 @@ public class DatabaseAccessArboles {
         registro.put("num_serie", numserie_arbol);
         registro.put("latitud",latitud_arbol);
         registro.put("longitud",longitud_arbol);
+        registro.put("fecha_registro", fecha_registro);
 
         db2.insert("arboles",null,registro);
 

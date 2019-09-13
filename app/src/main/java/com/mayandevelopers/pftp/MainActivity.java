@@ -34,6 +34,7 @@ import com.mayandevelopers.pftp.views.BuscarFolioActivity;
 import com.mayandevelopers.pftp.views.LoginActivity;
 import com.mayandevelopers.pftp.views.MuestrasActivity;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -47,6 +48,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private RvEspeciesController rv_especies_controller;
     private FloatingActionButton flt_action_btn_add;
     private SQLiteOpenHelper openHelper;
+
+    private String fecha_registro;
+    private String fecha_actualizacion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,12 +135,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 DatabaseAccessEspecies databaseAccess = DatabaseAccessEspecies.getInstance(getApplicationContext());
 
                 String nombre_especie = edtxt_nombre.getText().toString().trim();
+                fecha_registro = obtenerFecha();
 
                 if(nombre_especie == null || nombre_especie.equals("")){
                     Toast.makeText(MainActivity.this, "Ingresa un nombre valido", Toast.LENGTH_SHORT).show();
 
                 }else{
-                    databaseAccess.addEspecies(nombre_especie);
+                    databaseAccess.addEspecies(nombre_especie, fecha_registro);
                     dialog.dismiss();
                 }
 
@@ -198,5 +203,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         SharedPreferences.Editor editor = preferences.edit();
         editor.clear();
         editor.apply();
+    }
+
+    private String obtenerFecha (){
+        // obtener fecha actual //
+        Calendar calendar = Calendar.getInstance();
+        int dia = calendar.get(Calendar.DAY_OF_MONTH);
+        int mes  = calendar.get(Calendar.MONTH);
+        int año = calendar.get(Calendar.YEAR);
+        int hora = calendar.get(Calendar.HOUR_OF_DAY);
+        int minuto = calendar.get(Calendar.MINUTE);
+        int segundo = calendar.get(Calendar.SECOND);
+
+        String fecha = año + "-" + (mes + 1) + "-" + dia + " " + hora + ":" + minuto + ":" + segundo;
+
+        return fecha;
     }
 }

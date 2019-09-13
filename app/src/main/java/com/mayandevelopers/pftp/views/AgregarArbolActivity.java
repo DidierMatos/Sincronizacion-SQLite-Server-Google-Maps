@@ -52,6 +52,7 @@ import com.mayandevelopers.pftp.databaseHelper.DatabaseAccessArboles;
 import com.mayandevelopers.pftp.models.ArbolesModel;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class AgregarArbolActivity extends FragmentActivity implements SeekBar.OnSeekBarChangeListener, GoogleMap.OnMarkerDragListener, GoogleMap.OnMapLongClickListener,
@@ -60,7 +61,7 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
     private GoogleMap mMap;
     //EditText edtxt_longitud,edtxt_latitud, edtxt_radio;
     private Button btn_buscar, btn_buscar2;
-    private String longitud, latitud, folio, numserie, radio;
+    private String longitud, latitud, folio, numserie, radio, fecha_registro, fecha_actualizacion;
     private Boolean bandera = false;
     private Marker marcador;
     private UiSettings mUiSettings;
@@ -231,11 +232,13 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
         latitud = edtxt_latitud.getText().toString().trim();
         longitud = edtxt_longitud.getText().toString().trim();
 
+        fecha_registro = obtenerFecha();
+
         if(folio == null || folio.equals("") ||  numserie == null || numserie.equals("") || latitud == null || latitud.equals("") || longitud == null || longitud.equals("")){
             Toast.makeText(AgregarArbolActivity.this, "Completa todos los campos", Toast.LENGTH_SHORT).show();
         }else{
             DatabaseAccessArboles databaseAccess = DatabaseAccessArboles.getInstance(getApplicationContext());
-            databaseAccess.addArboles(id_especie_obtenido, id_rancho_obtenido, folio, numserie, latitud, longitud);
+            databaseAccess.addArboles(id_especie_obtenido, id_rancho_obtenido, folio, numserie, latitud, longitud, fecha_registro);
             reloadActivity();
         }
 
@@ -281,14 +284,31 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
         latitud = edtxt_latitud.getText().toString().trim();
         longitud = edtxt_longitud.getText().toString().trim();
 
+        fecha_actualizacion = obtenerFecha();
+
         if(folio == null || folio.equals("") ||  numserie == null || numserie.equals("") || latitud == null || latitud.equals("") || longitud == null || longitud.equals("")){
             Toast.makeText(this, "Completa correctamente los campos", Toast.LENGTH_SHORT).show();
         }else{
             DatabaseAccessArboles databaseAccess = DatabaseAccessArboles.getInstance(getApplicationContext());
-            databaseAccess.updateArbol(id_arbol_obtenido, folio, numserie, latitud, longitud);
+            databaseAccess.updateArbol(id_arbol_obtenido, folio, numserie, latitud, longitud, fecha_actualizacion);
             reloadActivity();
         }
         //Toast.makeText(this, "actualizado", Toast.LENGTH_SHORT).show();
+    }
+
+    private String obtenerFecha (){
+        // obtener fecha actual //
+        Calendar calendar = Calendar.getInstance();
+        int dia = calendar.get(Calendar.DAY_OF_MONTH);
+        int mes  = calendar.get(Calendar.MONTH);
+        int año = calendar.get(Calendar.YEAR);
+        int hora = calendar.get(Calendar.HOUR_OF_DAY);
+        int minuto = calendar.get(Calendar.MINUTE);
+        int segundo = calendar.get(Calendar.SECOND);
+
+        String fecha = año + "-" + (mes + 1) + "-" + dia + " " + hora + ":" + minuto + ":" + segundo;
+
+        return fecha;
     }
 
     public void loadMisArboles(){

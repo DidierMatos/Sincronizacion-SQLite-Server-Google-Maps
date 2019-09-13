@@ -29,6 +29,7 @@ import com.mayandevelopers.pftp.databaseHelper.DatabaseAccessEspecies;
 import com.mayandevelopers.pftp.models.EspeciesModel;
 import com.mayandevelopers.pftp.views.RanchosActivity;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class RvEspeciesController extends RecyclerView.Adapter<RvEspeciesController.ViewHolder> {
@@ -114,10 +115,11 @@ public class RvEspeciesController extends RecyclerView.Adapter<RvEspeciesControl
                     public void onClick(View v) {
 
                         String nombre_especie = edtxt_nombre.getText().toString();
+                        String fecha_actualizacion = obtenerFecha();
 
                         DatabaseAccessEspecies databaseAccess = DatabaseAccessEspecies.getInstance(mContext);
 
-                        databaseAccess.editarEspecies(misespecies.getIdEspecie(), nombre_especie);
+                        databaseAccess.editarEspecies(misespecies.getIdEspecie(), nombre_especie, fecha_actualizacion);
                         mData.get(position).setNombreEspecie(nombre_especie);
                         notifyItemChanged(position);
                         //mData.set(position,mData.get(position));
@@ -161,6 +163,7 @@ public class RvEspeciesController extends RecyclerView.Adapter<RvEspeciesControl
                 btn_eliminar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
                         DatabaseAccessEspecies databaseAccess = DatabaseAccessEspecies.getInstance(mContext);
 
                         databaseAccess.eliminarEspecies(misespecies.getIdEspecie());
@@ -203,5 +206,20 @@ public class RvEspeciesController extends RecyclerView.Adapter<RvEspeciesControl
            // relativeLayout=(RelativeLayout)view.findViewById(R.id.capa__lonuevo);
 
         }
+    }
+
+    private String obtenerFecha (){
+        // obtener fecha actual //
+        Calendar calendar = Calendar.getInstance();
+        int dia = calendar.get(Calendar.DAY_OF_MONTH);
+        int mes  = calendar.get(Calendar.MONTH);
+        int año = calendar.get(Calendar.YEAR);
+        int hora = calendar.get(Calendar.HOUR_OF_DAY);
+        int minuto = calendar.get(Calendar.MINUTE);
+        int segundo = calendar.get(Calendar.SECOND);
+
+        String fecha = año + "-" + (mes + 1) + "-" + dia + " " + hora + ":" + minuto + ":" + segundo;
+
+        return fecha;
     }
 }

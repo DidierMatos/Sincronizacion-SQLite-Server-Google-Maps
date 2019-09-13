@@ -68,13 +68,15 @@ public class DatabaseAccessEspecies {
     }
 
 
-    public void addEspecies(String nombreEspecie){
+    public void addEspecies(String nombreEspecie, String fecha_registro){
 
         openWriteBD();
 
         ContentValues registro = new ContentValues();
         //registro.put("id", 1);
         registro.put("nombre",nombreEspecie);
+        registro.put("fecha_registro", fecha_registro);
+        //registro.put("fecha_actualizacion", fecha_actualizacion);
 
         db.insert("especies",null,registro);
 
@@ -84,13 +86,14 @@ public class DatabaseAccessEspecies {
 
     }
 
-    public void editarEspecies(int id_especie,String nombre_especie){
+    public void editarEspecies(int id_especie,String nombre_especie, String fecha_actualizacion){
 
         openWriteBD();
 
         ContentValues actualizacion = new ContentValues();
         actualizacion.put("id", id_especie);
         actualizacion.put("nombre",nombre_especie);
+        actualizacion.put("fecha_actualizacion", fecha_actualizacion);
 
         db.update("especies",actualizacion,"id = ?", new String[] { String.valueOf(id_especie)});
 
