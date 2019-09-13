@@ -307,11 +307,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(muestras);
                 break;
 
-            case R.id.nav_folio:
-                Intent actividad = new Intent(this, BuscarFolioActivity.class);
-                startActivity(actividad);
-                break;
-
             case R.id.nav_sesion:
                 Intent logOut = new Intent(this, LoginActivity.class);
                 clearSessionVariables();

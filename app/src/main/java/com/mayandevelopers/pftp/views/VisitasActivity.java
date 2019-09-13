@@ -5,9 +5,15 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+
+import androidx.appcompat.widget.SearchView;
+import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
+
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -21,7 +27,7 @@ import com.mayandevelopers.pftp.models.VisitasModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VisitasActivity extends AppCompatActivity {
+public class VisitasActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, SearchView.OnSuggestionListener {
 
     DatabaseAccessVisitas databaseAccessVisitas;
 
@@ -41,6 +47,9 @@ public class VisitasActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visitas);
+        toolbar = (Toolbar) findViewById(R.id.toolbarVisitas);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         // OBTENER INSTANCIA DE MI CLASE DATABASE ACCESS //
         databaseAccessVisitas = DatabaseAccessVisitas.getInstance(getApplicationContext());
 
@@ -75,11 +84,55 @@ public class VisitasActivity extends AppCompatActivity {
             }
         });
 
+    }
 
+    // IMFLAR EL MENU DE LA TOOLBAR //
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.toolbar_options, menu);
 
+        MenuItem menuItem = menu.findItem(R.id.find);
+        SearchView searchView = (SearchView) menuItem.getActionView();
+        searchView.setQueryHint("Escribe una fecha");
+        MenuItemCompat.getActionView(menuItem);
+        // searchView.setOnQueryTextListener(this);
+        searchView.setOnQueryTextListener(this);
+        searchView.setOnSuggestionListener(this);
+        return true;
+    }
 
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
 
+    // EJECUTAR METODO AL ESCRIBIR //
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        // CREAR NUEVO ARRAY LIST PARA ALMACENAR LAS VISITAS ENCONTRADAS //
+        ArrayList<VisitasModel> visitas = new ArrayList<>();
 
+        for (VisitasModel visitasItem : databaseAccessVisitas.getVisitasArboles(id_arbol) ){
+            if (visitasItem.getFecha_registro().toLowerCase().contains(newText.toLowerCase())){
+                visitas.add(visitasItem);
+            }
+        }
+        // DESPLEGAR LAS VISITAS DEL ARBOL //
+        rv_visitas_controller = new RvVisitasController(VisitasActivity.this,visitas);
+        rv_visitas.setLayoutManager(new LinearLayoutManager(VisitasActivity.this, RecyclerView.VERTICAL,false));
+        rv_visitas.setAdapter(rv_visitas_controller);
 
+        return true;
+    }
+
+    @Override
+    public boolean onSuggestionSelect(int position) {
+        return false;
+    }
+
+    @Override
+    public boolean onSuggestionClick(int position) {
+        return false;
     }
 }

@@ -136,7 +136,7 @@ public class ArbolesActivity extends AppCompatActivity implements SearchView.OnQ
 
         MenuItem menuItem = menu.findItem(R.id.find);
         SearchView searchView = (SearchView) menuItem.getActionView();
-        searchView.setQueryHint("Escribe algo");
+        searchView.setQueryHint("Escribe el folio");
         MenuItemCompat.getActionView(menuItem);
         // searchView.setOnQueryTextListener(this);
         searchView.setOnQueryTextListener(this);

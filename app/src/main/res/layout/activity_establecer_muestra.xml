@@ -106,6 +106,7 @@
                 android:paddingStart="9dp"
                 android:paddingTop="5dp"
                 android:paddingEnd="9dp"
+                android:inputType="number"
                 android:background="@drawable/edtxt_contorno"
                 android:paddingBottom="5dp"/>
         </com.google.android.material.textfield.TextInputLayout>

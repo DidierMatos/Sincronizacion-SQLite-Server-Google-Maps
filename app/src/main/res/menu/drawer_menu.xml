@@ -15,10 +15,6 @@
                 android:id="@+id/nav_muestras"
                 android:title="Muestras"
                 android:icon="@drawable/ic_muestras"/>
-            <item
-                android:id="@+id/nav_folio"
-                android:title="Buscar por folio"
-                android:icon="@drawable/ic_search_folio"/>
 
         </group>
         <group
