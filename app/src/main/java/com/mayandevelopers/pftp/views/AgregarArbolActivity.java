@@ -140,8 +140,8 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
             edtxt_numserie.setText(numserie_arbol_obtenido);
             edtxt_latitud.setText(latitud_arbol_obtenido);
             edtxt_longitud.setText(longitud_arbol_obtenido);
-            contador = 1;
 
+            contador = 1;
             setMap();
 
         }else{ //agregar
@@ -183,9 +183,8 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
             public void onClick(View v) {
 
                 if (valorUpdate != null){
-                    editMiArbol();
+                    updateMiArbol();
                     loadMisArboles();
-                    reloadActivity();
                     //Toast.makeText(AgregarArbolActivity.this, "actualziaste", Toast.LENGTH_SHORT).show();
 
                 }else {
@@ -193,7 +192,6 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
                     //latitud = Double.parseDouble(edtxt_latitud.getText().toString());
                     //longitud = Double.parseDouble(edtxt_longitud.getText().toString());
                     addMiArbol();
-                    reloadActivity();
                 }
             }
         });
@@ -226,19 +224,19 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
 
     public void addMiArbol(){
 
-        DatabaseAccessArboles databaseAccess = DatabaseAccessArboles.getInstance(getApplicationContext());
-
         //String id_especie = edtxt_especie.getText().toString();
         //String id_centro = edtxt_centro.getText().toString();
-        folio = edtxt_folio.getText().toString();
-        numserie = edtxt_numserie.getText().toString();
-        latitud = edtxt_latitud.getText().toString();
-        longitud = edtxt_longitud.getText().toString();
+        folio = edtxt_folio.getText().toString().trim();
+        numserie = edtxt_numserie.getText().toString().trim();
+        latitud = edtxt_latitud.getText().toString().trim();
+        longitud = edtxt_longitud.getText().toString().trim();
 
-        if(folio != null){
-            databaseAccess.addArboles(id_especie_obtenido, id_rancho_obtenido, folio, numserie, latitud, longitud);
+        if(folio == null || folio.equals("") ||  numserie == null || numserie.equals("") || latitud == null || latitud.equals("") || longitud == null || longitud.equals("")){
+            Toast.makeText(AgregarArbolActivity.this, "Completa todos los campos", Toast.LENGTH_SHORT).show();
         }else{
-            Toast.makeText(AgregarArbolActivity.this, "Ingresa un nombre valido", Toast.LENGTH_SHORT).show();
+            DatabaseAccessArboles databaseAccess = DatabaseAccessArboles.getInstance(getApplicationContext());
+            databaseAccess.addArboles(id_especie_obtenido, id_rancho_obtenido, folio, numserie, latitud, longitud);
+            reloadActivity();
         }
 
     }
@@ -252,7 +250,7 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
         startActivity(listarArboles);
     }
 
-    public void editMiArbol(){
+    public void updateMiArbol(){
 
  /*           //int a=77;
         DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
@@ -278,13 +276,18 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
 
         //Toast.makeText(this, "id_arbol: " + id_arbol_obtenido + " folio: " + folio_arbol_obtenido + " latitud: " + latitud_arbol_obtenido + " longitud " + longitud_arbol_obtenido, Toast.LENGTH_SHORT).show();
 
-        folio_arbol_obtenido = edtxt_folio.getText().toString();
-        latitud_arbol_obtenido = edtxt_latitud.getText().toString();
-        longitud_arbol_obtenido = edtxt_longitud.getText().toString();
+        folio = edtxt_folio.getText().toString().trim();
+        numserie = edtxt_numserie.getText().toString().trim();
+        latitud = edtxt_latitud.getText().toString().trim();
+        longitud = edtxt_longitud.getText().toString().trim();
 
-        DatabaseAccessArboles databaseAccess = DatabaseAccessArboles.getInstance(getApplicationContext());
-        databaseAccess.updateArbol(id_arbol_obtenido, folio_arbol_obtenido, latitud_arbol_obtenido, longitud_arbol_obtenido);
-
+        if(folio == null || folio.equals("") ||  numserie == null || numserie.equals("") || latitud == null || latitud.equals("") || longitud == null || longitud.equals("")){
+            Toast.makeText(this, "Completa correctamente los campos", Toast.LENGTH_SHORT).show();
+        }else{
+            DatabaseAccessArboles databaseAccess = DatabaseAccessArboles.getInstance(getApplicationContext());
+            databaseAccess.updateArbol(id_arbol_obtenido, folio, numserie, latitud, longitud);
+            reloadActivity();
+        }
         //Toast.makeText(this, "actualizado", Toast.LENGTH_SHORT).show();
     }
 
@@ -305,7 +308,7 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
         }
 
         //Toast.makeText(this, arbol.toString(), Toast.LENGTH_SHORT).show();
-        Toast.makeText(this, "id_arbol: " + id_arbol_obtenido + " folio: " + folio_arbol_obtenido + " latitud: " + latitud_arbol_obtenido + " longitud " + longitud_arbol_obtenido, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "id_arbol: " + id_arbol_obtenido + " folio: " + folio_arbol_obtenido + " latitud: " + latitud_arbol_obtenido + " longitud " + longitud_arbol_obtenido, Toast.LENGTH_SHORT).show();
     }
 
 
@@ -474,8 +477,6 @@ public class AgregarArbolActivity extends FragmentActivity implements SeekBar.On
         if(contador == 1){
             mMap.clear();
         }
-
-
 
         // Add a marker in Sydney and move the camera
 

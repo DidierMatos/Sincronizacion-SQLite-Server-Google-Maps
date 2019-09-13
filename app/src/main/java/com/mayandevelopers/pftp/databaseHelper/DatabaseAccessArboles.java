@@ -81,7 +81,7 @@ public class DatabaseAccessArboles {
         return arboles;
     }
 
-    public void updateArbol(int id_arbol, String folio_arbol, String latitud_arbol, String longitud_arbol){
+    public void updateArbol(int id_arbol, String folio_arbol, String numserie_arbol, String latitud_arbol, String longitud_arbol){
 
         //Log.v("UPDATEARBOL", id_arbol+folio_arbol+latitud_arbol+longitud_arbol);
         openWriteBD();
@@ -90,7 +90,7 @@ public class DatabaseAccessArboles {
         ContentValues actualizacion2 = new ContentValues();
         actualizacion2.put("id", id_arbol);
         actualizacion2.put("folio", folio_arbol);
-        //actualizacion2.put("num_serie","nnnn");
+        actualizacion2.put("num_serie", numserie_arbol);
         actualizacion2.put("latitud", latitud_arbol);
         actualizacion2.put("longitud", longitud_arbol);
         //actualizacion2.put("id_c", 1);
