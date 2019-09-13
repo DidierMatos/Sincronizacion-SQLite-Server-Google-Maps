@@ -25,15 +25,17 @@ import android.widget.Toast;
 import com.mayandevelopers.pftp.MainActivity;
 import com.mayandevelopers.pftp.R;
 import com.mayandevelopers.pftp.databaseHelper.DatabaseAccess;
+import com.mayandevelopers.pftp.databaseHelper.DatabaseAccessEspecies;
 import com.mayandevelopers.pftp.models.EspeciesModel;
 import com.mayandevelopers.pftp.views.RanchosActivity;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class RvEspeciesController extends RecyclerView.Adapter<RvEspeciesController.ViewHolder> {
 
 
-    Context mContext;
+    private Context mContext;
     private List<EspeciesModel> mData;
 
     private static final String ESPECIE_SELECCIONADA = "ESPECIE_SELECCIONADA";
@@ -56,14 +58,10 @@ public class RvEspeciesController extends RecyclerView.Adapter<RvEspeciesControl
     public void onBindViewHolder(@NonNull RvEspeciesController.ViewHolder viewHolder, final int position) {
         final EspeciesModel misespecies = mData.get(position);
 
-        /*holder.precio_nuevo.setText(Lonuevo.getPrecio_nuevo());
-        holder.vigencia_nuevo.setText(Lonuevo.getVigencia_nuevo());
-        holder.nombre_nuevo.setText(Lonuevo.getNombre_nuevo());
-        Glide.with(mContext).load(mData.get(position).getImg_nuevo()).error(R.drawable.default_picture_promo).into(holder.imag_nuevo);*/
+        //Glide.with(mContext).load(mData.get(position).getImg_nuevo()).error(R.drawable.default_picture_promo).into(holder.imag_nuevo);
 
         viewHolder.nombre_especie.setText(misespecies.getNombreEspecie());
 
-        // intent //
         viewHolder.ver_arboles.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,7 +96,6 @@ public class RvEspeciesController extends RecyclerView.Adapter<RvEspeciesControl
 
                 edtxt_nombre.setText(misespecies.getNombreEspecie());
 
-
                 mBuilder.setView(mView);
                 final AlertDialog dialog = mBuilder.create();
                 dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
@@ -118,19 +115,14 @@ public class RvEspeciesController extends RecyclerView.Adapter<RvEspeciesControl
                     public void onClick(View v) {
 
                         String nombre_especie = edtxt_nombre.getText().toString();
+                        String fecha_actualizacion = obtenerFecha();
 
-                        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(mContext);
+                        DatabaseAccessEspecies databaseAccess = DatabaseAccessEspecies.getInstance(mContext);
 
-                        databaseAccess.open();
-
-                        databaseAccess.editarEspecies(misespecies.getIdEspecie(), nombre_especie);
-
-                        databaseAccess.close();
-
+                        databaseAccess.editarEspecies(misespecies.getIdEspecie(), nombre_especie, fecha_actualizacion);
                         mData.get(position).setNombreEspecie(nombre_especie);
                         notifyItemChanged(position);
                         //mData.set(position,mData.get(position));
-
 
                         //mData.remove(position);
                         //notifyItemRemoved(position);
@@ -171,13 +163,10 @@ public class RvEspeciesController extends RecyclerView.Adapter<RvEspeciesControl
                 btn_eliminar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(mContext);
 
-                        databaseAccess.open();
+                        DatabaseAccessEspecies databaseAccess = DatabaseAccessEspecies.getInstance(mContext);
 
                         databaseAccess.eliminarEspecies(misespecies.getIdEspecie());
-
-                        databaseAccess.close();
 
                         //mData.get(position).setNombreEspecie(nombre_especie);
                         //notifyItemChanged(position);
@@ -202,10 +191,10 @@ public class RvEspeciesController extends RecyclerView.Adapter<RvEspeciesControl
 
     public static class ViewHolder extends RecyclerView.ViewHolder  {
 
-        TextView nombre_especie;
-        ImageButton ver_arboles;
-        ImageButton editar_especie;
-        ImageButton eliminar_especie;
+        private TextView nombre_especie;
+        private ImageButton ver_arboles;
+        private ImageButton editar_especie;
+        private ImageButton eliminar_especie;
 
         public ViewHolder(View view) {
             super(view);
@@ -217,5 +206,20 @@ public class RvEspeciesController extends RecyclerView.Adapter<RvEspeciesControl
            // relativeLayout=(RelativeLayout)view.findViewById(R.id.capa__lonuevo);
 
         }
+    }
+
+    private String obtenerFecha (){
+        // obtener fecha actual //
+        Calendar calendar = Calendar.getInstance();
+        int dia = calendar.get(Calendar.DAY_OF_MONTH);
+        int mes  = calendar.get(Calendar.MONTH);
+        int año = calendar.get(Calendar.YEAR);
+        int hora = calendar.get(Calendar.HOUR_OF_DAY);
+        int minuto = calendar.get(Calendar.MINUTE);
+        int segundo = calendar.get(Calendar.SECOND);
+
+        String fecha = año + "-" + (mes + 1) + "-" + dia + " " + hora + ":" + minuto + ":" + segundo;
+
+        return fecha;
     }
 }

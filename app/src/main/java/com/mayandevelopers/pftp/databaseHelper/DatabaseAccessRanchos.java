@@ -28,7 +28,11 @@ public class DatabaseAccessRanchos {
         return instance;
     }
 
-    public  void openBD(){
+    public  void openReadBD(){
+        this.db=openHelper.getReadableDatabase();
+    }
+
+    public  void openWriteBD(){
         this.db=openHelper.getWritableDatabase();
     }
 
@@ -39,7 +43,7 @@ public class DatabaseAccessRanchos {
     }
 
     public List<RanchosModel> obtenerRanchos() {
-        openBD();
+        openReadBD();
         c = db.rawQuery("SELECT * FROM centros",null);
         List<RanchosModel> ranchos = new ArrayList<>();
 
@@ -53,6 +57,26 @@ public class DatabaseAccessRanchos {
         return ranchos;
     }
 
+
+/*    public List<RanchosModel> getRanchos(){
+        List<RanchosModel> ranchos = new ArrayList<>();
+
+        //c=db.rawQuery("select * from centros where id = '"+id_especie+"'",null);
+        c=db.rawQuery("select * from centros",null);
+
+        //StringBuffer buffer = new StringBuffer();
+        *//*EspeciesModel especiesModel = new EspeciesModel();*//*
+
+        if(c.moveToFirst()){
+            do {
+                ranchos.add(new RanchosModel(c.getInt(0),c.getString(1),c.getString(2),c.getString(3), c.getString(4), c.getString(5)));
+            }while(c.moveToNext());
+        }
+
+        closeBD();
+        return ranchos;
+        //return buffer.toString();
+    }*/
 
 
 }

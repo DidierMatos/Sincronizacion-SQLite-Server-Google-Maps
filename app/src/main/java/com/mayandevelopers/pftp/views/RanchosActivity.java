@@ -21,13 +21,13 @@ import java.util.List;
 
 public class RanchosActivity extends AppCompatActivity {
 
-    RvRanchosController rv_ranchos_controller;
+    private RvRanchosController rv_ranchos_controller;
 
-    RecyclerView rv_ranchos;
-    ImageButton imgbtn_back;
+    private RecyclerView rv_ranchos;
+    private ImageButton imgbtn_back;
 
-    int id_especie_obtenida;
-    String nombre_especie_obtenida;
+    private int id_especie_obtenida;
+    private String nombre_especie_obtenida;
 
 
     @Override
@@ -63,13 +63,11 @@ public class RanchosActivity extends AppCompatActivity {
 
 
     public void loadMisRanchos(){
-        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
-        databaseAccess.openRead();
+        DatabaseAccessRanchos databaseAccess = DatabaseAccessRanchos.getInstance(getApplicationContext());
 
-        rv_ranchos_controller = new RvRanchosController(RanchosActivity.this, databaseAccess.getRanchos());
+        rv_ranchos_controller = new RvRanchosController(RanchosActivity.this, databaseAccess.obtenerRanchos());
         rv_ranchos.setLayoutManager(new LinearLayoutManager(RanchosActivity.this, RecyclerView.VERTICAL,false ));
         rv_ranchos.setAdapter(rv_ranchos_controller);
 
-        databaseAccess.close();
     }
 }
